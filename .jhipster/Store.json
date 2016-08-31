@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "person",
+            "otherEntityName": "person",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "surname"
+        },
+        {
+            "relationshipName": "raport",
+            "otherEntityName": "raport",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "store"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160831181410",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "store",
+    "pagination": "pager"
+}

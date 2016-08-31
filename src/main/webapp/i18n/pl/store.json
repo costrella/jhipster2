@@ -1,0 +1,25 @@
+{
+    "jhipsterApp": {
+        "store" : {
+            "home": {
+                "title": "Stores",
+                "createLabel": "Dodaj Store",
+                "createOrEditLabel": "Dodaj lub edytuj: Store",
+                "search": "Search for Store"
+            },
+            "created": "A new Store is created with identifier {{ param }}",
+            "updated": "A Store is updated with identifier {{ param }}",
+            "deleted": "A Store is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Store {{ id }}?"
+            },
+            "detail": {
+                "title": "Store"
+            },
+            "name": "Name",
+            "city": "City",
+            "person": "Person",
+            "raport": "Raport"
+        }
+    }
+}

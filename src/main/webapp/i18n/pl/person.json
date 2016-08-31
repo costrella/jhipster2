@@ -1,0 +1,25 @@
+{
+    "jhipsterApp": {
+        "person" : {
+            "home": {
+                "title": "People",
+                "createLabel": "Dodaj Person",
+                "createOrEditLabel": "Dodaj lub edytuj: Person",
+                "search": "Search for Person"
+            },
+            "created": "A new Person is created with identifier {{ param }}",
+            "updated": "A Person is updated with identifier {{ param }}",
+            "deleted": "A Person is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Person {{ id }}?"
+            },
+            "detail": {
+                "title": "Person"
+            },
+            "name": "Name",
+            "surname": "Surname",
+            "store": "Store",
+            "raport": "Raport"
+        }
+    }
+}

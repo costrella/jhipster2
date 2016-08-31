@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span translate="jhipsterApp.raport.detail.title">Raport</span> {{vm.raport.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="jhipsterApp.raport.date">Date</span></dt>
+        <dd>
+            <span>{{vm.raport.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="jhipsterApp.raport.description">Description</span></dt>
+        <dd>
+            <span>{{vm.raport.description}}</span>
+        </dd>
+        <dt><span translate="jhipsterApp.raport.person">Person</span></dt>
+        <dd>
+            <a ui-sref="person-detail({id:vm.raport.person.id})">{{vm.raport.person.surname}}</a>
+        </dd>
+        <dt><span translate="jhipsterApp.raport.store">Store</span></dt>
+        <dd>
+            <a ui-sref="store-detail({id:vm.raport.store.id})">{{vm.raport.store.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="raport-detail.edit({id:vm.raport.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

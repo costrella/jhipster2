@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "store",
+            "otherEntityName": "store",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "person"
+        },
+        {
+            "relationshipName": "raport",
+            "otherEntityName": "raport",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "person"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "surname",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160831181148",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "person",
+    "pagination": "pager"
+}

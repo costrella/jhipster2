@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span translate="jhipsterApp.store.detail.title">Store</span> {{vm.store.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="jhipsterApp.store.name">Name</span></dt>
+        <dd>
+            <span>{{vm.store.name}}</span>
+        </dd>
+        <dt><span translate="jhipsterApp.store.city">City</span></dt>
+        <dd>
+            <span>{{vm.store.city}}</span>
+        </dd>
+        <dt><span translate="jhipsterApp.store.person">Person</span></dt>
+        <dd>
+            <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="store-detail.edit({id:vm.store.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+    </button>
+</div>
