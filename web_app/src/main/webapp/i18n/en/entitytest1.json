@@ -1,0 +1,22 @@
+{
+    "jhipsterApp": {
+        "entitytest1" : {
+            "home": {
+                "title": "Entitytest 1 S",
+                "createLabel": "Create a new Entitytest 1",
+                "createOrEditLabel": "Create or edit a Entitytest 1",
+                "search": "Search for Entitytest 1"
+            },
+            "created": "A new Entitytest 1 is created with identifier {{ param }}",
+            "updated": "A Entitytest 1 is updated with identifier {{ param }}",
+            "deleted": "A Entitytest 1 is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Entitytest 1 {{ id }}?"
+            },
+            "detail": {
+                "title": "Entitytest 1"
+            },
+            "test1": "Test 1"
+        }
+    }
+}

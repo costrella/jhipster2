@@ -1,0 +1,16 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "test1",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        }
+    ],
+    "changelogDate": "20160906182429",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "entitytest_2",
+    "pagination": "no"
+}

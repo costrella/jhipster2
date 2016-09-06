@@ -10,6 +10,8 @@
                 "person": "Person",
                 "store": "Store",
                 "raport": "Raport",
+                "entitytest1": "Entitytest 1",
+                "entitytest2": "Entitytest 2",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

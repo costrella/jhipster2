@@ -1,0 +1,28 @@
+
+<div>
+    <h2><span translate="jhipsterApp.entitytest2.detail.title">Entitytest 2</span> {{vm.entitytest2.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="jhipsterApp.entitytest2.test1">Test 1</span></dt>
+        <dd>
+            <div ng-if="vm.entitytest2.test1">
+                <a ng-click="vm.openFile(vm.entitytest2.test1ContentType, vm.entitytest2.test1)">
+                    <img data-ng-src="{{'data:' + vm.entitytest2.test1ContentType + ';base64,' + vm.entitytest2.test1}}" style="max-width: 100%;"/>
+                </a>
+                {{vm.entitytest2.test1ContentType}}, {{vm.byteSize(vm.entitytest2.test1)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="entitytest-2-detail.edit({id:vm.entitytest2.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

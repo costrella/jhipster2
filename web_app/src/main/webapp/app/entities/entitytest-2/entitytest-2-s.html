@@ -1,0 +1,61 @@
+<div>
+    <h2 translate="jhipsterApp.entitytest2.home.title">Entitytest 2 S</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="entitytest-2.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="jhipsterApp.entitytest2.home.createLabel">
+                        Create new Entitytest 2
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="jhipsterApp.entitytest2.test1">Test 1</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entitytest2 in vm.entitytest2S track by entitytest2.id">
+                    <td><a ui-sref="entitytest-2-detail({id:entitytest2.id})">{{entitytest2.id}}</a></td>
+                    <td>
+                        <a ng-if="entitytest2.test1" ng-click="vm.openFile(entitytest2.test1ContentType, entitytest2.test1)">
+                            <img data-ng-src="{{'data:' + entitytest2.test1ContentType + ';base64,' + entitytest2.test1}}" style="max-height: 30px;"/>
+                        </a>
+                        <span ng-if="entitytest2.test1">{{entitytest2.test1ContentType}}, {{vm.byteSize(entitytest2.test1)}}</span>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="entitytest-2-detail({id:entitytest2.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="entitytest-2.edit({id:entitytest2.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="entitytest-2.delete({id:entitytest2.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
