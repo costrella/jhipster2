@@ -38,6 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class Entitytest1ResourceIntTest {
     private static final String DEFAULT_TEST_1 = "AAAAA";
     private static final String UPDATED_TEST_1 = "BBBBB";
+    private static final String DEFAULT_STRING_123 = "AAAAA";
+    private static final String UPDATED_STRING_123 = "BBBBB";
 
     @Inject
     private Entitytest1Repository entitytest1Repository;
@@ -74,7 +76,8 @@ public class Entitytest1ResourceIntTest {
     public static Entitytest1 createEntity(EntityManager em) {
         Entitytest1 entitytest1 = new Entitytest1();
         entitytest1 = new Entitytest1()
-                .test1(DEFAULT_TEST_1);
+                .test1(DEFAULT_TEST_1)
+                .string123(DEFAULT_STRING_123);
         return entitytest1;
     }
 
@@ -100,6 +103,7 @@ public class Entitytest1ResourceIntTest {
         assertThat(entitytest1S).hasSize(databaseSizeBeforeCreate + 1);
         Entitytest1 testEntitytest1 = entitytest1S.get(entitytest1S.size() - 1);
         assertThat(testEntitytest1.getTest1()).isEqualTo(DEFAULT_TEST_1);
+        assertThat(testEntitytest1.getString123()).isEqualTo(DEFAULT_STRING_123);
     }
 
     @Test
@@ -113,7 +117,8 @@ public class Entitytest1ResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(entitytest1.getId().intValue())))
-                .andExpect(jsonPath("$.[*].test1").value(hasItem(DEFAULT_TEST_1.toString())));
+                .andExpect(jsonPath("$.[*].test1").value(hasItem(DEFAULT_TEST_1.toString())))
+                .andExpect(jsonPath("$.[*].string123").value(hasItem(DEFAULT_STRING_123.toString())));
     }
 
     @Test
@@ -127,7 +132,8 @@ public class Entitytest1ResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(entitytest1.getId().intValue()))
-            .andExpect(jsonPath("$.test1").value(DEFAULT_TEST_1.toString()));
+            .andExpect(jsonPath("$.test1").value(DEFAULT_TEST_1.toString()))
+            .andExpect(jsonPath("$.string123").value(DEFAULT_STRING_123.toString()));
     }
 
     @Test
@@ -148,7 +154,8 @@ public class Entitytest1ResourceIntTest {
         // Update the entitytest1
         Entitytest1 updatedEntitytest1 = entitytest1Repository.findOne(entitytest1.getId());
         updatedEntitytest1
-                .test1(UPDATED_TEST_1);
+                .test1(UPDATED_TEST_1)
+                .string123(UPDATED_STRING_123);
 
         restEntitytest1MockMvc.perform(put("/api/entitytest-1-s")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -160,6 +167,7 @@ public class Entitytest1ResourceIntTest {
         assertThat(entitytest1S).hasSize(databaseSizeBeforeUpdate);
         Entitytest1 testEntitytest1 = entitytest1S.get(entitytest1S.size() - 1);
         assertThat(testEntitytest1.getTest1()).isEqualTo(UPDATED_TEST_1);
+        assertThat(testEntitytest1.getString123()).isEqualTo(UPDATED_STRING_123);
     }
 
     @Test

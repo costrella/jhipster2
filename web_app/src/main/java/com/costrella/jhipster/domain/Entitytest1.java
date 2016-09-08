@@ -21,6 +21,9 @@ public class Entitytest1 implements Serializable {
     @Column(name = "test_1")
     private String test1;
 
+    @Column(name = "string_123")
+    private String string123;
+
     public Long getId() {
         return id;
     }
@@ -40,6 +43,19 @@ public class Entitytest1 implements Serializable {
 
     public void setTest1(String test1) {
         this.test1 = test1;
+    }
+
+    public String getString123() {
+        return string123;
+    }
+
+    public Entitytest1 string123(String string123) {
+        this.string123 = string123;
+        return this;
+    }
+
+    public void setString123(String string123) {
+        this.string123 = string123;
     }
 
     @Override
@@ -67,6 +83,7 @@ public class Entitytest1 implements Serializable {
         return "Entitytest1{" +
             "id=" + id +
             ", test1='" + test1 + "'" +
+            ", string123='" + string123 + "'" +
             '}';
     }
 }

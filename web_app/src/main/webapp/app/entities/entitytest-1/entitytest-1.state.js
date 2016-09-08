@@ -105,6 +105,7 @@
                         entity: function () {
                             return {
                                 test1: null,
+                                string123: null,
                                 id: null
                             };
                         }

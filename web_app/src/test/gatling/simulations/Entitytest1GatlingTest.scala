@@ -67,7 +67,7 @@ class Entitytest1GatlingTest extends Simulation {
             .exec(http("Create new entitytest1")
             .post("/api/entitytest-1-s")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "test1":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "test1":"SAMPLE_TEXT", "string123":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_entitytest1_url"))).exitHereIfFailed
             .pause(10)

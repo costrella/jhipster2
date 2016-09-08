@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Entitytest 1"
             },
-            "test1": "Test 1"
+            "test1": "Test 1",
+            "string123": "String 123"
         }
     }
 }

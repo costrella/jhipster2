@@ -25,6 +25,10 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="string_123" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
