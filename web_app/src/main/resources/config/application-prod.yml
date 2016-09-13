@@ -1,5 +1,5 @@
 # ===================================================================
-# Spring Boot configuration for the "prod" profile.
+# Spring Boot configuration for the "dev" profile.
 #
 # This configuration overrides the application.yml file.
 # ===================================================================
@@ -14,49 +14,48 @@
 spring:
     devtools:
         restart:
-            enabled: false
+            enabled: true
         livereload:
-            enabled: false
+            enabled: false # we use gulp + BrowserSync for livereload
+    jackson:
+        serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/jhipster
         name:
-        username: jhipster
-        password:
+        username: postgres
+        password: postgres
     jpa:
         database-platform: com.costrella.jhipster.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
-        show-sql: false
+        show-sql: true
         properties:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: false
+            hibernate.generate_statistics: true
     mail:
         host: localhost
         port: 25
         username:
         password:
+    messages:
+        cache-seconds: 1
     thymeleaf:
-        cache: true
+        cache: false
+    profiles:
+        include: swagger # automatically set the 'swagger' profile
 
 liquibase:
-    contexts: prod
+    contexts: dev
 
 server:
     port: 8080
-    compression:
-        enabled: true
-        mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
-        min-response-size: 1024
 
 # ===================================================================
 # JHipster specific properties
 # ===================================================================
 
 jhipster:
-    http:
-        cache: # Used by the CachingHttpHeadersFilter
-            timeToLiveInDays: 1461
     security:
         rememberMe:
             # security key (this key should be unique for your application, and kept secret)
