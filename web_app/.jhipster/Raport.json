@@ -34,6 +34,21 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "foto1",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "foto2",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "foto3",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
         }
     ],
     "changelogDate": "20160831181602",

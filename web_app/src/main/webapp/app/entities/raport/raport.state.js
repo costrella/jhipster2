@@ -126,6 +126,12 @@
                             return {
                                 date: null,
                                 description: null,
+                                foto1: null,
+                                foto1ContentType: null,
+                                foto2: null,
+                                foto2ContentType: null,
+                                foto3: null,
+                                foto3ContentType: null,
                                 id: null
                             };
                         }

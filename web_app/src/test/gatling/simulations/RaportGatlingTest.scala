@@ -67,7 +67,7 @@ class RaportGatlingTest extends Simulation {
             .exec(http("Create new raport")
             .post("/api/raports")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "date":"2020-01-01T00:00:00.000Z", "description":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "date":"2020-01-01T00:00:00.000Z", "description":"SAMPLE_TEXT", "foto1":null, "foto2":null, "foto3":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_raport_url"))).exitHereIfFailed
             .pause(10)
@@ -83,9 +83,9 @@ class RaportGatlingTest extends Simulation {
             .pause(10)
         }
 
-    val users = scenario("Users").exec(scn)
+    val userPersons = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(100) over (1 minutes))
+        userPersons.inject(rampUsers(100) over (1 minutes))
     ).protocols(httpConf)
 }

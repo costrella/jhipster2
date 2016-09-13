@@ -29,6 +29,27 @@
                 <constraints nullable="false" />
             </column>
             
+            <column name="foto_1" type="blob">
+                <constraints nullable="true" />
+            </column>
+            <column name="foto_1_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="foto_2" type="blob">
+                <constraints nullable="true" />
+            </column>
+            <column name="foto_2_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="foto_3" type="blob">
+                <constraints nullable="true" />
+            </column>
+            <column name="foto_3_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="person_id" type="bigint">
                 <constraints nullable="false" />
             </column>

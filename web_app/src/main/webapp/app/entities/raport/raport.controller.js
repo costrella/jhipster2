@@ -5,9 +5,9 @@
         .module('jhipsterApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$scope', '$state', 'Raport', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    RaportController.$inject = ['$scope', '$state', 'DataUtils', 'Raport', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function RaportController ($scope, $state, Raport, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function RaportController ($scope, $state, DataUtils, Raport, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -15,6 +15,8 @@
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.openFile = DataUtils.openFile;
+        vm.byteSize = DataUtils.byteSize;
 
         loadAll();
 

@@ -21,6 +21,9 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="date"><span translate="jhipsterApp.raport.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="description"><span translate="jhipsterApp.raport.description">Description</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="foto1"><span translate="jhipsterApp.raport.foto1">Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="foto2"><span translate="jhipsterApp.raport.foto2">Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="foto3"><span translate="jhipsterApp.raport.foto3">Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="person.surname"><span translate="jhipsterApp.raport.person">Person</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="store.name"><span translate="jhipsterApp.raport.store">Store</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
@@ -31,6 +34,24 @@
                     <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
                         <td>{{raport.date | date:'mediumDate'}}</td>
                     <td>{{raport.description}}</td>
+                    <td>
+                        <a ng-if="raport.foto1" ng-click="vm.openFile(raport.foto1ContentType, raport.foto1)">
+                            <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+                        </a>
+                        <span ng-if="raport.foto1">{{raport.foto1ContentType}}, {{vm.byteSize(raport.foto1)}}</span>
+                    </td>
+                    <td>
+                        <a ng-if="raport.foto2" ng-click="vm.openFile(raport.foto2ContentType, raport.foto2)">
+                            <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+                        </a>
+                        <span ng-if="raport.foto2">{{raport.foto2ContentType}}, {{vm.byteSize(raport.foto2)}}</span>
+                    </td>
+                    <td>
+                        <a ng-if="raport.foto3" ng-click="vm.openFile(raport.foto3ContentType, raport.foto3)">
+                            <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                        </a>
+                        <span ng-if="raport.foto3">{{raport.foto3ContentType}}, {{vm.byteSize(raport.foto3)}}</span>
+                    </td>
                     <td>
                         <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
                     </td>
