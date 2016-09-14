@@ -7,6 +7,8 @@ import com.sun.jersey.api.client.WebResource;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 public class JerseyClientPost {
@@ -22,10 +24,16 @@ public class JerseyClientPost {
 
 			WebResource webResource = client
 //					.resource("http://127.0.0.1:8080/api/people");
-					.resource("http://127.0.0.1:8080/api/entitytest-2-s");
+					.resource("http://127.0.0.1:8080/api/raport");
+
+//			LocalDate localDate = new LocalDate();
+//			String formattedDate = localDate.toString("MM/dd/yyyy");
 
 
-			String input = "{\"test1\":\"" + base64String + "\", \"test1ContentType\":\"image/jpeg\"}";
+			String input = "{\"test1\":\"" + base64String
+					+ "{\"test1\":\"" + base64String
+					+ "{\"test1\":\"" + base64String
+					+ "\", \"test1ContentType\":\"image/jpeg\"}";
 
 			ClientResponse response = webResource.type("application/json")
 					.post(ClientResponse.class, input);
