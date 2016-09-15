@@ -1,9 +1,13 @@
 package com.costrella.android.cechini;
 
+import com.costrella.android.cechini.model.Person;
+import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Store;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -14,4 +18,10 @@ public interface CechiniAPI {
 
     @GET("stores/{storeId}")
     Call<Store> getStore(@Path("storeId") String storeId);
+
+    @GET("people/{personId}")
+    Call<Person> getPerson(@Path("personId") String personId);
+
+    @POST("raports")
+    Call<Raport> createRaport(@Body Raport raport);
 }

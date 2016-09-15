@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.costrella.android.cechini.model.Person;
+import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.CechiniService;
 import com.google.gson.GsonBuilder;
@@ -55,9 +57,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
     Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 1;
     private CechiniService cechiniService;
+    Store store = null;
+    Person person = null;
 
     private void getStore(String id){
-
+        store = null;
         Call<Store> call = cechiniService.getCechiniAPI().getStore(id);
 
         //asynchronous call
@@ -66,7 +70,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
             public void onResponse(Call<Store> call, Response<Store> response) {
                 int code = response.code();
                 if (code == 200) {
-                    Store store = response.body();
+                    store = response.body();
                     Toast.makeText(getApplicationContext(), "Got the store: " + store.getName(), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Did not work: " + String.valueOf(code), Toast.LENGTH_LONG).show();
@@ -79,6 +83,89 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
+    }
+
+    private void getPerson(String id){
+        person = null;
+        Call<Person> call = cechiniService.getCechiniAPI().getPerson(id);
+
+        //asynchronous call
+        call.enqueue(new Callback<Person>() {
+            @Override
+            public void onResponse(Call<Person> call, Response<Person> response) {
+                int code = response.code();
+                if (code == 200) {
+                    person = response.body();
+                    Toast.makeText(getApplicationContext(), "Got the person: " + person.getName(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Did not work: " + String.valueOf(code), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Person> call, Throwable t) {
+                Log.e("s", "d");
+
+            }
+        });
+    }
+
+    private void createRaport(){
+        Call<Store> callStore = cechiniService.getCechiniAPI().getStore("1004");
+
+        //asynchronous call
+        callStore.enqueue(new Callback<Store>() {
+            @Override
+            public void onResponse(Call<Store> call, Response<Store> response) {
+                int code = response.code();
+                if (code == 200) {
+                    store = response.body();
+                    Call<Person> callPerson = cechiniService.getCechiniAPI().getPerson("1001");
+                    callPerson.enqueue(new Callback<Person>() {
+                        @Override
+                        public void onResponse(Call<Person> call, Response<Person> response) {
+                            int code = response.code();
+                            if (code == 200) {
+                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                                Raport raport = new Raport();
+                                raport.setDescription("lodz");
+                                raport.setPerson(person);
+                                raport.setStore(store);
+                                raport.setFoto1(byteArray);
+                                Call<Raport> callRaport = cechiniService.getCechiniAPI().createRaport(raport);
+                                callRaport.enqueue(new Callback<Raport>() {
+                                    @Override
+                                    public void onResponse(Call<Raport> call, Response<Raport> response) {
+                                        int code = response.code();
+                                        Toast.makeText(getApplicationContext(), "creating raport: " + code, Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Raport> call, Throwable t) {
+
+                                    }
+                                });
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Person> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Store> call, Throwable t) {
+                Log.e("s", "d");
+
+            }
+        });
+
     }
 
     @Override
@@ -137,7 +224,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 //            pb.setVisibility(View.VISIBLE);
 //            execute();
 //            new MyAsyncTask().execute(value.getText().toString());
-        getStore("1004");
+        createRaport();
 //        }
 
 
