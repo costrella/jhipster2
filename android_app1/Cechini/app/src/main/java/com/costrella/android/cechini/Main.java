@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.CechiniService;
 import com.google.gson.GsonBuilder;
 
 import org.apache.http.HttpResponse;
@@ -36,10 +39,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by mike on 2016-09-14.
  */
-public class Main extends AppCompatActivity implements View.OnClickListener {
+public class Main extends AppCompatActivity implements View.OnClickListener{
 
     private EditText value;
     private Button btn;
@@ -47,9 +54,37 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private ProgressBar pb;
     Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 1;
+    private CechiniService cechiniService;
+
+    private void getStore(String id){
+
+        Call<Store> call = cechiniService.getCechiniAPI().getStore(id);
+
+        //asynchronous call
+        call.enqueue(new Callback<Store>() {
+            @Override
+            public void onResponse(Call<Store> call, Response<Store> response) {
+                int code = response.code();
+                if (code == 200) {
+                    Store store = response.body();
+                    Toast.makeText(getApplicationContext(), "Got the store: " + store.getName(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Did not work: " + String.valueOf(code), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Store> call, Throwable t) {
+                Log.e("s", "d");
+
+            }
+        });
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cechiniService = CechiniService.getInstance();
         setContentView(R.layout.home_layout);
         value=(EditText)findViewById(R.id.editText1);
         btn=(Button)findViewById(R.id.button1);
@@ -99,9 +134,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 //            // out of range
 //            Toast.makeText(this, "please enter something", Toast.LENGTH_LONG).show();
 //        }else{
-            pb.setVisibility(View.VISIBLE);
+//            pb.setVisibility(View.VISIBLE);
 //            execute();
-            new MyAsyncTask().execute(value.getText().toString());
+//            new MyAsyncTask().execute(value.getText().toString());
+        getStore("1004");
 //        }
 
 
