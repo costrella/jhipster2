@@ -1,14 +1,19 @@
 package com.costrella.android.cechini;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 
@@ -19,6 +24,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -31,16 +37,47 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     private EditText value;
     private Button btn;
+    private Button galleryBtn;
     private ProgressBar pb;
+    Bitmap bitmap;
+    private int PICK_IMAGE_REQUEST = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
         value=(EditText)findViewById(R.id.editText1);
         btn=(Button)findViewById(R.id.button1);
+        galleryBtn=(Button)findViewById(R.id.galleryBtn);
         pb=(ProgressBar)findViewById(R.id.progressBar1);
         pb.setVisibility(View.GONE);
         btn.setOnClickListener(this);
+        galleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galllery();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                // Log.d(TAG, String.valueOf(bitmap));
+
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 //
 //    @Override
@@ -51,15 +88,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View v) {
         // TODO Auto-generated method stub
-        if(value.getText().toString().length()<1){
-
-            // out of range
-            Toast.makeText(this, "please enter something", Toast.LENGTH_LONG).show();
-        }else{
+//        if(value.getText().toString().length()<1){
+//
+//            // out of range
+//            Toast.makeText(this, "please enter something", Toast.LENGTH_LONG).show();
+//        }else{
             pb.setVisibility(View.VISIBLE);
 //            execute();
             new MyAsyncTask().execute(value.getText().toString());
-        }
+//        }
 
 
     }
@@ -89,40 +126,35 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         return null;
     }
 
+    private void galllery(){
+        Intent intent = new Intent();
+// Show only images, no videos or anything else
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+// Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
     private class MyAsyncTask extends AsyncTask<String, Integer, Double> {
 
         @Override
         protected Double doInBackground(String... params) {
             // TODO Auto-generated method stub
-            postData(params[0]);
+//            postRaport(params[0]);
+//            postData(params[0]);
+            postEntityTest2();
             return null;
         }
 
         protected void onPostExecute(Double result){
             pb.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(), "command sent", Toast.LENGTH_LONG).show();
         }
         protected void onProgressUpdate(Integer... progress){
             pb.setProgress(progress[0]);
         }
 
         public void postData(String valueIWantToSend) {
-            // Create a new HttpClient and Post Header
-
-
             try {
-                // Add your data
-
-
-//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//                nameValuePairs.add(new BasicNameValuePair("name", valueIWantToSend));
-//                nameValuePairs.add(new BasicNameValuePair("surname", valueIWantToSend));
-//                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-
-                // Execute HTTP Post Request
-
-
                 Map<String, String> comment = new HashMap<String, String>();
                 comment.put("name", valueIWantToSend);
                 comment.put("surname", valueIWantToSend);
@@ -138,11 +170,71 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 Log.e("a",response.toString());
 
             } catch (ClientProtocolException e) {
-                // TODO Auto-generated catch block
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+            }
+        }
+        public void postRaport(String valueIWantToSend) {
+            try {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                String picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
+                Map<String, String> comment = new HashMap<String, String>();
+                Map<String, byte[]> comment1 = new HashMap<String, byte[]>();
+                comment.put("data", "2016-09-13");
+                comment.put("description", valueIWantToSend);
+                comment.put("foto1", picture);
+                String json = new GsonBuilder().create().toJson(comment, Map.class);
+
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://192.168.0.10:8080/api/raports");
+                httppost.setEntity(new StringEntity(json));
+                httppost.setHeader("Accept", "application/json");
+                httppost.setHeader("Content-type", "application/json");
+
+                HttpResponse response = httpclient.execute(httppost);
+//                if(response.getStatusLine().getStatusCode() != 201){
+//                    Toast.makeText(getApplicationContext(), "ERROR code: " + response.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+//                }else{
+//                    Toast.makeText(getApplicationContext(), "command sent", Toast.LENGTH_LONG).show();
+//                }
+                Log.e("a",response.toString());
+
+            } catch (ClientProtocolException e) {
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+            }
+        }
+        public void postEntityTest2() {
+            try {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                String picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
+                Map<String, byte[]> comment1 = new HashMap<String, byte[]>();
+                comment1.put("test1", byteArray);
+                String json = new GsonBuilder().create().toJson(comment1, Map.class);
+
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://192.168.0.10:8080/api/entitytest-2-s");
+                httppost.setEntity(new StringEntity(json));
+                httppost.setHeader("Accept", "application/json");
+                httppost.setHeader("Content-type", "application/json");
+
+                HttpResponse response = httpclient.execute(httppost);
+                Log.e("a",response.toString());
+
+            } catch (ClientProtocolException e) {
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
             }
         }
 
