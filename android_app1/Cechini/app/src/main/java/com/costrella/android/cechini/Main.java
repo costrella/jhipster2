@@ -20,12 +20,18 @@ import com.google.gson.GsonBuilder;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,7 +148,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             // TODO Auto-generated method stub
 //            postRaport(params[0]);
 //            postData(params[0]);
-            postEntityTest2();
+//            postEntityTest2();
+            getStore();
             return null;
         }
 
@@ -180,15 +187,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream .toByteArray();
-                String picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//                String picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
 
-                Map<String, String> comment = new HashMap<String, String>();
-                Map<String, byte[]> comment1 = new HashMap<String, byte[]>();
-                comment.put("data", "2016-09-13");
-                comment.put("description", valueIWantToSend);
-                comment.put("foto1", picture);
-                String json = new GsonBuilder().create().toJson(comment, Map.class);
+//                Map<String, String> comment = new HashMap<String, String>();
+                Map<String, Object> comment1 = new HashMap<String, Object>();
+                comment1.put("data", "2016-09-13");
+                comment1.put("description", "ele elegancko");
+                comment1.put("foto1", byteArray);
+                String json = new GsonBuilder().create().toJson(comment1, Map.class);
 
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost("http://192.168.0.10:8080/api/raports");
@@ -236,6 +243,36 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 e.printStackTrace();
             } catch (IOException e) {
             }
+        }
+
+        public void getStore(){
+            try {
+                InputStream inputStream = null;
+                HttpClient httpclient = new DefaultHttpClient();
+                int id = 1003;
+                HttpGet httpGet = new HttpGet("http://192.168.0.10:8080/api/stores/"+id);
+                HttpResponse response = httpclient.execute(httpGet);
+                inputStream = response.getEntity().getContent();
+                JSONObject json = new JSONObject(convertInputStreamToString(inputStream));
+                //mozna budowac model
+                Log.e("json", json.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private String convertInputStreamToString(InputStream inputStream) throws IOException {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line = "";
+            String result = "";
+            while ((line = bufferedReader.readLine()) != null)
+                result += line;
+
+            inputStream.close();
+            return result;
+
         }
 
     }
