@@ -126,11 +126,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
                         public void onResponse(Call<Person> call, Response<Person> response) {
                             int code = response.code();
                             if (code == 200) {
+                                person = response.body();
                                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
                                 byte[] byteArray = byteArrayOutputStream .toByteArray();
                                 Raport raport = new Raport();
-                                raport.setDescription("lodz");
+                                raport.setDescription("lodz1");
+
                                 raport.setPerson(person);
                                 raport.setStore(store);
                                 raport.setFoto1(byteArray);
@@ -144,6 +146,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
                                     @Override
                                     public void onFailure(Call<Raport> call, Throwable t) {
+                                        Log.e("s", "f");
 
                                     }
                                 });

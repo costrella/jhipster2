@@ -12,8 +12,6 @@
 
         vm.raport = entity;
         vm.clear = clear;
-        vm.datePickerOpenStatus = {};
-        vm.openCalendar = openCalendar;
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
         vm.save = save;
@@ -47,7 +45,6 @@
             vm.isSaving = false;
         }
 
-        vm.datePickerOpenStatus.date = false;
 
         vm.setFoto1 = function ($file, raport) {
             if ($file && $file.$error === 'pattern') {
@@ -91,8 +88,5 @@
             }
         };
 
-        function openCalendar (date) {
-            vm.datePickerOpenStatus[date] = true;
-        }
     }
 })();

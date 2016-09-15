@@ -5,7 +5,6 @@ package com.costrella.android.cechini.model;
  */
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 
@@ -17,8 +16,6 @@ public class Raport implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
-    private Date date;
 
     private String description;
 
@@ -44,19 +41,6 @@ public class Raport implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public Raport date(Date date) {
-        this.date = date;
-        return this;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getDescription() {
@@ -181,7 +165,6 @@ public class Raport implements Serializable {
     public String toString() {
         return "Raport{" +
                 "id=" + id +
-                ", date='" + date + "'" +
                 ", description='" + description + "'" +
                 ", foto1='" + foto1 + "'" +
                 ", foto1ContentType='" + foto1ContentType + "'" +

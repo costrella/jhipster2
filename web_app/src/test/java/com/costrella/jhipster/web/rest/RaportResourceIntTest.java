@@ -25,8 +25,6 @@ import org.springframework.util.Base64Utils;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,9 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JhipsterApp.class)
 public class RaportResourceIntTest {
-
-    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -97,7 +92,6 @@ public class RaportResourceIntTest {
     public static Raport createEntity(EntityManager em) {
         Raport raport = new Raport();
         raport = new Raport()
-                .date(DEFAULT_DATE)
                 .description(DEFAULT_DESCRIPTION)
                 .foto1(DEFAULT_FOTO_1)
                 .foto1ContentType(DEFAULT_FOTO_1_CONTENT_TYPE)
@@ -139,7 +133,6 @@ public class RaportResourceIntTest {
         List<Raport> raports = raportRepository.findAll();
         assertThat(raports).hasSize(databaseSizeBeforeCreate + 1);
         Raport testRaport = raports.get(raports.size() - 1);
-        assertThat(testRaport.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testRaport.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testRaport.getFoto1()).isEqualTo(DEFAULT_FOTO_1);
         assertThat(testRaport.getFoto1ContentType()).isEqualTo(DEFAULT_FOTO_1_CONTENT_TYPE);
@@ -147,24 +140,6 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getFoto2ContentType()).isEqualTo(DEFAULT_FOTO_2_CONTENT_TYPE);
         assertThat(testRaport.getFoto3()).isEqualTo(DEFAULT_FOTO_3);
         assertThat(testRaport.getFoto3ContentType()).isEqualTo(DEFAULT_FOTO_3_CONTENT_TYPE);
-    }
-
-    @Test
-    @Transactional
-    public void checkDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = raportRepository.findAll().size();
-        // set the field null
-        raport.setDate(null);
-
-        // Create the Raport, which fails.
-
-        restRaportMockMvc.perform(post("/api/raports")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(raport)))
-                .andExpect(status().isBadRequest());
-
-        List<Raport> raports = raportRepository.findAll();
-        assertThat(raports).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -196,7 +171,6 @@ public class RaportResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(raport.getId().intValue())))
-                .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
                 .andExpect(jsonPath("$.[*].foto1ContentType").value(hasItem(DEFAULT_FOTO_1_CONTENT_TYPE)))
                 .andExpect(jsonPath("$.[*].foto1").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOTO_1))))
@@ -217,7 +191,6 @@ public class RaportResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(raport.getId().intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.foto1ContentType").value(DEFAULT_FOTO_1_CONTENT_TYPE))
             .andExpect(jsonPath("$.foto1").value(Base64Utils.encodeToString(DEFAULT_FOTO_1)))
@@ -245,7 +218,6 @@ public class RaportResourceIntTest {
         // Update the raport
         Raport updatedRaport = raportRepository.findOne(raport.getId());
         updatedRaport
-                .date(UPDATED_DATE)
                 .description(UPDATED_DESCRIPTION)
                 .foto1(UPDATED_FOTO_1)
                 .foto1ContentType(UPDATED_FOTO_1_CONTENT_TYPE)
@@ -263,7 +235,6 @@ public class RaportResourceIntTest {
         List<Raport> raports = raportRepository.findAll();
         assertThat(raports).hasSize(databaseSizeBeforeUpdate);
         Raport testRaport = raports.get(raports.size() - 1);
-        assertThat(testRaport.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testRaport.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testRaport.getFoto1()).isEqualTo(UPDATED_FOTO_1);
         assertThat(testRaport.getFoto1ContentType()).isEqualTo(UPDATED_FOTO_1_CONTENT_TYPE);

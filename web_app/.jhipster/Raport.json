@@ -22,13 +22,6 @@
     ],
     "fields": [
         {
-            "fieldName": "date",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "description",
             "fieldType": "String",
             "fieldValidateRules": [

@@ -124,7 +124,6 @@
                     resolve: {
                         entity: function () {
                             return {
-                                date: null,
                                 description: null,
                                 foto1: null,
                                 foto1ContentType: null,
