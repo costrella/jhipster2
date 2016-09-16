@@ -37,6 +37,38 @@
                 </p>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label" translate="jhipsterApp.person.login" for="field_login">Login</label>
+            <input type="text" class="form-control" name="login" id="field_login"
+                    ng-model="vm.person.login"
+                    required ng-minlength="4" />
+            <div ng-show="editForm.login.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.login.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.login.$error.minlength" translate="entity.validation.minlength" translate-value-min="4">
+                    This field is required to be at least 4 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="jhipsterApp.person.pass" for="field_pass">Pass</label>
+            <input type="text" class="form-control" name="pass" id="field_pass"
+                    ng-model="vm.person.pass"
+                    required ng-minlength="4" />
+            <div ng-show="editForm.pass.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.pass.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.pass.$error.minlength" translate="entity.validation.minlength" translate-value-min="4">
+                    This field is required to be at least 4 characters.
+                </p>
+            </div>
+        </div>
 
     </div>
     <div class="modal-footer">

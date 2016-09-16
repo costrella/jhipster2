@@ -30,6 +30,16 @@ public class Person implements Serializable {
     @Column(name = "surname", nullable = false)
     private String surname;
 
+    @NotNull
+    @Size(min = 4)
+    @Column(name = "login", nullable = false, unique = true)
+    private String login;
+
+    @NotNull
+    @Size(min = 4)
+    @Column(name = "pass", nullable = false)
+    private String pass;
+
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private Set<Store> stores = new HashSet<>();
@@ -70,6 +80,32 @@ public class Person implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public Person login(String login) {
+        this.login = login;
+        return this;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public Person pass(String pass) {
+        this.pass = pass;
+        return this;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public Set<Store> getStores() {
@@ -148,6 +184,8 @@ public class Person implements Serializable {
             "id=" + id +
             ", name='" + name + "'" +
             ", surname='" + surname + "'" +
+            ", login='" + login + "'" +
+            ", pass='" + pass + "'" +
             '}';
     }
 }

@@ -28,6 +28,24 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "login",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "4"
+        },
+        {
+            "fieldName": "pass",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "4"
         }
     ],
     "changelogDate": "20160831181148",

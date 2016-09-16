@@ -21,6 +21,10 @@ public class Person implements Serializable {
 
     private String surname;
 
+    private String login;
+
+    private String pass;
+
     private Set<Store> stores = new HashSet<>();
 
     private Set<Raport> raports = new HashSet<>();
@@ -40,6 +44,22 @@ public class Person implements Serializable {
     public Person name(String name) {
         this.name = name;
         return this;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public void setName(String name) {

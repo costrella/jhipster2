@@ -67,7 +67,7 @@ class PersonGatlingTest extends Simulation {
             .exec(http("Create new person")
             .post("/api/people")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "surname":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "surname":"SAMPLE_TEXT", "login":"SAMPLE_TEXT", "pass":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_person_url"))).exitHereIfFailed
             .pause(10)
@@ -83,9 +83,9 @@ class PersonGatlingTest extends Simulation {
             .pause(10)
         }
 
-    val users = scenario("Users").exec(scn)
+    val userPersons = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(100) over (1 minutes))
+        userPersons.inject(rampUsers(100) over (1 minutes))
     ).protocols(httpConf)
 }

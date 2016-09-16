@@ -21,6 +21,8 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="name"><span translate="jhipsterApp.person.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="surname"><span translate="jhipsterApp.person.surname">Surname</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="login"><span translate="jhipsterApp.person.login">Login</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="pass"><span translate="jhipsterApp.person.pass">Pass</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -29,6 +31,8 @@
                     <td><a ui-sref="person-detail({id:person.id})">{{person.id}}</a></td>
                     <td>{{person.name}}</td>
                     <td>{{person.surname}}</td>
+                    <td>{{person.login}}</td>
+                    <td>{{person.pass}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

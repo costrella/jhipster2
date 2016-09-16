@@ -40,6 +40,10 @@ public class PersonResourceIntTest {
     private static final String UPDATED_NAME = "BBBBB";
     private static final String DEFAULT_SURNAME = "AAAAA";
     private static final String UPDATED_SURNAME = "BBBBB";
+    private static final String DEFAULT_LOGIN = "AAAA";
+    private static final String UPDATED_LOGIN = "BBBB";
+    private static final String DEFAULT_PASS = "AAAA";
+    private static final String UPDATED_PASS = "BBBB";
 
     @Inject
     private PersonRepository personRepository;
@@ -77,7 +81,9 @@ public class PersonResourceIntTest {
         Person person = new Person();
         person = new Person()
                 .name(DEFAULT_NAME)
-                .surname(DEFAULT_SURNAME);
+                .surname(DEFAULT_SURNAME)
+                .login(DEFAULT_LOGIN)
+                .pass(DEFAULT_PASS);
         return person;
     }
 
@@ -104,6 +110,8 @@ public class PersonResourceIntTest {
         Person testPerson = people.get(people.size() - 1);
         assertThat(testPerson.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPerson.getSurname()).isEqualTo(DEFAULT_SURNAME);
+        assertThat(testPerson.getLogin()).isEqualTo(DEFAULT_LOGIN);
+        assertThat(testPerson.getPass()).isEqualTo(DEFAULT_PASS);
     }
 
     @Test
@@ -144,6 +152,42 @@ public class PersonResourceIntTest {
 
     @Test
     @Transactional
+    public void checkLoginIsRequired() throws Exception {
+        int databaseSizeBeforeTest = personRepository.findAll().size();
+        // set the field null
+        person.setLogin(null);
+
+        // Create the Person, which fails.
+
+        restPersonMockMvc.perform(post("/api/people")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(person)))
+                .andExpect(status().isBadRequest());
+
+        List<Person> people = personRepository.findAll();
+        assertThat(people).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPassIsRequired() throws Exception {
+        int databaseSizeBeforeTest = personRepository.findAll().size();
+        // set the field null
+        person.setPass(null);
+
+        // Create the Person, which fails.
+
+        restPersonMockMvc.perform(post("/api/people")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(person)))
+                .andExpect(status().isBadRequest());
+
+        List<Person> people = personRepository.findAll();
+        assertThat(people).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPeople() throws Exception {
         // Initialize the database
         personRepository.saveAndFlush(person);
@@ -154,7 +198,9 @@ public class PersonResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(person.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-                .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())));
+                .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())))
+                .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN.toString())))
+                .andExpect(jsonPath("$.[*].pass").value(hasItem(DEFAULT_PASS.toString())));
     }
 
     @Test
@@ -169,7 +215,9 @@ public class PersonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(person.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME.toString()));
+            .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME.toString()))
+            .andExpect(jsonPath("$.login").value(DEFAULT_LOGIN.toString()))
+            .andExpect(jsonPath("$.pass").value(DEFAULT_PASS.toString()));
     }
 
     @Test
@@ -191,7 +239,9 @@ public class PersonResourceIntTest {
         Person updatedPerson = personRepository.findOne(person.getId());
         updatedPerson
                 .name(UPDATED_NAME)
-                .surname(UPDATED_SURNAME);
+                .surname(UPDATED_SURNAME)
+                .login(UPDATED_LOGIN)
+                .pass(UPDATED_PASS);
 
         restPersonMockMvc.perform(put("/api/people")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -204,6 +254,8 @@ public class PersonResourceIntTest {
         Person testPerson = people.get(people.size() - 1);
         assertThat(testPerson.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testPerson.getSurname()).isEqualTo(UPDATED_SURNAME);
+        assertThat(testPerson.getLogin()).isEqualTo(UPDATED_LOGIN);
+        assertThat(testPerson.getPass()).isEqualTo(UPDATED_PASS);
     }
 
     @Test

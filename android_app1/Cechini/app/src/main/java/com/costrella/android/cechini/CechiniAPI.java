@@ -24,4 +24,7 @@ public interface CechiniAPI {
 
     @POST("raports")
     Call<Raport> createRaport(@Body Raport raport);
+
+    @POST("loginPerson")
+    Call<Person> loginPerson(@Body Person person);
 }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.costrella.android.cechini.login.LoginService;
 import com.costrella.android.cechini.model.Person;
 import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Store;
@@ -51,12 +52,15 @@ import retrofit2.Response;
 public class Main extends AppCompatActivity implements View.OnClickListener{
 
     private EditText value;
+    private EditText login;
+    private EditText pass;
     private Button btn;
     private Button galleryBtn;
     private ProgressBar pb;
     Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 1;
     private CechiniService cechiniService;
+    private LoginService loginService;
     Store store = null;
     Person person = null;
 
@@ -177,6 +181,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         cechiniService = CechiniService.getInstance();
         setContentView(R.layout.home_layout);
         value=(EditText)findViewById(R.id.editText1);
+        login=(EditText)findViewById(R.id.login);
+        pass=(EditText)findViewById(R.id.pass);
         btn=(Button)findViewById(R.id.button1);
         galleryBtn=(Button)findViewById(R.id.galleryBtn);
         pb=(ProgressBar)findViewById(R.id.progressBar1);
@@ -219,15 +225,21 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
     public void onClick(View v) {
         // TODO Auto-generated method stub
-//        if(value.getText().toString().length()<1){
-//
-//            // out of range
-//            Toast.makeText(this, "please enter something", Toast.LENGTH_LONG).show();
-//        }else{
+        if(login.getText().toString().length()<1 || pass.getText().toString().length()<1){
+            // out of range
+            Toast.makeText(this, "wypelnil login i haslo !", Toast.LENGTH_LONG).show();
+        }else{
+            loginService = LoginService.getInstance();
+            loginService.doLogin(getApplicationContext(), login.getText().toString(), pass.getText().toString());
+        }
 //            pb.setVisibility(View.VISIBLE);
 //            execute();
 //            new MyAsyncTask().execute(value.getText().toString());
-        createRaport();
+//        createRaport();
+
+//        loginService.doLogin(getApplicationContext(), );
+
+
 //        }
 
 

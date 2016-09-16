@@ -18,6 +18,8 @@
             },
             "name": "Name",
             "surname": "Surname",
+            "login": "Login",
+            "pass": "Pass",
             "store": "Store",
             "raport": "Raport"
         }

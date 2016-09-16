@@ -29,6 +29,14 @@
                 <constraints nullable="false" />
             </column>
             
+            <column name="login" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            
+            <column name="pass" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

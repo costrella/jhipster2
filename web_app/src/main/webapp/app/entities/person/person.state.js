@@ -126,6 +126,8 @@
                             return {
                                 name: null,
                                 surname: null,
+                                login: null,
+                                pass: null,
                                 id: null
                             };
                         }
