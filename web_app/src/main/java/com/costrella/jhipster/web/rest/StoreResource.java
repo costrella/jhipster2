@@ -31,7 +31,7 @@ import java.util.Optional;
 public class StoreResource {
 
     private final Logger log = LoggerFactory.getLogger(StoreResource.class);
-        
+
     @Inject
     private StoreRepository storeRepository;
 
@@ -120,6 +120,21 @@ public class StoreResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/personStores/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Store>> getPersonStores(@PathVariable Long id) {
+        log.debug("REST request to get personStores : {}", id);
+        List<Store> stores = storeRepository.getPersonStores(id);
+        return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+//        return Optional.ofNullable(stores)
+//            .map(result -> new ResponseEntity<>(
+//                result,
+//                HttpStatus.OK))
+//            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
+    }
     /**
      * DELETE  /stores/:id : delete the "id" store.
      *

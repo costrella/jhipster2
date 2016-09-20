@@ -24,7 +24,7 @@ public class LoginService {
         return instance;
     }
 
-    private Person person;
+    private Person person; //zalogowana osoba
     private CechiniService cechiniService;
 
     public Person getPerson() {
