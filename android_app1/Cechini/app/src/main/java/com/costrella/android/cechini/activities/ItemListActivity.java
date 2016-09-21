@@ -44,11 +44,23 @@ public class ItemListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     private CechiniService cechiniService;
     private LoginService loginService;
+    private Long idPerson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                idPerson= null;
+            } else {
+                idPerson= extras.getLong("STRING_I_NEED");
+            }
+        } else {
+            idPerson= (Long) savedInstanceState.getSerializable("STRING_I_NEED");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,7 +91,7 @@ public class ItemListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
         cechiniService = CechiniService.getInstance();
         loginService = LoginService.getInstance();
-        Call<List<Store>> call = cechiniService.getCechiniAPI().getPersonStores("1001");
+        Call<List<Store>> call = cechiniService.getCechiniAPI().getPersonStores(idPerson.toString());
         call.enqueue(new Callback<List<Store>>() {
             @Override
             public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
