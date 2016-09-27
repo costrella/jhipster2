@@ -35,6 +35,10 @@
                 {{vm.raport.foto3ContentType}}, {{vm.byteSize(vm.raport.foto3)}}
             </div>
         </dd>
+        <dt><span translate="jhipsterApp.raport.date">Date</span></dt>
+        <dd>
+            <span>{{vm.raport.date | date:'mediumDate'}}</span>
+        </dd>
         <dt><span translate="jhipsterApp.raport.person">Person</span></dt>
         <dd>
             <a ui-sref="person-detail({id:vm.raport.person.id})">{{vm.raport.person.surname}}</a>

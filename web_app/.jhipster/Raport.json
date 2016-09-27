@@ -42,6 +42,10 @@
             "fieldName": "foto3",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
         }
     ],
     "changelogDate": "20160831181602",

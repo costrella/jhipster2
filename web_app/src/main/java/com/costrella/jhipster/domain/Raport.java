@@ -4,6 +4,7 @@ package com.costrella.jhipster.domain;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -43,6 +44,9 @@ public class Raport implements Serializable {
 
     @Column(name = "foto_3_content_type")
     private String foto3ContentType;
+
+    @Column(name = "date")
+    private LocalDate date;
 
     @ManyToOne
     @NotNull
@@ -151,6 +155,19 @@ public class Raport implements Serializable {
         this.foto3ContentType = foto3ContentType;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public Raport date(LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -208,6 +225,7 @@ public class Raport implements Serializable {
             ", foto2ContentType='" + foto2ContentType + "'" +
             ", foto3='" + foto3 + "'" +
             ", foto3ContentType='" + foto3ContentType + "'" +
+            ", date='" + date + "'" +
             '}';
     }
 }

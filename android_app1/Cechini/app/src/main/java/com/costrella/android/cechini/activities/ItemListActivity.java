@@ -20,6 +20,7 @@ import com.costrella.android.cechini.activities.dummy.DummyContent;
 import com.costrella.android.cechini.login.LoginService;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.PersonService;
 import com.costrella.android.cechini.services.StoreService;
 
 import java.util.List;
@@ -92,7 +93,7 @@ public class ItemListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
         cechiniService = CechiniService.getInstance();
         loginService = LoginService.getInstance();
-        Call<List<Store>> call = cechiniService.getCechiniAPI().getPersonStores(idPerson.toString());
+        Call<List<Store>> call = cechiniService.getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
         call.enqueue(new Callback<List<Store>>() {
             @Override
             public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {

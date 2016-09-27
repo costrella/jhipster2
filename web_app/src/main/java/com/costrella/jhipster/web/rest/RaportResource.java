@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ import java.util.Optional;
 public class RaportResource {
 
     private final Logger log = LoggerFactory.getLogger(RaportResource.class);
-        
+
     @Inject
     private RaportRepository raportRepository;
 
@@ -51,6 +52,7 @@ public class RaportResource {
         if (raport.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("raport", "idexists", "A new raport cannot already have an ID")).body(null);
         }
+        raport.setDate(LocalDate.now());
         Raport result = raportRepository.save(raport);
         return ResponseEntity.created(new URI("/api/raports/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("raport", result.getId().toString()))

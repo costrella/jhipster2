@@ -138,7 +138,11 @@ public class RaportActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Raport> call, Response<Raport> response) {
                 int code = response.code();
-                Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
+                if(code == 201){
+                    Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+                }
                 finish();
             }
 

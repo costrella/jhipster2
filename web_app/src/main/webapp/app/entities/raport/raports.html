@@ -23,6 +23,7 @@
                     <th jh-sort-by="foto1"><span translate="jhipsterApp.raport.foto1">Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="foto2"><span translate="jhipsterApp.raport.foto2">Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="foto3"><span translate="jhipsterApp.raport.foto3">Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="date"><span translate="jhipsterApp.raport.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="person.surname"><span translate="jhipsterApp.raport.person">Person</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="store.name"><span translate="jhipsterApp.raport.store">Store</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
@@ -50,6 +51,7 @@
                         </a>
                         <span ng-if="raport.foto3">{{raport.foto3ContentType}}, {{vm.byteSize(raport.foto3)}}</span>
                     </td>
+                        <td>{{raport.date | date:'mediumDate'}}</td>
                     <td>
                         <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
                     </td>

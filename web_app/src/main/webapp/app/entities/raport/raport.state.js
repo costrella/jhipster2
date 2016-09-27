@@ -131,6 +131,7 @@
                                 foto2ContentType: null,
                                 foto3: null,
                                 foto3ContentType: null,
+                                date: null,
                                 id: null
                             };
                         }
