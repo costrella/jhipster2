@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Person;
 import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.PersonService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,6 +212,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     int code = response.code();
                     if (code == 201) {
                         person = response.body();
+                        PersonService.PERSON = person;
                         goToItemList(person);
 
                     } else {

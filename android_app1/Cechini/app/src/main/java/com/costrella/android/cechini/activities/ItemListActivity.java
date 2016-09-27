@@ -20,6 +20,7 @@ import com.costrella.android.cechini.activities.dummy.DummyContent;
 import com.costrella.android.cechini.login.LoginService;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.StoreService;
 
 import java.util.List;
 
@@ -149,6 +150,7 @@ public class ItemListActivity extends AppCompatActivity {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ItemDetailActivity.class);
                         intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
+                        StoreService.STORE = holder.mItem;
 
                         context.startActivity(intent);
                     }
