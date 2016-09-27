@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +42,9 @@ public class Entitytest1ResourceIntTest {
     private static final String UPDATED_TEST_1 = "BBBBB";
     private static final String DEFAULT_STRING_123 = "AAAAA";
     private static final String UPDATED_STRING_123 = "BBBBB";
+
+    private static final LocalDate DEFAULT_DATA_1 = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATA_1 = LocalDate.now(ZoneId.systemDefault());
 
     @Inject
     private Entitytest1Repository entitytest1Repository;
@@ -77,7 +82,8 @@ public class Entitytest1ResourceIntTest {
         Entitytest1 entitytest1 = new Entitytest1();
         entitytest1 = new Entitytest1()
                 .test1(DEFAULT_TEST_1)
-                .string123(DEFAULT_STRING_123);
+                .string123(DEFAULT_STRING_123)
+                .data1(DEFAULT_DATA_1);
         return entitytest1;
     }
 
@@ -104,6 +110,7 @@ public class Entitytest1ResourceIntTest {
         Entitytest1 testEntitytest1 = entitytest1S.get(entitytest1S.size() - 1);
         assertThat(testEntitytest1.getTest1()).isEqualTo(DEFAULT_TEST_1);
         assertThat(testEntitytest1.getString123()).isEqualTo(DEFAULT_STRING_123);
+        assertThat(testEntitytest1.getData1()).isEqualTo(DEFAULT_DATA_1);
     }
 
     @Test
@@ -118,7 +125,8 @@ public class Entitytest1ResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(entitytest1.getId().intValue())))
                 .andExpect(jsonPath("$.[*].test1").value(hasItem(DEFAULT_TEST_1.toString())))
-                .andExpect(jsonPath("$.[*].string123").value(hasItem(DEFAULT_STRING_123.toString())));
+                .andExpect(jsonPath("$.[*].string123").value(hasItem(DEFAULT_STRING_123.toString())))
+                .andExpect(jsonPath("$.[*].data1").value(hasItem(DEFAULT_DATA_1.toString())));
     }
 
     @Test
@@ -133,7 +141,8 @@ public class Entitytest1ResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(entitytest1.getId().intValue()))
             .andExpect(jsonPath("$.test1").value(DEFAULT_TEST_1.toString()))
-            .andExpect(jsonPath("$.string123").value(DEFAULT_STRING_123.toString()));
+            .andExpect(jsonPath("$.string123").value(DEFAULT_STRING_123.toString()))
+            .andExpect(jsonPath("$.data1").value(DEFAULT_DATA_1.toString()));
     }
 
     @Test
@@ -155,7 +164,8 @@ public class Entitytest1ResourceIntTest {
         Entitytest1 updatedEntitytest1 = entitytest1Repository.findOne(entitytest1.getId());
         updatedEntitytest1
                 .test1(UPDATED_TEST_1)
-                .string123(UPDATED_STRING_123);
+                .string123(UPDATED_STRING_123)
+                .data1(UPDATED_DATA_1);
 
         restEntitytest1MockMvc.perform(put("/api/entitytest-1-s")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -168,6 +178,7 @@ public class Entitytest1ResourceIntTest {
         Entitytest1 testEntitytest1 = entitytest1S.get(entitytest1S.size() - 1);
         assertThat(testEntitytest1.getTest1()).isEqualTo(UPDATED_TEST_1);
         assertThat(testEntitytest1.getString123()).isEqualTo(UPDATED_STRING_123);
+        assertThat(testEntitytest1.getData1()).isEqualTo(UPDATED_DATA_1);
     }
 
     @Test

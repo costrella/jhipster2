@@ -9,6 +9,10 @@
         {
             "fieldName": "string123",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "data1",
+            "fieldType": "LocalDate"
         }
     ],
     "changelogDate": "20160906181956",

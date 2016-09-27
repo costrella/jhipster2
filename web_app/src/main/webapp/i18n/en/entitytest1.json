@@ -17,7 +17,8 @@
                 "title": "Entitytest 1"
             },
             "test1": "Test 1",
-            "string123": "String 123"
+            "string123": "String 123",
+            "data1": "Data 1"
         }
     }
 }

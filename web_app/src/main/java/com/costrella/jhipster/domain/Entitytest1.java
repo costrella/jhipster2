@@ -3,6 +3,7 @@ package com.costrella.jhipster.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -23,6 +24,9 @@ public class Entitytest1 implements Serializable {
 
     @Column(name = "string_123")
     private String string123;
+
+    @Column(name = "data_1")
+    private LocalDate data1;
 
     public Long getId() {
         return id;
@@ -58,6 +62,19 @@ public class Entitytest1 implements Serializable {
         this.string123 = string123;
     }
 
+    public LocalDate getData1() {
+        return data1;
+    }
+
+    public Entitytest1 data1(LocalDate data1) {
+        this.data1 = data1;
+        return this;
+    }
+
+    public void setData1(LocalDate data1) {
+        this.data1 = data1;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -84,6 +101,7 @@ public class Entitytest1 implements Serializable {
             "id=" + id +
             ", test1='" + test1 + "'" +
             ", string123='" + string123 + "'" +
+            ", data1='" + data1 + "'" +
             '}';
     }
 }

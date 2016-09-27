@@ -25,6 +25,16 @@
                     ng-model="vm.entitytest1.string123"
                      />
         </div>
+        <div class="form-group">
+            <label class="control-label" translate="jhipsterApp.entitytest1.data1" for="field_data1">Data 1</label>
+                <div class="input-group">
+                    <input id="field_data1" type="text" class="form-control" name="data1" uib-datepicker-popup="{{dateformat}}" ng-model="vm.entitytest1.data1" is-open="vm.datePickerOpenStatus.data1"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('data1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
 
     </div>
     <div class="modal-footer">

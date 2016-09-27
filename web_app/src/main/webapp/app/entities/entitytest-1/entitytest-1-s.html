@@ -21,6 +21,7 @@
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="jhipsterApp.entitytest1.test1">Test 1</span></th>
                     <th><span translate="jhipsterApp.entitytest1.string123">String 123</span></th>
+                    <th><span translate="jhipsterApp.entitytest1.data1">Data 1</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -29,6 +30,7 @@
                     <td><a ui-sref="entitytest-1-detail({id:entitytest1.id})">{{entitytest1.id}}</a></td>
                     <td>{{entitytest1.test1}}</td>
                     <td>{{entitytest1.string123}}</td>
+                        <td>{{entitytest1.data1 | date:'mediumDate'}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

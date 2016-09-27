@@ -67,7 +67,7 @@ class Entitytest1GatlingTest extends Simulation {
             .exec(http("Create new entitytest1")
             .post("/api/entitytest-1-s")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "test1":"SAMPLE_TEXT", "string123":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "test1":"SAMPLE_TEXT", "string123":"SAMPLE_TEXT", "data1":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_entitytest1_url"))).exitHereIfFailed
             .pause(10)
@@ -83,9 +83,9 @@ class Entitytest1GatlingTest extends Simulation {
             .pause(10)
         }
 
-    val users = scenario("Users").exec(scn)
+    val userPersons = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(100) over (1 minutes))
+        userPersons.inject(rampUsers(100) over (1 minutes))
     ).protocols(httpConf)
 }

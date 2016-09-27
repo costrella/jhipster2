@@ -106,6 +106,7 @@
                             return {
                                 test1: null,
                                 string123: null,
+                                data1: null,
                                 id: null
                             };
                         }
