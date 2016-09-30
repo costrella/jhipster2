@@ -201,6 +201,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             personRequst.setName(email);
             personRequst.setSurname(email);
 
+            //FIXME FOR TESTS
+
+
+
+
             final LoginActivity _this = this;
 
             cechiniService = CechiniService.getInstance();

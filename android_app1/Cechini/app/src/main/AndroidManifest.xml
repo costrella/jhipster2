@@ -32,7 +32,7 @@
         <activity
             android:name=".activities.ItemListActivity"
             android:label="@string/title_item_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ItemDetailActivity"
             android:label="@string/title_item_detail"
@@ -42,7 +42,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.costrella.android.cechini.activities.ItemListActivity" />
         </activity>
-        <activity android:name=".activities.RaportActivity"></activity>
+        <activity android:name=".activities.RaportActivity" />
+        <activity
+            android:name=".activities.TrasowkaActivity"
+            android:label="@string/title_activity_trasowka"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
