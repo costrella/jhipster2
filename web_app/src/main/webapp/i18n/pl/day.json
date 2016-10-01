@@ -1,0 +1,25 @@
+{
+    "jhipsterApp": {
+        "day" : {
+            "home": {
+                "title": "Days",
+                "createLabel": "Dodaj Day",
+                "createOrEditLabel": "Dodaj lub edytuj: Day",
+                "search": "Search for Day"
+            },
+            "created": "A new Day is created with identifier {{ param }}",
+            "updated": "A Day is updated with identifier {{ param }}",
+            "deleted": "A Day is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Day {{ id }}?"
+            },
+            "detail": {
+                "title": "Day"
+            },
+            "name": "Name",
+            "date": "Date",
+            "week": "Week",
+            "store": "Store"
+        }
+    }
+}

@@ -83,9 +83,9 @@ class StoreGatlingTest extends Simulation {
             .pause(10)
         }
 
-    val users = scenario("Users").exec(scn)
+    val userPersons = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(100) over (1 minutes))
+        userPersons.inject(rampUsers(100) over (1 minutes))
     ).protocols(httpConf)
 }

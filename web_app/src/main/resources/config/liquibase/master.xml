@@ -10,8 +10,12 @@
     <include file="classpath:config/liquibase/changelog/20160831181602_added_entity_Raport.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160906181956_added_entity_Entitytest1.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160906182429_added_entity_Entitytest2.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161001103700_added_entity_Week.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161001103951_added_entity_Day.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20160831181410_added_entity_constraints_Store.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160831181602_added_entity_constraints_Raport.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161001103951_added_entity_constraints_Day.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161001103700_added_entity_constraints_Week.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

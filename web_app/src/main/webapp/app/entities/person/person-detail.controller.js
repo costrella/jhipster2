@@ -5,9 +5,9 @@
         .module('jhipsterApp')
         .controller('PersonDetailController', PersonDetailController);
 
-    PersonDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Person', 'Store', 'Raport'];
+    PersonDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Person', 'Store', 'Raport', 'Week'];
 
-    function PersonDetailController($scope, $rootScope, $stateParams, previousState, entity, Person, Store, Raport) {
+    function PersonDetailController($scope, $rootScope, $stateParams, previousState, entity, Person, Store, Raport, Week) {
         var vm = this;
 
         vm.person = entity;

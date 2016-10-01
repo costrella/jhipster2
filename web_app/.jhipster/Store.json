@@ -12,6 +12,12 @@
             "otherEntityName": "raport",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "store"
+        },
+        {
+            "relationshipName": "day",
+            "otherEntityName": "day",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "store"
         }
     ],
     "fields": [

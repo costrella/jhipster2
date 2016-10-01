@@ -32,7 +32,7 @@ public class Person implements Serializable {
 
     @NotNull
     @Size(min = 4)
-    @Column(name = "login", nullable = false, unique = true)
+    @Column(name = "login", nullable = false)
     private String login;
 
     @NotNull
@@ -47,6 +47,10 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private Set<Raport> raports = new HashSet<>();
+
+    @OneToMany(mappedBy = "person")
+    @JsonIgnore
+    private Set<Week> weeks = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -156,6 +160,31 @@ public class Person implements Serializable {
 
     public void setRaports(Set<Raport> raports) {
         this.raports = raports;
+    }
+
+    public Set<Week> getWeeks() {
+        return weeks;
+    }
+
+    public Person weeks(Set<Week> weeks) {
+        this.weeks = weeks;
+        return this;
+    }
+
+    public Person addWeek(Week week) {
+        weeks.add(week);
+        week.setPerson(this);
+        return this;
+    }
+
+    public Person removeWeek(Week week) {
+        weeks.remove(week);
+        week.setPerson(null);
+        return this;
+    }
+
+    public void setWeeks(Set<Week> weeks) {
+        this.weeks = weeks;
     }
 
     @Override

@@ -1,0 +1,70 @@
+<div>
+    <h2 translate="jhipsterApp.week.home.title">Weeks</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="week.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="jhipsterApp.week.home.createLabel">
+                        Create new Week
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="name"><span translate="jhipsterApp.week.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateBefore"><span translate="jhipsterApp.week.dateBefore">Date Before</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateAfter"><span translate="jhipsterApp.week.dateAfter">Date After</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="weekOfYear"><span translate="jhipsterApp.week.weekOfYear">Week Of Year</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="person.surname"><span translate="jhipsterApp.week.person">Person</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="week in vm.weeks track by week.id">
+                    <td><a ui-sref="week-detail({id:week.id})">{{week.id}}</a></td>
+                    <td>{{week.name}}</td>
+                        <td>{{week.dateBefore | date:'mediumDate'}}</td>
+                        <td>{{week.dateAfter | date:'mediumDate'}}</td>
+                    <td>{{week.weekOfYear}}</td>
+                    <td>
+                        <a ui-sref="person-detail({id:week.person.id})">{{week.person.surname}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="week-detail({id:week.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="week.edit({id:week.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="week.delete({id:week.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+    </div>
+    <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>
+</div>

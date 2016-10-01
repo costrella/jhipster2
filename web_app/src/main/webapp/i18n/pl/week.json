@@ -1,0 +1,27 @@
+{
+    "jhipsterApp": {
+        "week" : {
+            "home": {
+                "title": "Weeks",
+                "createLabel": "Dodaj Week",
+                "createOrEditLabel": "Dodaj lub edytuj: Week",
+                "search": "Search for Week"
+            },
+            "created": "A new Week is created with identifier {{ param }}",
+            "updated": "A Week is updated with identifier {{ param }}",
+            "deleted": "A Week is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Week {{ id }}?"
+            },
+            "detail": {
+                "title": "Week"
+            },
+            "name": "Name",
+            "dateBefore": "Date Before",
+            "dateAfter": "Date After",
+            "weekOfYear": "Week Of Year",
+            "day": "Day",
+            "person": "Person"
+        }
+    }
+}

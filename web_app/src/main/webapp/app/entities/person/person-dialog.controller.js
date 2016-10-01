@@ -5,9 +5,9 @@
         .module('jhipsterApp')
         .controller('PersonDialogController', PersonDialogController);
 
-    PersonDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Person', 'Store', 'Raport'];
+    PersonDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Person', 'Store', 'Raport', 'Week'];
 
-    function PersonDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Person, Store, Raport) {
+    function PersonDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Person, Store, Raport, Week) {
         var vm = this;
 
         vm.person = entity;
@@ -15,6 +15,7 @@
         vm.save = save;
         vm.stores = Store.query();
         vm.raports = Raport.query();
+        vm.weeks = Week.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

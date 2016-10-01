@@ -37,6 +37,10 @@ public class Store implements Serializable {
     @JsonIgnore
     private Set<Raport> raports = new HashSet<>();
 
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
+    private Set<Day> days = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -107,6 +111,31 @@ public class Store implements Serializable {
 
     public void setRaports(Set<Raport> raports) {
         this.raports = raports;
+    }
+
+    public Set<Day> getDays() {
+        return days;
+    }
+
+    public Store days(Set<Day> days) {
+        this.days = days;
+        return this;
+    }
+
+    public Store addDay(Day day) {
+        days.add(day);
+        day.setStore(this);
+        return this;
+    }
+
+    public Store removeDay(Day day) {
+        days.remove(day);
+        day.setStore(null);
+        return this;
+    }
+
+    public void setDays(Set<Day> days) {
+        this.days = days;
     }
 
     @Override

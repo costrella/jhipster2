@@ -12,6 +12,12 @@
             "otherEntityName": "raport",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "person"
+        },
+        {
+            "relationshipName": "week",
+            "otherEntityName": "week",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "person"
         }
     ],
     "fields": [

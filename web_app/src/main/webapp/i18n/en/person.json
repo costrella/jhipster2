@@ -21,7 +21,8 @@
             "login": "Login",
             "pass": "Pass",
             "store": "Store",
-            "raport": "Raport"
+            "raport": "Raport",
+            "week": "Week"
         }
     }
 }

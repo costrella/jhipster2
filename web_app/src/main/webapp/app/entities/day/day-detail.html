@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span translate="jhipsterApp.day.detail.title">Day</span> {{vm.day.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="jhipsterApp.day.name">Name</span></dt>
+        <dd>
+            <span>{{vm.day.name}}</span>
+        </dd>
+        <dt><span translate="jhipsterApp.day.date">Date</span></dt>
+        <dd>
+            <span>{{vm.day.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="jhipsterApp.day.week">Week</span></dt>
+        <dd>
+            <a ui-sref="week-detail({id:vm.day.week.id})">{{vm.day.week.name}}</a>
+        </dd>
+        <dt><span translate="jhipsterApp.day.store">Store</span></dt>
+        <dd>
+            <a ui-sref="store-detail({id:vm.day.store.id})">{{vm.day.store.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="day-detail.edit({id:vm.day.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

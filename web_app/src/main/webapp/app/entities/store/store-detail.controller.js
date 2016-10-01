@@ -5,9 +5,9 @@
         .module('jhipsterApp')
         .controller('StoreDetailController', StoreDetailController);
 
-    StoreDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Store', 'Person', 'Raport'];
+    StoreDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Store', 'Person', 'Raport', 'Day'];
 
-    function StoreDetailController($scope, $rootScope, $stateParams, previousState, entity, Store, Person, Raport) {
+    function StoreDetailController($scope, $rootScope, $stateParams, previousState, entity, Store, Person, Raport, Day) {
         var vm = this;
 
         vm.store = entity;

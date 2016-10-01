@@ -19,7 +19,8 @@
             "name": "Name",
             "city": "City",
             "person": "Person",
-            "raport": "Raport"
+            "raport": "Raport",
+            "day": "Day"
         }
     }
 }
