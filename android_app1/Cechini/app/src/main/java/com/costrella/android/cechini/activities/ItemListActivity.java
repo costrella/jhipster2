@@ -48,7 +48,7 @@ public class ItemListActivity extends AppCompatActivity {
     private Long idPerson;
 
     private void goToSection(){
-        Intent intent = new Intent(this, TrasowkaActivity.class);
+        Intent intent = new Intent(this, CalendarActivity.class);
         startActivity(intent);
     }
 
