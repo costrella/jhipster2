@@ -11,18 +11,14 @@ import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.PersonService;
+import com.costrella.android.cechini.util.DateUtil;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
 
-import java.text.DateFormatSymbols;
-import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,22 +45,10 @@ public class CalendarActivity extends AppCompatActivity {
 //        mcv.selectRange();
         mcv.setOnRangeSelectedListener(new OnRangeSelectedListener() {
             @Override
-            public void onRangeSelected(@NonNull MaterialCalendarView widget, @NonNull List<CalendarDay> dates) {
+            public void onRangeSelected(@NonNull MaterialCalendarView widget, final @NonNull List<CalendarDay> dates) {
                 final Week week = new Week();
-                Set<Day> days = new HashSet<>();
-                for (CalendarDay calendarDay : dates) {
-                    Day day = new Day();
-                    day.setDate(calendarDay.getDate());
-                    Calendar calendar = calendarDay.getCalendar();
-                    Locale usersLocale = Locale.getDefault();
-                    DateFormatSymbols dfs = new DateFormatSymbols(usersLocale);
-                    String weekdays[] = dfs.getWeekdays();
-                    int dayName = calendar.get(Calendar.DAY_OF_WEEK);
-                    day.setName(weekdays[dayName]);
-                    days.add(day);
-                }
                 week.setName("Trasowka na: " + dates.size() + " dni");
-                week.setDays(days);
+//                week.setDays(days);
                 week.setPerson(PersonService.PERSON);
                 Call<Week> callWeek = CechiniService.getInstance().getCechiniAPI().createWeek(week);
                 callWeek.enqueue(new Callback<Week>() {
@@ -72,6 +56,35 @@ public class CalendarActivity extends AppCompatActivity {
                     public void onResponse(Call<Week> call, Response<Week> response) {
                         int code = response.code();
                         Toast.makeText(getApplicationContext(), "creating week... " + code, Toast.LENGTH_LONG).show();
+                        if (code == 201) {
+
+                            Week week = response.body();
+//                            final List<Day> days = new ArrayList<Day>();
+                            for (CalendarDay calendarDay : dates) {
+                                Day day = new Day();
+                                day.setDate(calendarDay.getDate());
+                                day.setName(DateUtil.getDayName(calendarDay));
+                                day.setWeek(week);
+//                                days.add(day);
+                                Call<Day> callDays = CechiniService.getInstance().getCechiniAPI().createDay(day);
+                                callDays.enqueue(new Callback<Day>() {
+                                    @Override
+                                    public void onResponse(Call<Day> call, Response<Day> response) {
+                                        int code = response.code();
+                                        if (code == 201) {
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Day> call, Throwable t) {
+                                    }
+                                });
+                            }
+
+                            //
+                        }
+
                     }
 
                     @Override
