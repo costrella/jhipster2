@@ -3,6 +3,7 @@ package com.costrella.jhipster.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Person;
 
+import com.costrella.jhipster.domain.Week;
 import com.costrella.jhipster.repository.PersonRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
 import com.costrella.jhipster.web.rest.util.PaginationUtil;

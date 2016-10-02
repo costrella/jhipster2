@@ -3,6 +3,7 @@ package com.costrella.android.cechini;
 import com.costrella.android.cechini.model.Person;
 import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.model.Week;
 
 import java.util.List;
 
@@ -29,6 +30,9 @@ public interface CechiniAPI {
 
     @POST("raports")
     Call<Raport> createRaport(@Body Raport raport);
+
+    @POST("weeks")
+    Call<Week> createWeek(@Body Week week);
 
     @POST("loginPerson")
     Call<Person> loginPerson(@Body Person person);
