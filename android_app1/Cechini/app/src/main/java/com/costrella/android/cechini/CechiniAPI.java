@@ -26,6 +26,12 @@ public interface CechiniAPI {
     @GET("personStores/{personId}")
     Call<List<Store>> getPersonStores(@Path("personId") String personId);
 
+    @GET("personWeeks/{personId}")
+    Call<List<Week>> getPersonWeeks(@Path("personId") Long personId);
+
+    @GET("weekDays/{weekId}")
+    Call<List<Day>> getWeekDays(@Path("weekId") Long weekId);
+
     @GET("people/{personId}")
     Call<Person> getPerson(@Path("personId") String personId);
 
@@ -37,6 +43,9 @@ public interface CechiniAPI {
 
     @POST("days")
     Call<Day> createDay(@Body Day day);
+
+    @POST("days2")
+    Call <List<Day>> createDay2(@Body List<Day> day);
 
     @POST("daysList")
     Call<List<Day>> createListDay(@Body List<Day> day);

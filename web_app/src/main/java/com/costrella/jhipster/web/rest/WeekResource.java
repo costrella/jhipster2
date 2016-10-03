@@ -1,6 +1,7 @@
 package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.costrella.jhipster.domain.Person;
 import com.costrella.jhipster.domain.Week;
 
 import com.costrella.jhipster.repository.WeekRepository;
@@ -30,7 +31,7 @@ import java.util.Optional;
 public class WeekResource {
 
     private final Logger log = LoggerFactory.getLogger(WeekResource.class);
-        
+
     @Inject
     private WeekRepository weekRepository;
 
@@ -117,6 +118,15 @@ public class WeekResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/personWeeks/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Week>> getPersonWeeks(@PathVariable Long id) {
+        List<Week> weeks = weekRepository.getPersonWeeks(id);
+        return new ResponseEntity<List<Week>>(weeks, HttpStatus.OK);
     }
 
     /**

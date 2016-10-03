@@ -128,12 +128,6 @@ public class StoreResource {
         log.debug("REST request to get personStores : {}", id);
         List<Store> stores = storeRepository.getPersonStores(id);
         return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
-//        return Optional.ofNullable(stores)
-//            .map(result -> new ResponseEntity<>(
-//                result,
-//                HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
     }
     /**
      * DELETE  /stores/:id : delete the "id" store.

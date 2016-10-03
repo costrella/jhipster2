@@ -18,6 +18,8 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,16 +32,57 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        MaterialCalendarView mcv = (MaterialCalendarView) findViewById(R.id.calendarView);
+        final MaterialCalendarView mcv = (MaterialCalendarView) findViewById(R.id.calendarView);
         mcv.state().edit()
                 .setMinimumDate(CalendarDay.from(2016, 9, 1))
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
         mcv.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
+//        mcv.addDecorator(new DayViewFacade().setDaysDisabled(true));
+
+        Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
+//wypelnienie
+//        callPersonWeeks.enqueue(new Callback<List<Week>>() {
+//            @Override
+//            public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
+//                final int code = response.code();
+//                if (code == 200) {
+//                    List<Week> weeks = response.body();
+//                    for(Week week : weeks){
+//                        Call<List<Day>> callWeekDays = CechiniService.getInstance().getCechiniAPI().getWeekDays(week.getId());
+//                        callWeekDays.enqueue(new Callback<List<Day>>() {
+//                            @Override
+//                            public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
+//                                int code = response.code();
+//                                if (code == 200) {
+//                                    List<Day> days = response.body();
+//                                    for(Day day: days){
+//                                        mcv.setDateSelected(day.getDate(), true);
+//                                    }
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<List<Day>> call, Throwable t) {
+//
+//                            }
+//                        });
+//                    }
+//                    //FIXME czy na pewno tutaj?
+//                    Intent intent = new Intent(getApplicationContext(), TrasowkaActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Week>> call, Throwable t) {
+//
+//            }
+//        });
+
         mcv.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-
             }
         });
 //        mcv.selectRange();
@@ -50,6 +93,11 @@ public class CalendarActivity extends AppCompatActivity {
                 week.setName("Trasowka na: " + dates.size() + " dni");
 //                week.setDays(days);
                 week.setPerson(PersonService.PERSON);
+                final HashMap<CalendarDay, Boolean> tmpMap = new HashMap();
+                for (CalendarDay calendarDay : dates) {
+                    tmpMap.put(calendarDay, false);
+                }
+
                 Call<Week> callWeek = CechiniService.getInstance().getCechiniAPI().createWeek(week);
                 callWeek.enqueue(new Callback<Week>() {
                     @Override
@@ -58,31 +106,34 @@ public class CalendarActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "creating week... " + code, Toast.LENGTH_LONG).show();
                         if (code == 201) {
 
-                            Week week = response.body();
-//                            final List<Day> days = new ArrayList<Day>();
-                            for (CalendarDay calendarDay : dates) {
+                            final Week week = response.body();
+                            final List<Day> days = new ArrayList<Day>();
+                            for (final CalendarDay calendarDay : dates) {
                                 Day day = new Day();
                                 day.setDate(calendarDay.getDate());
                                 day.setName(DateUtil.getDayName(calendarDay));
                                 day.setWeek(week);
-//                                days.add(day);
-                                Call<Day> callDays = CechiniService.getInstance().getCechiniAPI().createDay(day);
-                                callDays.enqueue(new Callback<Day>() {
-                                    @Override
-                                    public void onResponse(Call<Day> call, Response<Day> response) {
-                                        int code = response.code();
-                                        if (code == 201) {
+                                days.add(day);
 
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Day> call, Throwable t) {
-                                    }
-                                });
                             }
+                            Call<List<Day>> callDays = CechiniService.getInstance().getCechiniAPI().createDay2(days);
+                            callDays.enqueue(new Callback<List<Day>>() {
+                                @Override
+                                public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
+                                    int code = response.code();
+                                    if (code == 201) {
+                                        Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
+                                    }
+                                }
 
-                            //
+                                @Override
+                                public void onFailure(Call<List<Day>> call, Throwable t) {
+                                    Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                         }
 
                     }

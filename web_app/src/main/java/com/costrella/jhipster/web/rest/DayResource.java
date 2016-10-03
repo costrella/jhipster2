@@ -30,7 +30,7 @@ import java.util.Optional;
 public class DayResource {
 
     private final Logger log = LoggerFactory.getLogger(DayResource.class);
-        
+
     @Inject
     private DayRepository dayRepository;
 
@@ -54,6 +54,26 @@ public class DayResource {
         return ResponseEntity.created(new URI("/api/days/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("day", result.getId().toString()))
             .body(result);
+    }
+
+    @RequestMapping(value = "/days2",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Day>> createDay2(@RequestBody List<Day> days) throws URISyntaxException {
+//        log.debug("REST request to save Day : {}", day);
+//        if (day.getId() != null) {
+//            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("day", "idexists", "A new day cannot already have an ID")).body(null);
+//        }
+        for(Day day: days){
+            Day result = dayRepository.save(day);
+            ResponseEntity.created(new URI("/api/days/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert("day", result.getId().toString()))
+                .body(result);
+        }
+        return ResponseEntity.created(new URI("/api/days/" + ""))
+            .headers(HeaderUtil.createEntityCreationAlert("day", ""))
+            .body(days);
     }
 
     /**
@@ -117,6 +137,17 @@ public class DayResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+    @RequestMapping(value = "/weekDays/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Day>> getWeekDays(@PathVariable Long id) {
+        log.debug("REST request to get personStores : {}", id);
+        List<Day> days = dayRepository.getWeekDays(id);
+        return new ResponseEntity<List<Day>>(days, HttpStatus.OK);
     }
 
     /**
