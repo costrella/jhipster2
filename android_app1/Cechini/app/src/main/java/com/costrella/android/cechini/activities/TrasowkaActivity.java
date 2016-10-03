@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.model.Day;
+import com.costrella.android.cechini.services.DayService;
 
 public class TrasowkaActivity extends AppCompatActivity {
 
@@ -34,11 +36,24 @@ public class TrasowkaActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    public int days;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trasowka);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                days = 0;
+            } else {
+                days = extras.getInt("DAYS");
+            }
+        } else {
+            days = (int) savedInstanceState.getSerializable("DAYS");
+        }
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -115,11 +130,12 @@ public class TrasowkaActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_trasowka, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-//            CalendarView calendarView = (CalendarView) rootView.findViewById(R.id.calendarView);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                calendarView.setSelectedWeekBackgroundColor(getContext().getColor(R.color.colorPrimaryDark));
-//            }
+            int i = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            //sortujemy ?DAYS
+            Day fragmentDay = DayService.DAYS.get(i);
+            textView.setText(fragmentDay.getDate().toString());
+
             return rootView;
         }
     }
@@ -141,13 +157,13 @@ public class TrasowkaActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
 
 
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return days;
         }
 
         @Override

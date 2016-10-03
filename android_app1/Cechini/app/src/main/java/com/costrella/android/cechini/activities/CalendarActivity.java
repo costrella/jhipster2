@@ -1,5 +1,6 @@
 package com.costrella.android.cechini.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.PersonService;
 import com.costrella.android.cechini.util.DateUtil;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -123,6 +125,24 @@ public class CalendarActivity extends AppCompatActivity {
                                     int code = response.code();
                                     if (code == 201) {
                                         Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                                        Call<List<Day>> callDaysWeek = CechiniService.getInstance().getCechiniAPI().getWeekDays(week.getId());
+                                        callDaysWeek.enqueue(new Callback<List<Day>>() {
+                                            @Override
+                                            public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
+                                                int code = response.code();
+                                                if (code == 200) {
+                                                    Intent intent = new Intent(getApplicationContext(), TrasowkaActivity.class);
+                                                    intent.putExtra("DAYS", response.body().size());
+                                                    DayService.DAYS.addAll(response.body());
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<List<Day>> call, Throwable t) {
+
+                                            }
+                                        });
                                     }else {
                                         Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
                                     }
