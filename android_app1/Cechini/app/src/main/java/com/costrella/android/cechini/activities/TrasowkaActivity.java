@@ -1,6 +1,9 @@
 package com.costrella.android.cechini.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -8,7 +11,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +22,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.activities.dummy.DummyContent;
 import com.costrella.android.cechini.model.Day;
+import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
+import com.costrella.android.cechini.services.PersonService;
+import com.costrella.android.cechini.services.StoreService;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TrasowkaActivity extends AppCompatActivity {
 
@@ -134,9 +151,97 @@ public class TrasowkaActivity extends AppCompatActivity {
 
             //sortujemy ?DAYS
             Day fragmentDay = DayService.DAYS.get(i);
-            textView.setText(fragmentDay.getDate().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+            String date = sdf.format(fragmentDay.getDate());
+            textView.setText(date);
+
+            View recyclerView= rootView.findViewById(R.id.rv);
+//            View recyclerView = findViewById(R.id.item_list);
+//            assert recyclerView != null;
+            setupRecyclerView((RecyclerView) recyclerView);
 
             return rootView;
+        }
+
+        private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
+            Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+            call.enqueue(new Callback<List<Store>>() {
+                @Override
+                public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                    DummyContent.ITEMS.clear();
+                    List<Store> list = response.body();
+                    for (Store s : list) {
+                        DummyContent.addItem(s);
+                    }
+                    recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+                }
+
+                @Override
+                public void onFailure(Call<List<Store>> call, Throwable t) {
+                    Log.e("s", "f");
+                }
+            });
+
+        }
+
+        public class SimpleItemRecyclerViewAdapter
+                extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+
+            private final List<Store> mValues;
+
+            public SimpleItemRecyclerViewAdapter(List<Store> items) {
+                mValues = items;
+            }
+
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_list_content, parent, false);
+                return new ViewHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(final ViewHolder holder, int position) {
+                holder.mItem = mValues.get(position);
+                holder.mIdView.setText(mValues.get(position).getName());
+                holder.mContentView.setText(mValues.get(position).getCity());
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, ItemDetailActivity.class);
+                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
+                        StoreService.STORE = holder.mItem;
+
+                        context.startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public int getItemCount() {
+                return mValues.size();
+            }
+
+            public class ViewHolder extends RecyclerView.ViewHolder {
+                public final View mView;
+                public final TextView mIdView;
+                public final TextView mContentView;
+                public Store mItem;
+
+                public ViewHolder(View view) {
+                    super(view);
+                    mView = view;
+                    mIdView = (TextView) view.findViewById(R.id.id);
+                    mContentView = (TextView) view.findViewById(R.id.content);
+                }
+
+                @Override
+                public String toString() {
+                    return super.toString() + " '" + mContentView.getText() + "'";
+                }
+            }
         }
     }
 
