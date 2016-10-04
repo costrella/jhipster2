@@ -15,6 +15,8 @@ public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    boolean selected = false;
+
     private Long id;
 
     private String name;
@@ -40,6 +42,14 @@ public class Store implements Serializable {
     public Store name(String name) {
         this.name = name;
         return this;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public void setName(String name) {

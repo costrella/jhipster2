@@ -1,7 +1,5 @@
 package com.costrella.android.cechini.activities;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.activities.dummy.DummyContent;
@@ -28,7 +28,6 @@ import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.PersonService;
-import com.costrella.android.cechini.services.StoreService;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -196,27 +195,36 @@ public class TrasowkaActivity extends AppCompatActivity {
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_list_content, parent, false);
+                        .inflate(R.layout.item_list_content_day, parent, false);
                 return new ViewHolder(view);
             }
 
             @Override
             public void onBindViewHolder(final ViewHolder holder, int position) {
                 holder.mItem = mValues.get(position);
-                holder.mIdView.setText(mValues.get(position).getName());
-                holder.mContentView.setText(mValues.get(position).getCity());
-
-                holder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
+                holder.checkBox.setText(mValues.get(position).getName());
+                holder.checkBox.setOnClickListener( new View.OnClickListener() {
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, ItemDetailActivity.class);
-                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
-                        StoreService.STORE = holder.mItem;
-
-                        context.startActivity(intent);
+                        CheckBox cb = (CheckBox) v ;
+                        Store store = holder.mItem;
+                        Toast.makeText(getContext(),
+                                "Clicked on Checkbox: " + cb.getText() +
+                                        " is " + cb.isChecked(),
+                                Toast.LENGTH_LONG).show();
+                        store.setSelected(cb.isChecked());
                     }
                 });
+//                holder.mView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Context context = v.getContext();
+//                        Intent intent = new Intent(context, ItemDetailActivity.class);
+//                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
+//                        StoreService.STORE = holder.mItem;
+//
+//                        context.startActivity(intent);
+//                    }
+//                });
             }
 
             @Override
@@ -228,6 +236,7 @@ public class TrasowkaActivity extends AppCompatActivity {
                 public final View mView;
                 public final TextView mIdView;
                 public final TextView mContentView;
+                public final CheckBox checkBox;
                 public Store mItem;
 
                 public ViewHolder(View view) {
@@ -235,6 +244,7 @@ public class TrasowkaActivity extends AppCompatActivity {
                     mView = view;
                     mIdView = (TextView) view.findViewById(R.id.id);
                     mContentView = (TextView) view.findViewById(R.id.content);
+                    checkBox = (CheckBox) view.findViewById(R.id.checkBox);
                 }
 
                 @Override
