@@ -1,9 +1,12 @@
 package com.costrella.android.cechini.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.costrella.android.cechini.Constants;
@@ -93,76 +96,88 @@ public class CalendarActivity extends AppCompatActivity {
             public void onRangeSelected(@NonNull MaterialCalendarView widget, final @NonNull List<CalendarDay> dates) {
                 final Week week = new Week();
                 week.setName("Trasowka na: " + dates.size() + " dni");
-//                week.setDays(days);
-                week.setPerson(PersonService.PERSON);
-                final HashMap<CalendarDay, Boolean> tmpMap = new HashMap();
-                for (CalendarDay calendarDay : dates) {
-                    tmpMap.put(calendarDay, false);
-                }
 
-                Call<Week> callWeek = CechiniService.getInstance().getCechiniAPI().createWeek(week);
-                callWeek.enqueue(new Callback<Week>() {
-                    @Override
-                    public void onResponse(Call<Week> call, Response<Week> response) {
-                        int code = response.code();
-                        Toast.makeText(getApplicationContext(), "creating week... " + code, Toast.LENGTH_LONG).show();
-                        if (code == 201) {
+                Snackbar snackbar = Snackbar
+                        .make(widget, "Czy utworzyć trasówkę?", Snackbar.LENGTH_LONG)
+                        .setAction("TAK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                week.setPerson(PersonService.PERSON);
+                                final HashMap<CalendarDay, Boolean> tmpMap = new HashMap();
+                                for (CalendarDay calendarDay : dates) {
+                                    tmpMap.put(calendarDay, false);
+                                }
 
-                            final Week week = response.body();
-                            final List<Day> days = new ArrayList<Day>();
-                            for (final CalendarDay calendarDay : dates) {
-                                Day day = new Day();
-                                day.setDate(calendarDay.getDate());
-                                day.setName(DateUtil.getDayName(calendarDay));
-                                day.setWeek(week);
-                                days.add(day);
+                                Call<Week> callWeek = CechiniService.getInstance().getCechiniAPI().createWeek(week);
+                                callWeek.enqueue(new Callback<Week>() {
+                                    @Override
+                                    public void onResponse(Call<Week> call, Response<Week> response) {
+                                        int code = response.code();
+                                        Toast.makeText(getApplicationContext(), "creating week... " + code, Toast.LENGTH_LONG).show();
+                                        if (code == 201) {
+
+                                            final Week week = response.body();
+                                            final List<Day> days = new ArrayList<Day>();
+                                            for (final CalendarDay calendarDay : dates) {
+                                                Day day = new Day();
+                                                day.setDate(calendarDay.getDate());
+                                                day.setName(DateUtil.getDayName(calendarDay));
+                                                day.setWeek(week);
+                                                days.add(day);
+
+                                            }
+                                            Call<List<Day>> callDays = CechiniService.getInstance().getCechiniAPI().createDay2(days);
+                                            callDays.enqueue(new Callback<List<Day>>() {
+                                                @Override
+                                                public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
+                                                    int code = response.code();
+                                                    if (code == 201) {
+                                                        Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                                                        Call<List<Day>> callDaysWeek = CechiniService.getInstance().getCechiniAPI().getWeekDays(week.getId());
+                                                        callDaysWeek.enqueue(new Callback<List<Day>>() {
+                                                            @Override
+                                                            public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
+                                                                int code = response.code();
+                                                                if (code == 200) {
+                                                                    Intent intent = new Intent(getApplicationContext(), TrasowkaActivity.class);
+                                                                    intent.putExtra("DAYS", response.body().size());
+                                                                    DayService.DAYS.addAll(response.body());
+                                                                    startActivity(intent);
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<List<Day>> call, Throwable t) {
+
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<List<Day>> call, Throwable t) {
+                                                    Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Week> call, Throwable t) {
+                                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
+                                    }
+                                });
 
                             }
-                            Call<List<Day>> callDays = CechiniService.getInstance().getCechiniAPI().createDay2(days);
-                            callDays.enqueue(new Callback<List<Day>>() {
-                                @Override
-                                public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
-                                    int code = response.code();
-                                    if (code == 201) {
-                                        Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
-                                        Call<List<Day>> callDaysWeek = CechiniService.getInstance().getCechiniAPI().getWeekDays(week.getId());
-                                        callDaysWeek.enqueue(new Callback<List<Day>>() {
-                                            @Override
-                                            public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
-                                                int code = response.code();
-                                                if (code == 200) {
-                                                    Intent intent = new Intent(getApplicationContext(), TrasowkaActivity.class);
-                                                    intent.putExtra("DAYS", response.body().size());
-                                                    DayService.DAYS.addAll(response.body());
-                                                    startActivity(intent);
-                                                }
-                                            }
+                        });
 
-                                            @Override
-                                            public void onFailure(Call<List<Day>> call, Throwable t) {
+                snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
 
-                                            }
-                                        });
-                                    }else {
-                                        Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<List<Day>> call, Throwable t) {
-                                    Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Week> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
-                    }
-                });
 
 //                new AlertDialog.Builder(getApplicationContext())
 //                        .setIcon(android.R.drawable.ic_dialog_alert)

@@ -81,16 +81,6 @@ public class TrasowkaActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
 
@@ -125,7 +115,10 @@ public class TrasowkaActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
+        private String date;
+        public String getDate(){
+            return date;
+        }
         public PlaceholderFragment() {
         }
 
@@ -151,13 +144,25 @@ public class TrasowkaActivity extends AppCompatActivity {
             //sortujemy ?DAYS
             Day fragmentDay = DayService.DAYS.get(i);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-            String date = sdf.format(fragmentDay.getDate());
+            date = sdf.format(fragmentDay.getDate());
             textView.setText(date);
 
             View recyclerView= rootView.findViewById(R.id.rv);
 //            View recyclerView = findViewById(R.id.item_list);
 //            assert recyclerView != null;
             setupRecyclerView((RecyclerView) recyclerView);
+
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+//                    fragmentDay.
+
+                }
+            });
+
 
             return rootView;
         }
