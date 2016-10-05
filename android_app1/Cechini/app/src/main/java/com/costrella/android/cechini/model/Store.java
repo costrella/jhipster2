@@ -10,13 +10,22 @@ import java.util.Set;
 
 /**
  * A Store.
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
+
+/**
+ * A Store.
  */
 public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    boolean selected = false;
-
     private Long id;
 
     private String name;
@@ -26,6 +35,8 @@ public class Store implements Serializable {
     private Person person;
 
     private Set<Raport> raports = new HashSet<>();
+
+    private Set<Day> days = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -42,14 +53,6 @@ public class Store implements Serializable {
     public Store name(String name) {
         this.name = name;
         return this;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 
     public void setName(String name) {
@@ -107,6 +110,30 @@ public class Store implements Serializable {
         this.raports = raports;
     }
 
+    public Set<Day> getDays() {
+        return days;
+    }
+
+    public Store days(Set<Day> days) {
+        this.days = days;
+        return this;
+    }
+
+    public Store addDay(Day day) {
+        days.add(day);
+        day.getStores().add(this);
+        return this;
+    }
+
+    public Store removeDay(Day day) {
+        days.remove(day);
+        day.getStores().remove(this);
+        return this;
+    }
+
+    public void setDays(Set<Day> days) {
+        this.days = days;
+    }
 
     @Override
     public String toString() {

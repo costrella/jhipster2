@@ -16,6 +16,12 @@
         <dd>
             <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
         </dd>
+        <dt><span translate="jhipsterApp.store.day">Day</span></dt>
+        <dd>
+            <span ng-repeat="day in vm.store.days">
+                <a ui-sref="day-detail({id: day.id})">{{day.name}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
     </dl>
 
     <button type="submit"

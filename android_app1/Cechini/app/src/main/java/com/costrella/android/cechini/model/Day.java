@@ -2,6 +2,9 @@ package com.costrella.android.cechini.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * A Day.
@@ -18,7 +21,7 @@ public class Day implements Serializable {
 
     private Week week;
 
-    private Store store;
+    private Set<Store> stores = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -67,19 +70,30 @@ public class Day implements Serializable {
         this.week = week;
     }
 
-    public Store getStore() {
-        return store;
+    public Set<Store> getStores() {
+        return stores;
     }
 
-    public Day store(Store store) {
-        this.store = store;
+    public Day stores(Set<Store> stores) {
+        this.stores = stores;
         return this;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    public Day addStore(Store store) {
+        stores.add(store);
+        store.getDays().add(this);
+        return this;
     }
 
+    public Day removeStore(Store store) {
+        stores.remove(store);
+        store.getDays().remove(this);
+        return this;
+    }
+
+    public void setStores(Set<Store> stores) {
+        this.stores = stores;
+    }
 
     @Override
     public String toString() {

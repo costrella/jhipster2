@@ -14,11 +14,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="week"/>
 
-        <addForeignKeyConstraint baseColumnNames="store_id"
-                                 baseTableName="day"
-                                 constraintName="fk_day_store_id"
+        <addForeignKeyConstraint baseColumnNames="days_id"
+                                 baseTableName="day_store"
+                                 constraintName="fk_day_store_days_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="stores_id"
+                                 baseTableName="day_store"
+                                 constraintName="fk_day_store_stores_id"
                                  referencedColumnNames="id"
                                  referencedTableName="store"/>
-
+        
     </changeSet>
 </databaseChangeLog>

@@ -152,13 +152,13 @@ public class CalendarActivity extends AppCompatActivity {
                                                             }
                                                         });
                                                     } else {
-                                                        Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getApplicationContext(), "BAD1", Toast.LENGTH_LONG).show();
                                                     }
                                                 }
 
                                                 @Override
                                                 public void onFailure(Call<List<Day>> call, Throwable t) {
-                                                    Toast.makeText(getApplicationContext(), "BAD", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(getApplicationContext(), "BAD2", Toast.LENGTH_LONG).show();
                                                 }
                                             });
 

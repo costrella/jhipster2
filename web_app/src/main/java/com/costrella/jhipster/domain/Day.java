@@ -4,6 +4,8 @@ package com.costrella.jhipster.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -28,8 +30,11 @@ public class Day implements Serializable {
     @ManyToOne
     private Week week;
 
-    @ManyToOne
-    private Store store;
+    @ManyToMany
+    @JoinTable(name = "day_store",
+               joinColumns = @JoinColumn(name="days_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="stores_id", referencedColumnName="ID"))
+    private Set<Store> stores = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -78,17 +83,29 @@ public class Day implements Serializable {
         this.week = week;
     }
 
-    public Store getStore() {
-        return store;
+    public Set<Store> getStores() {
+        return stores;
     }
 
-    public Day store(Store store) {
-        this.store = store;
+    public Day stores(Set<Store> stores) {
+        this.stores = stores;
         return this;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    public Day addStore(Store store) {
+        stores.add(store);
+        store.getDays().add(this);
+        return this;
+    }
+
+    public Day removeStore(Store store) {
+        stores.remove(store);
+        store.getDays().remove(this);
+        return this;
+    }
+
+    public void setStores(Set<Store> stores) {
+        this.stores = stores;
     }
 
     @Override

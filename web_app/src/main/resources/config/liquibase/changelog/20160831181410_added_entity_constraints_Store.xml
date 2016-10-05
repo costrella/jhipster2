@@ -14,5 +14,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="person"/>
 
+        <addForeignKeyConstraint baseColumnNames="stores_id"
+                                 baseTableName="store_day"
+                                 constraintName="fk_store_day_stores_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="store"/>
+        <addForeignKeyConstraint baseColumnNames="days_id"
+                                 baseTableName="store_day"
+                                 constraintName="fk_store_day_days_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="day"/>
+        
     </changeSet>
 </databaseChangeLog>

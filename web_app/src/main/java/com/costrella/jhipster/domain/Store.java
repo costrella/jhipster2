@@ -37,8 +37,10 @@ public class Store implements Serializable {
     @JsonIgnore
     private Set<Raport> raports = new HashSet<>();
 
-    @OneToMany(mappedBy = "store")
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "day_store",
+               joinColumns = @JoinColumn(name="stores_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="days_id", referencedColumnName="ID"))
     private Set<Day> days = new HashSet<>();
 
     public Long getId() {
@@ -124,13 +126,13 @@ public class Store implements Serializable {
 
     public Store addDay(Day day) {
         days.add(day);
-        day.setStore(this);
+        day.getStores().add(this);
         return this;
     }
 
     public Store removeDay(Day day) {
         days.remove(day);
-        day.setStore(null);
+        day.getStores().remove(this);
         return this;
     }
 

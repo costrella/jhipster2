@@ -216,7 +216,7 @@ public class TrasowkaActivity extends AppCompatActivity {
                                 "Clicked on Checkbox: " + cb.getText() +
                                         " is " + cb.isChecked(),
                                 Toast.LENGTH_LONG).show();
-                        store.setSelected(cb.isChecked());
+//                        store.setSelected(cb.isChecked());
                     }
                 });
 //                holder.mView.setOnClickListener(new View.OnClickListener() {

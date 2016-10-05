@@ -16,7 +16,9 @@
         {
             "relationshipName": "day",
             "otherEntityName": "day",
-            "relationshipType": "one-to-many",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true,
             "otherEntityRelationshipName": "store"
         }
     ],

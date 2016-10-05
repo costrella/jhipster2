@@ -10,8 +10,10 @@
         {
             "relationshipName": "store",
             "otherEntityName": "store",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "name"
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "day"
         }
     ],
     "fields": [

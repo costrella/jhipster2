@@ -33,12 +33,19 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="store_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
+        
+        <createTable tableName="day_store">
+            <column name="stores_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="days_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="days_id, stores_id" tableName="day_store"/>
         
     </changeSet>
 </databaseChangeLog>

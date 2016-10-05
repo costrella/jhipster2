@@ -18,7 +18,9 @@
         </dd>
         <dt><span translate="jhipsterApp.day.store">Store</span></dt>
         <dd>
-            <a ui-sref="store-detail({id:vm.day.store.id})">{{vm.day.store.name}}</a>
+            <span ng-repeat="store in vm.day.stores">
+                <a ui-sref="store-detail({id: store.id})">{{store.name}}</a>{{$last ? '' : ', '}}
+            </span>
         </dd>
     </dl>
 
