@@ -131,7 +131,7 @@ public class DayResource {
     @Timed
     public ResponseEntity<Day> getDay(@PathVariable Long id) {
         log.debug("REST request to get Day : {}", id);
-        Day day = dayRepository.findOne(id);
+        Day day = dayRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(day)
             .map(result -> new ResponseEntity<>(
                 result,

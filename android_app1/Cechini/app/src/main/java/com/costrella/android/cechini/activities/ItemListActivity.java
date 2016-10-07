@@ -102,6 +102,7 @@ public class ItemListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
                 DummyContent.ITEMS.clear();
                 List<Store> list = response.body();
+                StoreService.STORES_LIST = list;
                 for (Store s : list) {
                     DummyContent.addItem(s);
                 }
