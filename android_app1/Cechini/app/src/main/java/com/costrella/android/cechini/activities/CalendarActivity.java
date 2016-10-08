@@ -146,7 +146,7 @@ public class CalendarActivity extends AppCompatActivity {
                                                             public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
                                                                 int code = response.code();
                                                                 if (code == 200) {
-                                                                    Intent intent = new Intent(getApplicationContext(), TrasowkaActivity.class);
+                                                                    Intent intent = new Intent(getApplicationContext(), DaysActivity.class);
 //                                                                    intent.putExtra("DAYS", response.body().size());
                                                                     DayService.DAYS.addAll(response.body());
                                                                     startActivity(intent);
