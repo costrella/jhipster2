@@ -19,16 +19,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Main" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:label="@string/cechini"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activities.LoginActivity"></activity>
         <activity
             android:name=".activities.ItemListActivity"
             android:label="@string/title_item_list"
@@ -44,12 +35,23 @@
         </activity>
         <activity android:name=".activities.RaportActivity" />
         <activity android:name=".activities.test.FragmentPagerSupport" />
-
         <activity
             android:name=".activities.TrasowkaActivity"
             android:label="@string/title_activity_trasowka"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.CalendarActivity"></activity>
+        <activity android:name=".activities.CalendarActivity" />
+        <activity
+            android:name=".activities.DaysActivity"
+            android:label="@string/cechini"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            >
+        </activity>
+        <activity android:name=".activities.StoresActivity"></activity>
     </application>
 
 </manifest>
