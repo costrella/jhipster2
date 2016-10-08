@@ -7,12 +7,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.fragments.PlaceholderFragment;
+import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
+import com.costrella.android.cechini.services.PersonService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TrasowkaActivity extends AppCompatActivity {
 
@@ -31,21 +41,34 @@ public class TrasowkaActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private List<Store> storeList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trasowka);
+        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+        call.enqueue(new Callback<List<Store>>() {
+            @Override
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                List<Store> list = response.body();
+                storeList = list;
+                setContentView(R.layout.activity_trasowka);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+                final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+                // Create the adapter that will return a fragment for each of the three
+                // primary sections of the activity.
+                mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+                // Set up the ViewPager with the sections adapter.
+                mViewPager = (ViewPager) findViewById(R.id.container);
+                mViewPager.setAdapter(mSectionsPagerAdapter);
+            }
 
-
+            @Override
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.e("s", "f");
+            }
+        });
     }
 
 
@@ -92,7 +115,7 @@ public class TrasowkaActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
 
 
-            return PlaceholderFragment.newInstance(position);
+            return PlaceholderFragment.newInstance(position, storeList);
         }
 
         @Override

@@ -119,6 +119,7 @@ public class FragmentPagerSupport extends FragmentActivity {
             List<String> list = new ArrayList<>();
             list.add("ssdasd");
             list.add("fsdasd");
+
             setListAdapter(new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_list_item_1, list));
         }
@@ -127,5 +128,7 @@ public class FragmentPagerSupport extends FragmentActivity {
         public void onListItemClick(ListView l, View v, int position, long id) {
             Log.i("FragmentList", "Item clicked: " + id);
         }
+
+
     }
 }

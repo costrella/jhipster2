@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.costrella.android.cechini.Constants;
 import com.costrella.android.cechini.R;
-import com.costrella.android.cechini.activities.test.FragmentPagerSupport;
 import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Week;
@@ -147,7 +146,7 @@ public class CalendarActivity extends AppCompatActivity {
                                                             public void onResponse(Call<List<Day>> call, Response<List<Day>> response) {
                                                                 int code = response.code();
                                                                 if (code == 200) {
-                                                                    Intent intent = new Intent(getApplicationContext(), FragmentPagerSupport.class);
+                                                                    Intent intent = new Intent(getApplicationContext(), TrasowkaActivity.class);
 //                                                                    intent.putExtra("DAYS", response.body().size());
                                                                     DayService.DAYS.addAll(response.body());
                                                                     startActivity(intent);

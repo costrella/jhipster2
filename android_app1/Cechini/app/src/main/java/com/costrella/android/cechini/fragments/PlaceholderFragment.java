@@ -43,6 +43,9 @@ public class PlaceholderFragment extends Fragment {
     private String date;
     private RecyclerView.ViewHolder viewHolder;
     public Map<Long, Store> fragmentStoresMap = new HashMap<>();
+    private static List<Store> storeListStatic;
+
+
     //TUTAJ DODAJ LISTE SKLEPOW
     public PlaceholderFragment() {
     }
@@ -56,7 +59,8 @@ public class PlaceholderFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int sectionNumber) {
+    public static PlaceholderFragment newInstance(int sectionNumber, List<Store> storeList) {
+        storeListStatic = storeList;
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -80,7 +84,7 @@ public class PlaceholderFragment extends Fragment {
         date = sdf.format(fragmentDay.getDate());
         textView.setText(date);
         View recyclerView= rootView.findViewById(R.id.rv);
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView2((RecyclerView) recyclerView);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +118,14 @@ public class PlaceholderFragment extends Fragment {
                 Log.e("s", "f");
             }
         });
+
+    }
+
+    private void setupRecyclerView2(@NonNull final RecyclerView recyclerView) {
+
+                recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(storeListStatic));
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
     }
 
