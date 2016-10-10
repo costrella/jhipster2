@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
 
@@ -18,24 +21,19 @@ public class StoresActivity extends ListActivity {
 
     private TextView text;
     private ArrayList<Store> listValues;
+    private ArrayList<Store> listCheckedValues;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores);
         listValues = new ArrayList<>();
+        listCheckedValues = new ArrayList<>();
+        listValues.addAll(StoreService.STORES_LIST);
         StoreAdapter adapter = new StoreAdapter(this, listValues);
 
-        text = (TextView) findViewById(R.id.mainText);
-
-        Store d1 = new Store();
-        d1.setName("store1");
-
-        Store d2 = new Store();
-        d2.setName("store2");
-
-        listValues.add(d1);
-        listValues.add(d2);
+        text = (TextView) findViewById(R.id.storesMainText);
         setListAdapter(adapter);
     }
 
@@ -47,16 +45,26 @@ public class StoresActivity extends ListActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // Get the data item for this position
-            Store day = getItem(position);
+            final Store store = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_layout, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.store_row_layout, parent, false);
             }
             // Lookup view for data population
-            TextView tvName = (TextView) convertView.findViewById(R.id.listText);
+            CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.storeCheckBoxRow);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(b){
+                        listCheckedValues.add(store);
+                    }else {
+                        listCheckedValues.remove(store);
+                    }
+                }
+            });
 //            TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
             // Populate the data into the template view using the data object
-            tvName.setText(day.getName());
+            checkBox.setText(store.getName());
 //            tvHome.setText(day.hometown);
             // Return the completed view to render on screen
             return convertView;

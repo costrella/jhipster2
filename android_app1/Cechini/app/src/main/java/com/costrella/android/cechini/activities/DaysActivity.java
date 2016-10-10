@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Day;
+import com.costrella.android.cechini.services.DayService;
 
 import java.util.ArrayList;
 
@@ -27,20 +28,12 @@ public class DaysActivity extends ListActivity {
         setContentView(R.layout.activity_days);
 
         listValues = new ArrayList<>();
+        listValues.addAll(DayService.DAYS);
 // Create the adapter to convert the array to views
         DayAdapter adapter = new DayAdapter(this, listValues);
 
 
-        text = (TextView) findViewById(R.id.mainText);
-
-        Day d1 = new Day();
-        d1.setName("pon");
-
-        Day d2 = new Day();
-        d2.setName("wt");
-
-        listValues.add(d1);
-        listValues.add(d2);
+        text = (TextView) findViewById(R.id.storesMainText);
 
         // initiate the listadapter
 //        ArrayAdapter<Day> myAdapter = new ArrayAdapter<String>(this,
