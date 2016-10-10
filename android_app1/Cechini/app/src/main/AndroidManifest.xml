@@ -52,7 +52,7 @@
         <activity
             android:name=".activities.DaysActivity"
             android:label="@string/cechini"></activity>
-        <activity android:name=".activities.StoresActivity"></activity>
+        <activity android:name=".activities.StoresActivity" android:label="@string/title_activity_trasowka"></activity>
     </application>
 
 </manifest>

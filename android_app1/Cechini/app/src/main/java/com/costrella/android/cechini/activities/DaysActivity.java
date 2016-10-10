@@ -50,7 +50,7 @@ public class DaysActivity extends ListActivity {
         super.onListItemClick(list, view, position, id);
 
         Day selectedItem = (Day) getListView().getItemAtPosition(position);
-
+        DayService.selectedDay = selectedItem;
         text.setText("You clicked " + selectedItem.getName() + " at position " + position);
 
         Intent intent = new Intent(this, StoresActivity.class);

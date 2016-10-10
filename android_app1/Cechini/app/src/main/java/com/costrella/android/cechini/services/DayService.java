@@ -11,4 +11,5 @@ import java.util.List;
 public class DayService {
 
     public static List<Day> DAYS = new ArrayList<>();
+    public static Day selectedDay;
 }

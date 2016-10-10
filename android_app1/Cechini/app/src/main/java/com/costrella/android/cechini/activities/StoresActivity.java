@@ -3,6 +3,7 @@ package com.costrella.android.cechini.activities;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StoresActivity extends ListActivity {
 
@@ -34,7 +45,40 @@ public class StoresActivity extends ListActivity {
         StoreAdapter adapter = new StoreAdapter(this, listValues);
 
         text = (TextView) findViewById(R.id.storesMainText);
+
+        final Day day = DayService.selectedDay;
+
+        text.setText(day.getName());
+
         setListAdapter(adapter);
+
+        final FloatingActionButton updateDay = (FloatingActionButton) findViewById(R.id.updateDay);
+        updateDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Set<Store> daysSet = new HashSet<Store>(listCheckedValues);
+                day.setStores(daysSet);
+                Call<Day> updateDayCall = CechiniService.getInstance().getCechiniAPI().updateDay(day);
+                updateDayCall.enqueue(new Callback<Day>() {
+                    @Override
+                    public void onResponse(Call<Day> call, Response<Day> response) {
+                        int code = response.code();
+                        if (code == 200) {
+                            Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Day> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            }
+        });
     }
 
     public class StoreAdapter extends ArrayAdapter<Store> {

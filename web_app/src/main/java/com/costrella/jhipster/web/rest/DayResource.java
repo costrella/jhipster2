@@ -100,6 +100,21 @@ public class DayResource {
             .body(result);
     }
 
+    @RequestMapping(value = "/updateDay",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Day> updateDay2(@RequestBody Day day) throws URISyntaxException {
+        log.debug("REST request to update Day : {}", day);
+        if (day.getId() == null) {
+            return createDay(day);
+        }
+        Day result = dayRepository.save(day);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("day", day.getId().toString()))
+            .body(result);
+    }
+
     /**
      * GET  /days : get all the days.
      *

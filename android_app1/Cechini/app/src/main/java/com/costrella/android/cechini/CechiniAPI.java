@@ -44,6 +44,9 @@ public interface CechiniAPI {
     @POST("days")
     Call<Day> createDay(@Body Day day);
 
+    @POST("updateDay")
+    Call<Day> updateDay(@Body Day day);
+
     @POST("days2")
     Call <List<Day>> createDay2(@Body List<Day> day);
 

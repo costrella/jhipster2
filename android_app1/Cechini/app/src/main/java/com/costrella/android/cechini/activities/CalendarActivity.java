@@ -129,7 +129,7 @@ public class CalendarActivity extends AppCompatActivity {
                                                 day.setWeek(week);
                                                 Set<Store> stores = new HashSet<>();
                                                 stores.addAll(StoreService.STORES_LIST);
-                                                day.setStores(stores);
+//                                                day.setStores(stores);
                                                 days.add(day);
 
                                             }
