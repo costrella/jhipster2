@@ -148,6 +148,7 @@ public class CalendarActivity extends AppCompatActivity {
                                                                 if (code == 200) {
                                                                     Intent intent = new Intent(getApplicationContext(), DaysActivity.class);
 //                                                                    intent.putExtra("DAYS", response.body().size());
+                                                                    DayService.DAYS.clear();
                                                                     DayService.DAYS.addAll(response.body());
                                                                     startActivity(intent);
 

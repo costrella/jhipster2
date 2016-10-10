@@ -235,7 +235,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void goToItemList(Person person){
-        Intent intent = new Intent(this, ItemListActivity.class);
+        Intent intent = new Intent(this, WeeksActivity.class);
         Long id = person.getId();
         intent.putExtra("STRING_I_NEED", id);
 //        intent.putExtra("person", (Parcelable) person);
