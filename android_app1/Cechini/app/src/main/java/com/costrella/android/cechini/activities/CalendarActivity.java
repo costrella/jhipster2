@@ -12,12 +12,10 @@ import android.widget.Toast;
 import com.costrella.android.cechini.Constants;
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Day;
-import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.PersonService;
-import com.costrella.android.cechini.services.StoreService;
 import com.costrella.android.cechini.util.DateUtil;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
@@ -27,9 +25,7 @@ import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -127,8 +123,8 @@ public class CalendarActivity extends AppCompatActivity {
                                                 day.setDate(calendarDay.getDate());
                                                 day.setName(DateUtil.getDayName(calendarDay));
                                                 day.setWeek(week);
-                                                Set<Store> stores = new HashSet<>();
-                                                stores.addAll(StoreService.STORES_LIST);
+//                                                Set<Store> stores = new HashSet<>();
+//                                                stores.addAll(StoreService.STORES_LIST);
 //                                                day.setStores(stores);
                                                 days.add(day);
 

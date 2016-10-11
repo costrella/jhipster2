@@ -129,6 +129,16 @@ public class StoreResource {
         List<Store> stores = storeRepository.getPersonStores(id);
         return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
     }
+
+//    @RequestMapping(value = "/dayStores/{id}",
+//        method = RequestMethod.GET,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+//    public ResponseEntity<List<Store>> getDayStores(@PathVariable Long id) {
+//        log.debug("REST request to get dayStores : {}", id);
+//        List<Store> stores = storeRepository.getDayStores(id);
+//        return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+//    }
     /**
      * DELETE  /stores/:id : delete the "id" store.
      *

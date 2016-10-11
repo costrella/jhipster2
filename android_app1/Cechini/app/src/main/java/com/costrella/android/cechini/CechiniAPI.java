@@ -23,6 +23,11 @@ public interface CechiniAPI {
     @GET("stores/{storeId}")
     Call<Store> getStore(@Path("storeId") String storeId);
 
+    @GET("days/{dayId}")
+    Call<Day> getDay(@Path("dayId") Long dayId);
+//    @GET("dayStores/{dayId}")
+//    Call<List<Store>> getDayStores(@Path("dayId") Long dayId);
+
     @GET("personStores/{personId}")
     Call<List<Store>> getPersonStores(@Path("personId") String personId);
 

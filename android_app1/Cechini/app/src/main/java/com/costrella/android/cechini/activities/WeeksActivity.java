@@ -4,6 +4,8 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,12 @@ import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Day;
+import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.PersonService;
+import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,24 +41,51 @@ public class WeeksActivity extends ListActivity {
 
         listValues = new ArrayList<>();
         final WeekAdapter adapter = new WeekAdapter(this, listValues);
-        Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
-        callPersonWeeks.enqueue(new Callback<List<Week>>() {
+
+        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+        call.enqueue(new Callback<List<Store>>() {
             @Override
-            public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                List<Store> list = response.body();
+                StoreService.STORES_LIST.clear();
+                StoreService.STORES_LIST = list;
 
-                final int code = response.code();
-                if (code == 200) {
-                    List<Week> weeks = response.body();
-                    listValues.addAll(weeks);
+                Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
+                callPersonWeeks.enqueue(new Callback<List<Week>>() {
+                    @Override
+                    public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
 
-                    text = (TextView) findViewById(R.id.weeksMainText);
-                    setListAdapter(adapter);
-                }
+                        final int code = response.code();
+                        if (code == 200) {
+                            List<Week> weeks = response.body();
+                            listValues.addAll(weeks);
+
+                            text = (TextView) findViewById(R.id.weeksMainText);
+                            setListAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Week>> call, Throwable t) {
+
+                    }
+                });
+
             }
 
             @Override
-            public void onFailure(Call<List<Week>> call, Throwable t) {
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.e("s", "f");
+            }
+        });
 
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.weeksAddWeek);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -77,7 +108,7 @@ public class WeeksActivity extends ListActivity {
                 int code = response.code();
                 if (code == 200) {
                     DayService.DAYS.addAll(response.body());
-                    Intent intent = new Intent(getApplicationContext(), DaysActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), DaysReviewActivity.class);
                     startActivity(intent);
                 }
             }
@@ -102,7 +133,7 @@ public class WeeksActivity extends ListActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_layout, parent, false);
             }
             TextView tvName = (TextView) convertView.findViewById(R.id.listText);
-            tvName.setText(week.getName());
+            tvName.setText(week.getId() + ", " + week.getName());
             return convertView;
         }
     }
