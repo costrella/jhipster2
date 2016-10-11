@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
-import com.costrella.android.cechini.activities.dummy.DummyContent;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.StoreService;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -29,7 +29,7 @@ public class ItemDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private Store mItem;
+    private Store store;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,18 +42,18 @@ public class ItemDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+//        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        // Load the dummy content specified by the fragment
+        // arguments. In a real-world scenario, use a Loader
+        // to load content from a content provider.
+        store = StoreService.STORE;
 
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getName());
-            }
+        Activity activity = this.getActivity();
+        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+        if (appBarLayout != null) {
+            appBarLayout.setTitle(store.getName());
         }
+//        }
     }
 
     @Override
@@ -62,8 +62,8 @@ public class ItemDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.getCity());
+        if (store != null) {
+            ((TextView) rootView.findViewById(R.id.item_detail)).setText(store.getCity());
         }
 
         return rootView;

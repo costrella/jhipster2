@@ -2,11 +2,13 @@ package com.costrella.android.cechini.activities;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
@@ -14,6 +16,7 @@ import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
+import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -58,24 +61,17 @@ public class StoresInDayActivity extends ListActivity {
             }
         });
 
-//        Call<List<Store>> callDayStores = CechiniService.getInstance().getCechiniAPI().getDayStores(day.getId());
-//        callDayStores.enqueue(new Callback<List<Store>>() {
-//            @Override
-//            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
-//                int code = response.code();
-//                if (code == 200) {
-//                    List<Store> stores = response.body();
-//                    listValues.addAll(stores);
-//                    setListAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Store>> call, Throwable t) {
-//
-//            }
-//        });
+    }
 
+    @Override
+    protected void onListItemClick(ListView list, View view, int position, long id) {
+        super.onListItemClick(list, view, position, id);
+        Store selectedItem = (Store) getListView().getItemAtPosition(position);
+        StoreService.STORE = selectedItem;
+        text.setText("You clicked " + selectedItem.getName() + " at position " + position);
+
+        Intent intent = new Intent(this, ItemDetailActivity.class);
+        startActivity(intent);
     }
 
     public class StoreAdapter extends ArrayAdapter<Store> {
