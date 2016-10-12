@@ -36,6 +36,10 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "visited",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20160831181410",

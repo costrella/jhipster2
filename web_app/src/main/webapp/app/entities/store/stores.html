@@ -21,6 +21,7 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="name"><span translate="jhipsterApp.store.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="city"><span translate="jhipsterApp.store.city">City</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="visited"><span translate="jhipsterApp.store.visited">Visited</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="person.surname"><span translate="jhipsterApp.store.person">Person</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -28,8 +29,19 @@
             <tbody>
                 <tr ng-repeat="store in vm.stores track by store.id">
                     <td><a ui-sref="store-detail({id:store.id})">{{store.id}}</a></td>
-                    <td>{{store.name}}</td>
+                    <td>
+					<div ng-if="!store.visited">
+						<font color="red">{{store.name}}</font>
+					</div>
+					<div ng-if="store.visited">
+						{{store.name}}
+					</div>
+
+					
+					
+					</td>
                     <td>{{store.city}}</td>
+                    <td>{{store.visited}}</td>
                     <td>
                         <a ui-sref="person-detail({id:store.person.id})">{{store.person.surname}}</a>
                     </td>

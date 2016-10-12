@@ -30,6 +30,9 @@ public class Store implements Serializable {
     @Column(name = "city", nullable = false)
     private String city;
 
+    @Column(name = "visited")
+    private Boolean visited;
+
     @ManyToOne
     private Person person;
 
@@ -75,6 +78,19 @@ public class Store implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Boolean isVisited() {
+        return visited;
+    }
+
+    public Store visited(Boolean visited) {
+        this.visited = visited;
+        return this;
+    }
+
+    public void setVisited(Boolean visited) {
+        this.visited = visited;
     }
 
     public Person getPerson() {
@@ -166,6 +182,7 @@ public class Store implements Serializable {
             "id=" + id +
             ", name='" + name + "'" +
             ", city='" + city + "'" +
+            ", visited='" + visited + "'" +
             '}';
     }
 }

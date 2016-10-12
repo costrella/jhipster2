@@ -41,6 +41,9 @@ public class StoreResourceIntTest {
     private static final String DEFAULT_CITY = "AAAAA";
     private static final String UPDATED_CITY = "BBBBB";
 
+    private static final Boolean DEFAULT_VISITED = false;
+    private static final Boolean UPDATED_VISITED = true;
+
     @Inject
     private StoreRepository storeRepository;
 
@@ -77,7 +80,8 @@ public class StoreResourceIntTest {
         Store store = new Store();
         store = new Store()
                 .name(DEFAULT_NAME)
-                .city(DEFAULT_CITY);
+                .city(DEFAULT_CITY)
+                .visited(DEFAULT_VISITED);
         return store;
     }
 
@@ -104,6 +108,7 @@ public class StoreResourceIntTest {
         Store testStore = stores.get(stores.size() - 1);
         assertThat(testStore.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testStore.getCity()).isEqualTo(DEFAULT_CITY);
+        assertThat(testStore.isVisited()).isEqualTo(DEFAULT_VISITED);
     }
 
     @Test
@@ -154,7 +159,8 @@ public class StoreResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(store.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-                .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())));
+                .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
+                .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())));
     }
 
     @Test
@@ -169,7 +175,8 @@ public class StoreResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(store.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()));
+            .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
+            .andExpect(jsonPath("$.visited").value(DEFAULT_VISITED.booleanValue()));
     }
 
     @Test
@@ -191,7 +198,8 @@ public class StoreResourceIntTest {
         Store updatedStore = storeRepository.findOne(store.getId());
         updatedStore
                 .name(UPDATED_NAME)
-                .city(UPDATED_CITY);
+                .city(UPDATED_CITY)
+                .visited(UPDATED_VISITED);
 
         restStoreMockMvc.perform(put("/api/stores")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -204,6 +212,7 @@ public class StoreResourceIntTest {
         Store testStore = stores.get(stores.size() - 1);
         assertThat(testStore.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testStore.getCity()).isEqualTo(UPDATED_CITY);
+        assertThat(testStore.isVisited()).isEqualTo(UPDATED_VISITED);
     }
 
     @Test

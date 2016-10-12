@@ -1,8 +1,10 @@
 package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.costrella.jhipster.domain.Raport;
 import com.costrella.jhipster.domain.Store;
 
+import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.StoreRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
 import com.costrella.jhipster.web.rest.util.PaginationUtil;
@@ -20,6 +22,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,7 +101,33 @@ public class StoreResource {
         log.debug("REST request to get a page of Stores");
         Page<Store> page = storeRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stores");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
+        return new ResponseEntity<>(checVisited(page.getContent()), headers, HttpStatus.OK);
+    }
+
+    private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {
+        return raportDate.getYear() == year && raportDate.getMonth().equals(month);
+    }
+
+    private List<Store> checVisited(List<Store> stores) {
+        LocalDate today = LocalDate.now();
+        Month month = today.getMonth();
+        int year = today.getYear();
+
+        //FIXME pobierac z bazy !
+        for (Store s : stores) {
+            List<Raport> raports = storeRepository.getStoresRaport(s.getId());
+            for (Raport r : raports) {
+                if(!checkMonthAndYear(r.getDate(), month, year)){
+                    s.setName(s.getName() + " -");
+                    s.setVisited(false);
+                }else{
+                    s.setVisited(true);
+                }
+            }
+        }
+
+        return stores;
     }
 
     /**
@@ -139,6 +169,7 @@ public class StoreResource {
 //        List<Store> stores = storeRepository.getDayStores(id);
 //        return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
 //    }
+
     /**
      * DELETE  /stores/:id : delete the "id" store.
      *

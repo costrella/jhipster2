@@ -126,6 +126,7 @@
                             return {
                                 name: null,
                                 city: null,
+                                visited: null,
                                 id: null
                             };
                         }

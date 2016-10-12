@@ -18,6 +18,7 @@
             },
             "name": "Name",
             "city": "City",
+            "visited": "Visited",
             "person": "Person",
             "raport": "Raport",
             "day": "Day"
