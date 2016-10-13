@@ -2,7 +2,6 @@ package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Week;
-
 import com.costrella.jhipster.repository.WeekRepository;
 import com.costrella.jhipster.repository.search.WeekSearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
@@ -25,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * REST controller for managing Week.
@@ -35,7 +34,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class WeekResource {
 
     private final Logger log = LoggerFactory.getLogger(WeekResource.class);
-        
+
     @Inject
     private WeekRepository weekRepository;
 
@@ -129,6 +128,15 @@ public class WeekResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/personWeeks/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Week>> getPersonWeeks(@PathVariable Long id) {
+        List<Week> weeks = weekRepository.getPersonWeeks(id);
+        return new ResponseEntity<List<Week>>(weeks, HttpStatus.OK);
+    }
+
     /**
      * DELETE  /weeks/:id : delete the "id" week.
      *
@@ -150,7 +158,7 @@ public class WeekResource {
      * SEARCH  /_search/weeks?query=:query : search for the week corresponding
      * to the query.
      *
-     * @param query the query of the week search 
+     * @param query the query of the week search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

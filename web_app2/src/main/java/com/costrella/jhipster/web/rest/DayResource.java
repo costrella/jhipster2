@@ -2,7 +2,6 @@ package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Day;
-
 import com.costrella.jhipster.repository.DayRepository;
 import com.costrella.jhipster.repository.search.DaySearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
@@ -22,10 +21,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * REST controller for managing Day.
@@ -35,7 +32,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class DayResource {
 
     private final Logger log = LoggerFactory.getLogger(DayResource.class);
-        
+
     @Inject
     private DayRepository dayRepository;
 
@@ -65,6 +62,26 @@ public class DayResource {
             .body(result);
     }
 
+    @RequestMapping(value = "/days2",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Day>> createDay2(@RequestBody List<Day> days) throws URISyntaxException {
+//        log.debug("REST request to save Day : {}", day);
+//        if (day.getId() != null) {
+//            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("day", "idexists", "A new day cannot already have an ID")).body(null);
+//        }
+        for(Day day: days){
+            Day result = dayRepository.save(day);
+            ResponseEntity.created(new URI("/api/days/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert("day", result.getId().toString()))
+                .body(result);
+        }
+        return ResponseEntity.created(new URI("/api/days/" + ""))
+            .headers(HeaderUtil.createEntityCreationAlert("day", ""))
+            .body(days);
+    }
+
     /**
      * PUT  /days : Updates an existing day.
      *
@@ -85,6 +102,21 @@ public class DayResource {
         }
         Day result = dayRepository.save(day);
         daySearchRepository.save(result);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("day", day.getId().toString()))
+            .body(result);
+    }
+
+    @RequestMapping(value = "/updateDay",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Day> updateDay2(@RequestBody Day day) throws URISyntaxException {
+        log.debug("REST request to update Day : {}", day);
+        if (day.getId() == null) {
+            return createDay(day);
+        }
+        Day result = dayRepository.save(day);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("day", day.getId().toString()))
             .body(result);
@@ -129,6 +161,17 @@ public class DayResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+
+    @RequestMapping(value = "/weekDays/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Day>> getWeekDays(@PathVariable Long id) {
+        log.debug("REST request to get personStores : {}", id);
+        List<Day> days = dayRepository.getWeekDays(id);
+        return new ResponseEntity<List<Day>>(days, HttpStatus.OK);
+    }
+
     /**
      * DELETE  /days/:id : delete the "id" day.
      *
@@ -150,7 +193,7 @@ public class DayResource {
      * SEARCH  /_search/days?query=:query : search for the day corresponding
      * to the query.
      *
-     * @param query the query of the day search 
+     * @param query the query of the day search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

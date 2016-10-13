@@ -84,8 +84,7 @@ public class DayResourceIntTest {
     public static Day createEntity(EntityManager em) {
         Day day = new Day();
         day = new Day()
-                .name(DEFAULT_NAME)
-                .date(DEFAULT_DATE);
+                .name(DEFAULT_NAME);
         return day;
     }
 
@@ -168,8 +167,7 @@ public class DayResourceIntTest {
         // Update the day
         Day updatedDay = dayRepository.findOne(day.getId());
         updatedDay
-                .name(UPDATED_NAME)
-                .date(UPDATED_DATE);
+                .name(UPDATED_NAME);
 
         restDayMockMvc.perform(put("/api/days")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

@@ -1,8 +1,10 @@
 package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.costrella.jhipster.domain.Raport;
 import com.costrella.jhipster.domain.Store;
 
+import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.StoreRepository;
 import com.costrella.jhipster.repository.search.StoreSearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
@@ -21,6 +23,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +40,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class StoreResource {
 
     private final Logger log = LoggerFactory.getLogger(StoreResource.class);
-        
+
     @Inject
     private StoreRepository storeRepository;
 
@@ -107,7 +111,33 @@ public class StoreResource {
         log.debug("REST request to get a page of Stores");
         Page<Store> page = storeRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stores");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
+        return new ResponseEntity<>(checVisited(page.getContent()), headers, HttpStatus.OK);
+    }
+
+    private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {
+        return raportDate.getYear() == year && raportDate.getMonth().equals(month);
+    }
+
+    private List<Store> checVisited(List<Store> stores) {
+        LocalDate today = LocalDate.now();
+        Month month = today.getMonth();
+        int year = today.getYear();
+
+        //FIXME pobierac z bazy !
+        for (Store s : stores) {
+            List<Raport> raports = storeRepository.getStoresRaport(s.getId());
+            for (Raport r : raports) {
+                if(!checkMonthAndYear(r.getDate(), month, year)){
+                    s.setName(s.getName() + " -");
+                    s.setVisited(false);
+                }else{
+                    s.setVisited(true);
+                }
+            }
+        }
+
+        return stores;
     }
 
     /**
@@ -130,6 +160,26 @@ public class StoreResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/personStores/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Store>> getPersonStores(@PathVariable Long id) {
+        log.debug("REST request to get personStores : {}", id);
+        List<Store> stores = storeRepository.getPersonStores(id);
+        return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+    }
+
+//    @RequestMapping(value = "/dayStores/{id}",
+//        method = RequestMethod.GET,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+//    public ResponseEntity<List<Store>> getDayStores(@PathVariable Long id) {
+//        log.debug("REST request to get dayStores : {}", id);
+//        List<Store> stores = storeRepository.getDayStores(id);
+//        return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+//    }
+
     /**
      * DELETE  /stores/:id : delete the "id" store.
      *
@@ -151,7 +201,7 @@ public class StoreResource {
      * SEARCH  /_search/stores?query=:query : search for the store corresponding
      * to the query.
      *
-     * @param query the query of the store search 
+     * @param query the query of the store search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

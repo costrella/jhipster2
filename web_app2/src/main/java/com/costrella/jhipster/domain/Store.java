@@ -33,7 +33,7 @@ public class Store implements Serializable {
     private String city;
 
     @Column(name = "visited")
-    private Boolean visited;
+    private Boolean visited = false;
 
     @ManyToOne
     private Person person;

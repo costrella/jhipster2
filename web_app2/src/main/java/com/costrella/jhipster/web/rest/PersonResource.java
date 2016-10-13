@@ -3,6 +3,7 @@ package com.costrella.jhipster.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Person;
 
+import com.costrella.jhipster.domain.Week;
 import com.costrella.jhipster.repository.PersonRepository;
 import com.costrella.jhipster.repository.search.PersonSearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
@@ -36,7 +37,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class PersonResource {
 
     private final Logger log = LoggerFactory.getLogger(PersonResource.class);
-        
+
     @Inject
     private PersonRepository personRepository;
 
@@ -62,6 +63,35 @@ public class PersonResource {
         Person result = personRepository.save(person);
         personSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/people/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("person", result.getId().toString()))
+            .body(result);
+    }
+
+    @RequestMapping(value = "/loginPerson",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Person> loginPerson(@Valid @RequestBody Person personPost) throws URISyntaxException {
+        log.debug("REST request to login Person : {}", personPost);
+        if (personPost.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "idexists", "A person cannot already have an ID")).body(null);
+        }
+        if(personPost.getLogin() == null){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "loginNPE", "A person have a null LOGIN")).body(null);
+        }
+        if(personPost.getPass() == null){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "passNPE", "A person have a null PASSWORD")).body(null);
+        }
+
+        Person result = personRepository.login(personPost.getLogin());
+        if(result == null){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "personDoesNotExist", "A person does not exist")).body(null);
+        }
+        if(!result.getPass().equals(personPost.getPass())){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "personDoesNotExist", "A person does not exist")).body(null);
+        }
+
+        return ResponseEntity.created(new URI("/api/loginPerson/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("person", result.getId().toString()))
             .body(result);
     }
@@ -151,7 +181,7 @@ public class PersonResource {
      * SEARCH  /_search/people?query=:query : search for the person corresponding
      * to the query.
      *
-     * @param query the query of the person search 
+     * @param query the query of the person search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

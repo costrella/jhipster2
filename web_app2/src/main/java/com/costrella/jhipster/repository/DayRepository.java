@@ -13,6 +13,9 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface DayRepository extends JpaRepository<Day,Long> {
 
+    @Query("SELECT day from Day day where day.week.id = ?1")
+    List<Day> getWeekDays(Long id);
+
     @Query("select distinct day from Day day left join fetch day.stores")
     List<Day> findAllWithEagerRelationships();
 

@@ -11,5 +11,6 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface WeekRepository extends JpaRepository<Week,Long> {
-
+@Query("SELECT week from Week week where week.person.id = ?1")
+    List<Week> getPersonWeeks(Long id);
 }

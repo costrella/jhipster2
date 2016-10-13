@@ -69,7 +69,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**");
+            .antMatchers("/test/**")
+            .antMatchers(HttpMethod.POST, "/api/raports")
+            .antMatchers(HttpMethod.POST, "/api/people")
+            .antMatchers(HttpMethod.POST, "/api/loginPerson")
+            .antMatchers(HttpMethod.POST, "/api/weeks")
+            .antMatchers(HttpMethod.POST, "/api/days")
+            .antMatchers(HttpMethod.POST, "/api/updateDay")
+            .antMatchers(HttpMethod.POST, "/api/days2")
+            .antMatchers(HttpMethod.POST, "/api/entitytest-2-s")
+            .antMatchers(HttpMethod.GET, "/api/personStores/**")
+            .antMatchers(HttpMethod.GET, "/api/personWeeks/**")
+            .antMatchers(HttpMethod.GET, "/api/weekDays/**")
+            .antMatchers(HttpMethod.GET, "/api/stores")
+            .antMatchers(HttpMethod.GET, "/api/stores/**")
+            .antMatchers(HttpMethod.GET, "/api/people")
+            .antMatchers(HttpMethod.GET, "/api/days/**")
+            .antMatchers(HttpMethod.GET, "/api/people/**");
+//            .antMatchers(HttpMethod.GET, "/api/**");
     }
 
     @Override

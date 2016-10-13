@@ -2,7 +2,6 @@ package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Raport;
-
 import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.search.RaportSearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
@@ -21,12 +20,11 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * REST controller for managing Raport.
@@ -36,7 +34,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class RaportResource {
 
     private final Logger log = LoggerFactory.getLogger(RaportResource.class);
-        
+
     @Inject
     private RaportRepository raportRepository;
 
@@ -59,6 +57,7 @@ public class RaportResource {
         if (raport.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("raport", "idexists", "A new raport cannot already have an ID")).body(null);
         }
+        raport.setDate(LocalDate.now());
         Raport result = raportRepository.save(raport);
         raportSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/raports/" + result.getId()))
@@ -151,7 +150,7 @@ public class RaportResource {
      * SEARCH  /_search/raports?query=:query : search for the raport corresponding
      * to the query.
      *
-     * @param query the query of the raport search 
+     * @param query the query of the raport search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

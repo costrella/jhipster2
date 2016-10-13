@@ -4,7 +4,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class Day implements Serializable {
     private String name;
 
     @Column(name = "date")
-    private LocalDate date;
+    private Date date;
 
     @ManyToOne
     private Week week;
@@ -59,16 +59,16 @@ public class Day implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public Day date(LocalDate date) {
+    public Day date(Date date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
