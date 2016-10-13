@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Store.
+    -->
+    <changeSet id="20160831181410-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="person_id"
+                                 baseTableName="store"
+                                 constraintName="fk_store_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"/>
+
+        <addForeignKeyConstraint baseColumnNames="stores_id"
+                                 baseTableName="store_day"
+                                 constraintName="fk_store_day_stores_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="store"/>
+        <addForeignKeyConstraint baseColumnNames="days_id"
+                                 baseTableName="store_day"
+                                 constraintName="fk_store_day_days_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="day"/>
+        
+    </changeSet>
+</databaseChangeLog>

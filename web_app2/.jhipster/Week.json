@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "day",
+            "otherEntityName": "day",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "week"
+        },
+        {
+            "relationshipName": "person",
+            "otherEntityName": "person",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "surname"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateBefore",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "dateAfter",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "weekOfYear",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20161001103700",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "week",
+    "pagination": "pager"
+}

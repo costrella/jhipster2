@@ -1,0 +1,50 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "person",
+            "otherEntityName": "person",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "surname"
+        },
+        {
+            "relationshipName": "raport",
+            "otherEntityName": "raport",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "store"
+        },
+        {
+            "relationshipName": "day",
+            "otherEntityName": "day",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "store"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "visited",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20160831181410",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "store",
+    "pagination": "pager"
+}

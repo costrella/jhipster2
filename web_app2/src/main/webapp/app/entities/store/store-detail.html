@@ -1,0 +1,41 @@
+
+<div>
+    <h2><span>Store</span> {{vm.store.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{vm.store.name}}</span>
+        </dd>
+        <dt><span>City</span></dt>
+        <dd>
+            <span>{{vm.store.city}}</span>
+        </dd>
+        <dt><span>Visited</span></dt>
+        <dd>
+            <span>{{vm.store.visited}}</span>
+        </dd>
+        <dt><span>Person</span></dt>
+        <dd>
+            <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
+        </dd>
+        <dt><span>Day</span></dt>
+        <dd>
+            <span ng-repeat="day in vm.store.days">
+                <a ui-sref="day-detail({id: day.id})">{{day.name}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="store-detail.edit({id:vm.store.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

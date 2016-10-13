@@ -1,0 +1,64 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myWeekLabel">Create or edit a Week</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.week.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.week.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="vm.week.name"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_dateBefore">Date Before</label>
+                <div class="input-group">
+                    <input id="field_dateBefore" type="text" class="form-control" name="dateBefore" uib-datepicker-popup="{{dateformat}}" ng-model="vm.week.dateBefore" is-open="vm.datePickerOpenStatus.dateBefore"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateBefore')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_dateAfter">Date After</label>
+                <div class="input-group">
+                    <input id="field_dateAfter" type="text" class="form-control" name="dateAfter" uib-datepicker-popup="{{dateformat}}" ng-model="vm.week.dateAfter" is-open="vm.datePickerOpenStatus.dateAfter"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateAfter')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_weekOfYear">Week Of Year</label>
+            <input type="number" class="form-control" name="weekOfYear" id="field_weekOfYear"
+                    ng-model="vm.week.weekOfYear"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label for="field_person">Person</label>
+            <select class="form-control" id="field_person" name="person" ng-model="vm.week.person" ng-options="person as person.surname for person in vm.people track by person.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,62 @@
+
+<div>
+    <h2><span>Raport</span> {{vm.raport.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{vm.raport.description}}</span>
+        </dd>
+        <dt><span>Foto 1</span></dt>
+        <dd>
+            <div ng-if="vm.raport.foto1">
+                <a ng-click="vm.openFile(vm.raport.foto1ContentType, vm.raport.foto1)">
+                    <img data-ng-src="{{'data:' + vm.raport.foto1ContentType + ';base64,' + vm.raport.foto1}}" style="max-width: 100%;"/>
+                </a>
+                {{vm.raport.foto1ContentType}}, {{vm.byteSize(vm.raport.foto1)}}
+            </div>
+        </dd>
+        <dt><span>Foto 2</span></dt>
+        <dd>
+            <div ng-if="vm.raport.foto2">
+                <a ng-click="vm.openFile(vm.raport.foto2ContentType, vm.raport.foto2)">
+                    <img data-ng-src="{{'data:' + vm.raport.foto2ContentType + ';base64,' + vm.raport.foto2}}" style="max-width: 100%;"/>
+                </a>
+                {{vm.raport.foto2ContentType}}, {{vm.byteSize(vm.raport.foto2)}}
+            </div>
+        </dd>
+        <dt><span>Foto 3</span></dt>
+        <dd>
+            <div ng-if="vm.raport.foto3">
+                <a ng-click="vm.openFile(vm.raport.foto3ContentType, vm.raport.foto3)">
+                    <img data-ng-src="{{'data:' + vm.raport.foto3ContentType + ';base64,' + vm.raport.foto3}}" style="max-width: 100%;"/>
+                </a>
+                {{vm.raport.foto3ContentType}}, {{vm.byteSize(vm.raport.foto3)}}
+            </div>
+        </dd>
+        <dt><span>Date</span></dt>
+        <dd>
+            <span>{{vm.raport.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Person</span></dt>
+        <dd>
+            <a ui-sref="person-detail({id:vm.raport.person.id})">{{vm.raport.person.surname}}</a>
+        </dd>
+        <dt><span>Store</span></dt>
+        <dd>
+            <a ui-sref="store-detail({id:vm.raport.store.id})">{{vm.raport.store.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="raport-detail.edit({id:vm.raport.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

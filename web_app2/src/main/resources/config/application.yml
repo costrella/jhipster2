@@ -19,7 +19,7 @@ management:
 
 spring:
     application:
-        name: cechini
+        name: jhipster
     profiles:
         # The commented value for `active` can be replaced with valid spring profiles to load.
         # Otherwise, it will be filled in by maven when building the WAR file
@@ -62,10 +62,10 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: cechini@localhost
+        from: jhipster@localhost
     swagger:
-        title: cechini API
-        description: cechini API documentation
+        title: jhipster API
+        description: jhipster API documentation
         version: 0.0.1
         termsOfServiceUrl:
         contactName:

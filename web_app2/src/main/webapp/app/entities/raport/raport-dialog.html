@@ -1,0 +1,138 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRaportLabel">Create or edit a Raport</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.raport.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.raport.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.raport.description"
+                    required />
+            <div ng-show="editForm.description.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.description.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setFoto1($file, vm.raport)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_foto1">Foto 1</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.raport.foto1ContentType + ';base64,' + vm.raport.foto1}}" style="max-height: 100px;" ng-if="vm.raport.foto1"/>
+                <div ng-if="vm.raport.foto1" class="help-block clearfix">
+                    <span class="pull-left">{{vm.raport.foto1ContentType}}, {{vm.byteSize(vm.raport.foto1)}}</span>
+                    <button ng-click="vm.raport.foto1=null;vm.raport.foto1ContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setFoto1($file, vm.raport)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="foto1" id="field_foto1"
+                    ng-model="vm.raport.foto1"
+                     />
+            <input type="hidden" class="form-control" name="foto1ContentType" id="field_foto1ContentType"
+                    ng-model="vm.raport.foto1ContentType" />
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setFoto2($file, vm.raport)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_foto2">Foto 2</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.raport.foto2ContentType + ';base64,' + vm.raport.foto2}}" style="max-height: 100px;" ng-if="vm.raport.foto2"/>
+                <div ng-if="vm.raport.foto2" class="help-block clearfix">
+                    <span class="pull-left">{{vm.raport.foto2ContentType}}, {{vm.byteSize(vm.raport.foto2)}}</span>
+                    <button ng-click="vm.raport.foto2=null;vm.raport.foto2ContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setFoto2($file, vm.raport)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="foto2" id="field_foto2"
+                    ng-model="vm.raport.foto2"
+                     />
+            <input type="hidden" class="form-control" name="foto2ContentType" id="field_foto2ContentType"
+                    ng-model="vm.raport.foto2ContentType" />
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setFoto3($file, vm.raport)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_foto3">Foto 3</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.raport.foto3ContentType + ';base64,' + vm.raport.foto3}}" style="max-height: 100px;" ng-if="vm.raport.foto3"/>
+                <div ng-if="vm.raport.foto3" class="help-block clearfix">
+                    <span class="pull-left">{{vm.raport.foto3ContentType}}, {{vm.byteSize(vm.raport.foto3)}}</span>
+                    <button ng-click="vm.raport.foto3=null;vm.raport.foto3ContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setFoto3($file, vm.raport)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="foto3" id="field_foto3"
+                    ng-model="vm.raport.foto3"
+                     />
+            <input type="hidden" class="form-control" name="foto3ContentType" id="field_foto3ContentType"
+                    ng-model="vm.raport.foto3ContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_date">Date</label>
+                <div class="input-group">
+                    <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.raport.date" is-open="vm.datePickerOpenStatus.date"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_person">Person</label>
+            <select class="form-control" id="field_person" name="person" ng-model="vm.raport.person" ng-options="person as person.surname for person in vm.people track by person.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div ng-show="editForm.person.$invalid">
+            <p class="help-block"
+                ng-show="editForm.person.$error.required">
+                This field is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="field_store">Store</label>
+            <select class="form-control" id="field_store" name="store" ng-model="vm.raport.store" ng-options="store as store.name for store in vm.stores track by store.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div ng-show="editForm.store.$invalid">
+            <p class="help-block"
+                ng-show="editForm.store.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
