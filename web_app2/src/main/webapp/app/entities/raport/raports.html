@@ -68,7 +68,7 @@
                         </a>
                         <span ng-if="raport.foto3">{{raport.foto3ContentType}}, {{vm.byteSize(raport.foto3)}}</span>
                     </td>
-                        <td>{{raport.date | date:'mediumDate'}}</td>
+                        <td>{{raport.date | date:'yyyy-MM-dd'}}</td>
                     <td>
                         <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
                     </td>

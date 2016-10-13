@@ -129,7 +129,6 @@ public class StoreResource {
             List<Raport> raports = storeRepository.getStoresRaport(s.getId());
             for (Raport r : raports) {
                 if(!checkMonthAndYear(r.getDate(), month, year)){
-                    s.setName(s.getName() + " -");
                     s.setVisited(false);
                 }else{
                     s.setVisited(true);

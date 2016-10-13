@@ -46,7 +46,12 @@
             <tbody>
                 <tr ng-repeat="store in vm.stores track by store.id">
                     <td><a ui-sref="store-detail({id:store.id})">{{store.id}}</a></td>
-                    <td>{{store.name}}</td>
+                    <td><div ng-if="!store.visited">
+						<font color="red">{{store.name}}</font>
+					</div>
+					<div ng-if="store.visited">
+						{{store.name}}
+					</div></td>
                     <td>{{store.city}}</td>
                     <td>{{store.visited}}</td>
                     <td>

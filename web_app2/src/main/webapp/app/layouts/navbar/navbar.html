@@ -8,8 +8,8 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
-                <img class="logo-img" src="content/images/logo-jhipster.png"/>
-                <span>Cechini</span> <span class="navbar-version">v{{VERSION}}</span>
+                <img class="logo-img" src="content/images/logo-cechini.png"/>
+                <span class="navbar-version">v{{VERSION}}</span>
             </a>
         </div>
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
@@ -26,7 +26,7 @@
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
                             <span class="hidden-sm">
-                                Entities
+                                Cechini menu
                             </span>
                             <b class="caret"></b>
                         </span>
@@ -35,13 +35,13 @@
                         <li ui-sref-active="active" >
                             <a ui-sref="person" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span >Person</span>
+                                <span >Przedstawiciele</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
                             <a ui-sref="day" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span >Day</span>
+                                <span >Dzień</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
@@ -53,13 +53,13 @@
                         <li ui-sref-active="active" >
                             <a ui-sref="store" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span >Store</span>
+                                <span >Sklep</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" >
                             <a ui-sref="week" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span >Week</span>
+                                <span >Trasówka</span>
                             </a>
                         </li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
@@ -70,7 +70,7 @@
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
                             <span class="hidden-sm">
-                                Account
+                                Konto
                             </span>
                             <b class="caret"></b>
                         </span>
@@ -79,7 +79,7 @@
                         <li ui-sref-active="active" ng-switch-when="true">
                             <a ui-sref="settings" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-wrench"></span>&nbsp;
-                                <span>Settings</span>
+                                <span>Ustawienia</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" ng-switch-when="true">
@@ -97,13 +97,13 @@
                         <li ui-sref-active="active" ng-switch-when="true">
                             <a href="" ng-click="vm.logout()" id="logout">
                                 <span class="glyphicon glyphicon-log-out"></span>&nbsp;
-                                <span>Sign out</span>
+                                <span>Wyloguj</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" ng-switch-when="false">
                             <a href="" ng-click="vm.login()" id="login">
                                 <span class="glyphicon glyphicon-log-in"></span>&nbsp;
-                                <span>Sign in</span>
+                                <span>Zaloguj</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" ng-switch-when="false">
