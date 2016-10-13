@@ -1,0 +1,12 @@
+version: '2'
+services:
+    cechini-postgresql:
+        container_name: cechini-postgresql
+        image: postgres:9.5.3
+        # volumes:
+        #     - ~/volumes/jhipster/cechini/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=cechini
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
