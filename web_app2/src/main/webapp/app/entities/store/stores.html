@@ -1,5 +1,5 @@
 <div>
-    <h2>Stores</h2>
+    <h2>Sklepy</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -7,7 +7,7 @@
                 <button class="btn btn-primary" ui-sref="store.new" >
                     <span class="glyphicon glyphicon-plus"></span>
                     <span class="hidden-xs" >
-                        Create new Store
+                        Dodaj sklep
                     </span>
                 </button>
             </div>
@@ -36,27 +36,37 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="city"><span>City</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="visited"><span>Visited</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="person.surname"><span>Person</span> <span class="glyphicon glyphicon-sort"></span></th>
+					 <th jh-sort-by="person.surname"><span>Person</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="name"><span>Nazwa</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="city"><span>Miasto</span> <span class="glyphicon glyphicon-sort"></span></th>
+                   
+                    <th jh-sort-by="street"><span>Ulica</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="number"><span>Numer</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
+                   
+					 <th jh-sort-by="visited"><span>Odwiedzony w tym miesiącu</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="store in vm.stores track by store.id">
                     <td><a ui-sref="store-detail({id:store.id})">{{store.id}}</a></td>
-                    <td><div ng-if="!store.visited">
+					 <td>
+                        <a ui-sref="person-detail({id:store.person.id})">{{store.person.surname}}</a>
+                    </td>
+                     <td><div ng-if="!store.visited">
 						<font color="red">{{store.name}}</font>
 					</div>
 					<div ng-if="store.visited">
 						{{store.name}}
 					</div></td>
                     <td>{{store.city}}</td>
-                    <td>{{store.visited}}</td>
-                    <td>
-                        <a ui-sref="person-detail({id:store.person.id})">{{store.person.surname}}</a>
-                    </td>
+                    
+                    <td>{{store.street}}</td>
+                    <td>{{store.number}}</td>
+                    <td>{{store.description}}</td>
+					<td>{{store.visited}}</td>
+                   
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

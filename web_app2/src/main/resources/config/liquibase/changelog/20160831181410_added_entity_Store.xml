@@ -33,6 +33,18 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="street" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="person_id" type="bigint">
                 <constraints nullable="true" />
             </column>

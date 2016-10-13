@@ -40,6 +40,18 @@
         {
             "fieldName": "visited",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "street",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "number",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160831181410",

@@ -118,6 +118,9 @@
                                 name: null,
                                 city: null,
                                 visited: null,
+                                street: null,
+                                number: null,
+                                description: null,
                                 id: null
                             };
                         }

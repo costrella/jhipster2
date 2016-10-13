@@ -35,6 +35,15 @@ public class Store implements Serializable {
     @Column(name = "visited")
     private Boolean visited = false;
 
+    @Column(name = "street")
+    private String street;
+
+    @Column(name = "number")
+    private String number;
+
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     private Person person;
 
@@ -93,6 +102,45 @@ public class Store implements Serializable {
 
     public void setVisited(Boolean visited) {
         this.visited = visited;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public Store street(String street) {
+        this.street = street;
+        return this;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public Store number(String number) {
+        this.number = number;
+        return this;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Store description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Person getPerson() {
@@ -185,6 +233,9 @@ public class Store implements Serializable {
             ", name='" + name + "'" +
             ", city='" + city + "'" +
             ", visited='" + visited + "'" +
+            ", street='" + street + "'" +
+            ", number='" + number + "'" +
+            ", description='" + description + "'" +
             '}';
     }
 }

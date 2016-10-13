@@ -44,6 +44,12 @@ public class StoreResourceIntTest {
 
     private static final Boolean DEFAULT_VISITED = false;
     private static final Boolean UPDATED_VISITED = true;
+    private static final String DEFAULT_STREET = "AAAAA";
+    private static final String UPDATED_STREET = "BBBBB";
+    private static final String DEFAULT_NUMBER = "AAAAA";
+    private static final String UPDATED_NUMBER = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION = "AAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBB";
 
     @Inject
     private StoreRepository storeRepository;
@@ -86,7 +92,10 @@ public class StoreResourceIntTest {
         store = new Store()
                 .name(DEFAULT_NAME)
                 .city(DEFAULT_CITY)
-                .visited(DEFAULT_VISITED);
+                .visited(DEFAULT_VISITED)
+                .street(DEFAULT_STREET)
+                .number(DEFAULT_NUMBER)
+                .description(DEFAULT_DESCRIPTION);
         return store;
     }
 
@@ -115,6 +124,9 @@ public class StoreResourceIntTest {
         assertThat(testStore.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testStore.getCity()).isEqualTo(DEFAULT_CITY);
         assertThat(testStore.isVisited()).isEqualTo(DEFAULT_VISITED);
+        assertThat(testStore.getStreet()).isEqualTo(DEFAULT_STREET);
+        assertThat(testStore.getNumber()).isEqualTo(DEFAULT_NUMBER);
+        assertThat(testStore.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
 
         // Validate the Store in ElasticSearch
         Store storeEs = storeSearchRepository.findOne(testStore.getId());
@@ -170,7 +182,10 @@ public class StoreResourceIntTest {
                 .andExpect(jsonPath("$.[*].id").value(hasItem(store.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
-                .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())));
+                .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())))
+                .andExpect(jsonPath("$.[*].street").value(hasItem(DEFAULT_STREET.toString())))
+                .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 
     @Test
@@ -186,7 +201,10 @@ public class StoreResourceIntTest {
             .andExpect(jsonPath("$.id").value(store.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
-            .andExpect(jsonPath("$.visited").value(DEFAULT_VISITED.booleanValue()));
+            .andExpect(jsonPath("$.visited").value(DEFAULT_VISITED.booleanValue()))
+            .andExpect(jsonPath("$.street").value(DEFAULT_STREET.toString()))
+            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -210,7 +228,10 @@ public class StoreResourceIntTest {
         updatedStore
                 .name(UPDATED_NAME)
                 .city(UPDATED_CITY)
-                .visited(UPDATED_VISITED);
+                .visited(UPDATED_VISITED)
+                .street(UPDATED_STREET)
+                .number(UPDATED_NUMBER)
+                .description(UPDATED_DESCRIPTION);
 
         restStoreMockMvc.perform(put("/api/stores")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -224,6 +245,9 @@ public class StoreResourceIntTest {
         assertThat(testStore.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testStore.getCity()).isEqualTo(UPDATED_CITY);
         assertThat(testStore.isVisited()).isEqualTo(UPDATED_VISITED);
+        assertThat(testStore.getStreet()).isEqualTo(UPDATED_STREET);
+        assertThat(testStore.getNumber()).isEqualTo(UPDATED_NUMBER);
+        assertThat(testStore.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
 
         // Validate the Store in ElasticSearch
         Store storeEs = storeSearchRepository.findOne(testStore.getId());
@@ -266,6 +290,9 @@ public class StoreResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(store.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
-            .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())));
+            .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())))
+            .andExpect(jsonPath("$.[*].street").value(hasItem(DEFAULT_STREET.toString())))
+            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 }
