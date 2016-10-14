@@ -46,6 +46,26 @@
         {
             "fieldName": "date",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "z_a",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_b",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_c",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_d",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_e",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20160831181602",

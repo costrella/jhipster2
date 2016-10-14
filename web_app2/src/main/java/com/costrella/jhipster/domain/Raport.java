@@ -50,6 +50,21 @@ public class Raport implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
+    @Column(name = "z_a")
+    private Integer z_a;
+
+    @Column(name = "z_b")
+    private Integer z_b;
+
+    @Column(name = "z_c")
+    private Integer z_c;
+
+    @Column(name = "z_d")
+    private Integer z_d;
+
+    @Column(name = "z_e")
+    private Integer z_e;
+
     @ManyToOne
     @NotNull
     private Person person;
@@ -170,6 +185,71 @@ public class Raport implements Serializable {
         this.date = date;
     }
 
+    public Integer getz_a() {
+        return z_a;
+    }
+
+    public Raport z_a(Integer z_a) {
+        this.z_a = z_a;
+        return this;
+    }
+
+    public void setz_a(Integer z_a) {
+        this.z_a = z_a;
+    }
+
+    public Integer getz_b() {
+        return z_b;
+    }
+
+    public Raport z_b(Integer z_b) {
+        this.z_b = z_b;
+        return this;
+    }
+
+    public void setz_b(Integer z_b) {
+        this.z_b = z_b;
+    }
+
+    public Integer getz_c() {
+        return z_c;
+    }
+
+    public Raport z_c(Integer z_c) {
+        this.z_c = z_c;
+        return this;
+    }
+
+    public void setz_c(Integer z_c) {
+        this.z_c = z_c;
+    }
+
+    public Integer getz_d() {
+        return z_d;
+    }
+
+    public Raport z_d(Integer z_d) {
+        this.z_d = z_d;
+        return this;
+    }
+
+    public void setz_d(Integer z_d) {
+        this.z_d = z_d;
+    }
+
+    public Integer getz_e() {
+        return z_e;
+    }
+
+    public Raport z_e(Integer z_e) {
+        this.z_e = z_e;
+        return this;
+    }
+
+    public void setz_e(Integer z_e) {
+        this.z_e = z_e;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -228,6 +308,11 @@ public class Raport implements Serializable {
             ", foto3='" + foto3 + "'" +
             ", foto3ContentType='" + foto3ContentType + "'" +
             ", date='" + date + "'" +
+            ", z_a='" + z_a + "'" +
+            ", z_b='" + z_b + "'" +
+            ", z_c='" + z_c + "'" +
+            ", z_d='" + z_d + "'" +
+            ", z_e='" + z_e + "'" +
             '}';
     }
 }

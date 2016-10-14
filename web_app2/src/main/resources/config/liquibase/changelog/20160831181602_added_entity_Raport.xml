@@ -50,6 +50,26 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="z_a" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="z_b" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="z_c" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="z_d" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="z_e" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="person_id" type="bigint">
                 <constraints nullable="false" />
             </column>

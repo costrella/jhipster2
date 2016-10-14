@@ -63,6 +63,21 @@ public class RaportResourceIntTest {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Integer DEFAULT_Z_A = 1;
+    private static final Integer UPDATED_Z_A = 2;
+
+    private static final Integer DEFAULT_Z_B = 1;
+    private static final Integer UPDATED_Z_B = 2;
+
+    private static final Integer DEFAULT_Z_C = 1;
+    private static final Integer UPDATED_Z_C = 2;
+
+    private static final Integer DEFAULT_Z_D = 1;
+    private static final Integer UPDATED_Z_D = 2;
+
+    private static final Integer DEFAULT_Z_E = 1;
+    private static final Integer UPDATED_Z_E = 2;
+
     @Inject
     private RaportRepository raportRepository;
 
@@ -109,7 +124,12 @@ public class RaportResourceIntTest {
                 .foto2ContentType(DEFAULT_FOTO_2_CONTENT_TYPE)
                 .foto3(DEFAULT_FOTO_3)
                 .foto3ContentType(DEFAULT_FOTO_3_CONTENT_TYPE)
-                .date(DEFAULT_DATE);
+                .date(DEFAULT_DATE)
+                .z_a(DEFAULT_Z_A)
+                .z_b(DEFAULT_Z_B)
+                .z_c(DEFAULT_Z_C)
+                .z_d(DEFAULT_Z_D)
+                .z_e(DEFAULT_Z_E);
         // Add required entity
         Person person = PersonResourceIntTest.createEntity(em);
         em.persist(person);
@@ -153,6 +173,11 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getFoto3()).isEqualTo(DEFAULT_FOTO_3);
         assertThat(testRaport.getFoto3ContentType()).isEqualTo(DEFAULT_FOTO_3_CONTENT_TYPE);
         assertThat(testRaport.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testRaport.getz_a()).isEqualTo(DEFAULT_Z_A);
+        assertThat(testRaport.getz_b()).isEqualTo(DEFAULT_Z_B);
+        assertThat(testRaport.getz_c()).isEqualTo(DEFAULT_Z_C);
+        assertThat(testRaport.getz_d()).isEqualTo(DEFAULT_Z_D);
+        assertThat(testRaport.getz_e()).isEqualTo(DEFAULT_Z_E);
 
         // Validate the Raport in ElasticSearch
         Raport raportEs = raportSearchRepository.findOne(testRaport.getId());
@@ -195,7 +220,12 @@ public class RaportResourceIntTest {
                 .andExpect(jsonPath("$.[*].foto2").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOTO_2))))
                 .andExpect(jsonPath("$.[*].foto3ContentType").value(hasItem(DEFAULT_FOTO_3_CONTENT_TYPE)))
                 .andExpect(jsonPath("$.[*].foto3").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOTO_3))))
-                .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+                .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+                .andExpect(jsonPath("$.[*].z_a").value(hasItem(DEFAULT_Z_A)))
+                .andExpect(jsonPath("$.[*].z_b").value(hasItem(DEFAULT_Z_B)))
+                .andExpect(jsonPath("$.[*].z_c").value(hasItem(DEFAULT_Z_C)))
+                .andExpect(jsonPath("$.[*].z_d").value(hasItem(DEFAULT_Z_D)))
+                .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)));
     }
 
     @Test
@@ -216,7 +246,12 @@ public class RaportResourceIntTest {
             .andExpect(jsonPath("$.foto2").value(Base64Utils.encodeToString(DEFAULT_FOTO_2)))
             .andExpect(jsonPath("$.foto3ContentType").value(DEFAULT_FOTO_3_CONTENT_TYPE))
             .andExpect(jsonPath("$.foto3").value(Base64Utils.encodeToString(DEFAULT_FOTO_3)))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.z_a").value(DEFAULT_Z_A))
+            .andExpect(jsonPath("$.z_b").value(DEFAULT_Z_B))
+            .andExpect(jsonPath("$.z_c").value(DEFAULT_Z_C))
+            .andExpect(jsonPath("$.z_d").value(DEFAULT_Z_D))
+            .andExpect(jsonPath("$.z_e").value(DEFAULT_Z_E));
     }
 
     @Test
@@ -245,7 +280,12 @@ public class RaportResourceIntTest {
                 .foto2ContentType(UPDATED_FOTO_2_CONTENT_TYPE)
                 .foto3(UPDATED_FOTO_3)
                 .foto3ContentType(UPDATED_FOTO_3_CONTENT_TYPE)
-                .date(UPDATED_DATE);
+                .date(UPDATED_DATE)
+                .z_a(UPDATED_Z_A)
+                .z_b(UPDATED_Z_B)
+                .z_c(UPDATED_Z_C)
+                .z_d(UPDATED_Z_D)
+                .z_e(UPDATED_Z_E);
 
         restRaportMockMvc.perform(put("/api/raports")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -264,6 +304,11 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getFoto3()).isEqualTo(UPDATED_FOTO_3);
         assertThat(testRaport.getFoto3ContentType()).isEqualTo(UPDATED_FOTO_3_CONTENT_TYPE);
         assertThat(testRaport.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testRaport.getz_a()).isEqualTo(UPDATED_Z_A);
+        assertThat(testRaport.getz_b()).isEqualTo(UPDATED_Z_B);
+        assertThat(testRaport.getz_c()).isEqualTo(UPDATED_Z_C);
+        assertThat(testRaport.getz_d()).isEqualTo(UPDATED_Z_D);
+        assertThat(testRaport.getz_e()).isEqualTo(UPDATED_Z_E);
 
         // Validate the Raport in ElasticSearch
         Raport raportEs = raportSearchRepository.findOne(testRaport.getId());
@@ -311,6 +356,11 @@ public class RaportResourceIntTest {
             .andExpect(jsonPath("$.[*].foto2").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOTO_2))))
             .andExpect(jsonPath("$.[*].foto3ContentType").value(hasItem(DEFAULT_FOTO_3_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].foto3").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOTO_3))))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].z_a").value(hasItem(DEFAULT_Z_A)))
+            .andExpect(jsonPath("$.[*].z_b").value(hasItem(DEFAULT_Z_B)))
+            .andExpect(jsonPath("$.[*].z_c").value(hasItem(DEFAULT_Z_C)))
+            .andExpect(jsonPath("$.[*].z_d").value(hasItem(DEFAULT_Z_D)))
+            .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)));
     }
 }

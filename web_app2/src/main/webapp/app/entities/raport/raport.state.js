@@ -123,6 +123,11 @@
                                 foto3: null,
                                 foto3ContentType: null,
                                 date: null,
+                                z_a: null,
+                                z_b: null,
+                                z_c: null,
+                                z_d: null,
+                                z_e: null,
                                 id: null
                             };
                         }
