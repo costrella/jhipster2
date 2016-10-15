@@ -98,7 +98,7 @@ public class WeeksActivity extends ListActivity {
         super.onListItemClick(list, view, position, id);
 
         Week selectedItem = (Week) getListView().getItemAtPosition(position);
-        text.setText("You clicked " + selectedItem.getName() + " at position " + position);
+//        text.setText("You clicked " + selectedItem.getName() + " at position " + position);
 
         DayService.DAYS.clear();
         Call<List<Day>> callDaysWeek = CechiniService.getInstance().getCechiniAPI().getWeekDays(selectedItem.getId());

@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/weeksMainText"
-        android:text="My list" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trasówki" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -25,17 +26,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/weeksMainText"
         android:id="@android:id/empty"
-        android:text="There is no data"
+        android:text="brak trasówek"
         android:textStyle="bold" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/storesFloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_above="@+id/weeksAddWeek"
+        android:src="@android:drawable/star_big_on"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@android:id/list"
+        android:layout_alignEnd="@android:id/list" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/weeksAddWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@android:drawable/ic_input_add"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@android:id/list"
-        android:layout_alignEnd="@android:id/list" />
+        android:layout_alignLeft="@+id/storesFloatingActionButton"
+        android:layout_alignStart="@+id/storesFloatingActionButton"
+        android:layout_marginBottom="65dp"
+        android:src="@android:drawable/ic_input_add" />
 
 </RelativeLayout>
