@@ -92,5 +92,46 @@
             vm.currentSearch = null;
             vm.transition();
         }
+		
+		$scope.getTotalZ_a = function(){
+		var total = 0;
+		 for(var i = 0; i < $scope.vm.raports.length; i++){
+			var raport = $scope.vm.raports[i];
+			total += raport.z_a;
+		}
+		return total;
+		}
+		$scope.getTotalZ_b = function(){
+		var total = 0;
+		 for(var i = 0; i < $scope.vm.raports.length; i++){
+			var raport = $scope.vm.raports[i];
+			total += raport.z_b;
+		}
+		return total;
+		}
+		$scope.getTotalZ_c = function(){
+		var total = 0;
+		 for(var i = 0; i < $scope.vm.raports.length; i++){
+			var raport = $scope.vm.raports[i];
+			total += raport.z_c;
+		}
+		return total;
+		}
+		$scope.getTotalZ_d = function(){
+		var total = 0;
+		 for(var i = 0; i < $scope.vm.raports.length; i++){
+			var raport = $scope.vm.raports[i];
+			total += raport.z_d;
+		}
+		return total;
+		}
+		$scope.getTotalZ_e = function(){
+		var total = 0;
+		 for(var i = 0; i < $scope.vm.raports.length; i++){
+			var raport = $scope.vm.raports[i];
+			total += raport.z_e;
+		}
+		return total;
+		}
     }
 })();
