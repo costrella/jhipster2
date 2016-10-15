@@ -133,5 +133,9 @@
 		}
 		return total;
 		}
+		
+		$scope.getImage = function(data){
+			return 'data:image/jpeg;base64,' + data;
+		}
     }
 })();

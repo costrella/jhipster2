@@ -72,22 +72,15 @@
                     <td>{{raport.z_e}}</td>
                     
 					<td>
-                        <a ng-if="raport.foto1" ng-click="vm.openFile(raport.foto1ContentType, raport.foto1)">
-                            <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-                        </a>
-                        <span ng-if="raport.foto1">{{raport.foto1ContentType}}, {{vm.byteSize(raport.foto1)}}</span>
+						<img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>						
                     </td>
                     <td>
-                        <a ng-if="raport.foto2" ng-click="vm.openFile(raport.foto2ContentType, raport.foto2)">
-                            <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-                        </a>
-                        <span ng-if="raport.foto2">{{raport.foto2ContentType}}, {{vm.byteSize(raport.foto2)}}</span>
+						<img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+                        
                     </td>
                     <td>
-                        <a ng-if="raport.foto3" ng-click="vm.openFile(raport.foto3ContentType, raport.foto3)">
-                            <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
-                        </a>
-                        <span ng-if="raport.foto3">{{raport.foto3ContentType}}, {{vm.byteSize(raport.foto3)}}</span>
+						<img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                        
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
@@ -118,11 +111,11 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td>{{ getTotalZ_a() }}</td>
-					<td>{{ getTotalZ_b() }}</td>
-					<td>{{ getTotalZ_c() }}</td>
-					<td>{{ getTotalZ_d() }}</td>
-					<td>{{ getTotalZ_e() }}</td>
+					<td><b>{{ getTotalZ_a() }}</b></td>
+					<td><b>{{ getTotalZ_b() }}</b></td>
+					<td><b>{{ getTotalZ_c() }}</b></td>
+					<td><b>{{ getTotalZ_d() }}</b></td>
+					<td><b>{{ getTotalZ_e() }}</b></td>
 					<td></td>
 					<td></td>
 					<td></td>

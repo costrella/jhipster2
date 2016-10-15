@@ -20,4 +20,9 @@
     <string name="title_activity_trasowka">TrasowkaActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="z_a">2L NGAZ</string>
+    <string name="z_b">2l GAZ</string>
+    <string name="z_c">0,33L</string>
+    <string name="z_d">CYTRYNA</string>
+    <string name="z_e">GRATISY</string>
 </resources>
