@@ -60,9 +60,49 @@ public class Store implements Serializable {
         return name;
     }
 
+    private Boolean visited = false;
+
+    private String street;
+
+    private String number;
+
+    private String description;
+
     public Store name(String name) {
         this.name = name;
         return this;
+    }
+
+    public Boolean getVisited() {
+        return visited;
+    }
+
+    public void setVisited(Boolean visited) {
+        this.visited = visited;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setName(String name) {

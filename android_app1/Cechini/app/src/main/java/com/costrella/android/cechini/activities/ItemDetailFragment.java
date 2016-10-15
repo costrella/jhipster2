@@ -63,7 +63,11 @@ public class ItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (store != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(store.getCity());
+            String storeDetails = "";
+            storeDetails += store.getCity() + "\n";
+            storeDetails += store.getStreet() + " " + store.getNumber() + "\n\n";
+            storeDetails += store.getDescription();
+            ((TextView) rootView.findViewById(R.id.item_detail)).setText(storeDetails);
         }
 
         return rootView;

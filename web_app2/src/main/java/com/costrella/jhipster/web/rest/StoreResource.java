@@ -128,11 +128,13 @@ public class StoreResource {
         for (Store s : stores) {
             List<Raport> raports = storeRepository.getStoresRaport(s.getId());
             for (Raport r : raports) {
-                if(!checkMonthAndYear(r.getDate(), month, year)){
-                    s.setVisited(false);
-                }else{
+                if(checkMonthAndYear(r.getDate(), month, year)){
                     s.setVisited(true);
+                    break;
                 }
+//                else{
+//                    s.setVisited(true);
+//                }
             }
         }
 
@@ -166,7 +168,7 @@ public class StoreResource {
     public ResponseEntity<List<Store>> getPersonStores(@PathVariable Long id) {
         log.debug("REST request to get personStores : {}", id);
         List<Store> stores = storeRepository.getPersonStores(id);
-        return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+        return new ResponseEntity<List<Store>>(checVisited(stores), HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/dayStores/{id}",

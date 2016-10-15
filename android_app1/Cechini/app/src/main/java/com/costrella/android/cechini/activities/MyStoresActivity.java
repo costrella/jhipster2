@@ -53,6 +53,13 @@ public class MyStoresActivity extends ListActivity {
             }
             TextView textView = (TextView) convertView.findViewById(R.id.listText);
             // Populate the data into the template view using the data object
+
+            if(store.getVisited() == null){
+                textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
+            }else{
+                textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+            }
+
             textView.setText(store.getName());
             return convertView;
         }
