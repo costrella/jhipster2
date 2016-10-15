@@ -1,6 +1,7 @@
 package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.costrella.jhipster.domain.Person;
 import com.costrella.jhipster.domain.Raport;
 import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.search.RaportSearchRepository;
@@ -21,7 +22,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
@@ -109,6 +112,33 @@ public class RaportResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/order/{idPerson}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Map<String, Integer>> order(@PathVariable int idPerson)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Raports");
+        Long idLong = Long.valueOf(idPerson);
+        int z_a = raportRepository.getZ_a(idLong);
+        int z_b = raportRepository.getZ_b(idLong);
+        int z_c = raportRepository.getZ_c(idLong);
+        int z_d = raportRepository.getZ_d(idLong);
+        int z_e = raportRepository.getZ_e(idLong);
+        Map<String, Integer> myMap = new HashMap<>();
+        myMap.put("2L NGAZ: ", z_a);
+        myMap.put("2L GAZ: ", z_b);
+        myMap.put("0,33L: ", z_c);
+        myMap.put("CYT: ", z_d);
+        myMap.put("gratisy: ", z_e);
+
+        return Optional.ofNullable(myMap)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
     /**
      * GET  /raports/:id : get the "id" raport.
      *
