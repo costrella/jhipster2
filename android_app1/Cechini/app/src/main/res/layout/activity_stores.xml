@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/storesMainText"
-        android:text="My list" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sklepy" />
 
     <ListView
         android:layout_width="wrap_content"

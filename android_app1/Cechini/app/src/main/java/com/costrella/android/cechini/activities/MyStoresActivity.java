@@ -12,22 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
-import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Store;
-import com.costrella.android.cechini.services.CechiniService;
-import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
-import java.util.Set;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class StoresInDayActivity extends ListActivity {
-
-    private TextView text;
+public class MyStoresActivity extends ListActivity {
     private ArrayList<Store> listValues;
 
     @Override
@@ -35,40 +25,15 @@ public class StoresInDayActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores);
         listValues = new ArrayList<>();
-        listValues.clear();
-        final StoreAdapter adapter = new StoreAdapter(this, listValues);
-        text = (TextView) findViewById(R.id.storesMainText);
-        final Day day = DayService.selectedDay;
-        text.setText(day.getName());
-
-        Call<Day> callDayStores = CechiniService.getInstance().getCechiniAPI().getDay(day.getId());
-        callDayStores.enqueue(new Callback<Day>() {
-            @Override
-            public void onResponse(Call<Day> call, Response<Day> response) {
-                int code = response.code();
-                if (code == 200) {
-                    Day day = response.body();
-                    Set<Store> stores = day.getStores();
-                    listValues.addAll(stores);
-                    setListAdapter(adapter);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Day> call, Throwable t) {
-
-            }
-        });
-
+        listValues.addAll(StoreService.STORES_LIST);
+        StoreAdapter adapter = new StoreAdapter(this, listValues);
+        setListAdapter(adapter);
     }
 
     @Override
-    protected void onListItemClick(ListView list, View view, int position, long id) {
-        super.onListItemClick(list, view, position, id);
+    protected void onListItemClick(ListView l, View v, int position, long id) {
         Store selectedItem = (Store) getListView().getItemAtPosition(position);
         StoreService.STORE = selectedItem;
-
         Intent intent = new Intent(this, ItemDetailActivity.class);
         startActivity(intent);
     }
@@ -86,12 +51,9 @@ public class StoresInDayActivity extends ListActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_layout, parent, false);
             }
-            // Lookup view for data population
             TextView textView = (TextView) convertView.findViewById(R.id.listText);
             // Populate the data into the template view using the data object
             textView.setText(store.getName());
-//            tvHome.setText(day.hometown);
-            // Return the completed view to render on screen
             return convertView;
         }
     }
