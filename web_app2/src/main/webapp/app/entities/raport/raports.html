@@ -12,29 +12,13 @@
                 </button>
             </div>
             <div class="col-xs-8 no-padding-right">
-                <form name="searchForm" class="form-inline">
-                    <div class="input-group pull-right" >
-						<input type="text" class="form-control" ng-model="vm.searchQueryPerson" id="searchQueryPerson" placeholder="searchQueryPerson">
-                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="Query">
-                        <span  class="input-group-btn width-min" >
-                            <button class="btn btn-info" ng-click="vm.search(vm.searchQuery, vm.searchQueryPerson)">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                        <span class="input-group-btn width-min" ng-if="vm.currentSearch">
-                            <button class="btn btn-info" ng-click="vm.clear()">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </span>
-                    </div>
-                </form>
 				 <div class="row">
 					<div class="col-md-5">
-						<h4>Filter by date</h4>
+						<h4>Filtrowanie</h4>
 						<p class="input-group">
-							<span class="input-group-addon">from</span>
+							<span class="input-group-addon">data od</span>
 							<input type="date" class="input-sm form-control" name="start" ng-model="vm.fromDate" ng-change="vm.loadAll()" required/>
-							<span class="input-group-addon">to</span>
+							<span class="input-group-addon">data do</span>
 							<input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()" required/>
 						</p>
                         <span class="input-group-addon">Przedstawiciel</span>

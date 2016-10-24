@@ -83,13 +83,16 @@
 
         function previousMonth () {
             var fromDate = new Date();
-            if (fromDate.getMonth() === 0) {
-                fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
-            } else {
-                fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
-            }
-
+            var toDate = new Date();
+            // if (fromDate.getMonth() === 0) {
+            //     fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
+            // } else {
+            //     fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
+            // }
+            // fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate()-1);
+            fromDate.setDate(fromDate.getDate()-1);
             vm.fromDate = fromDate;
+            vm.toDate = toDate;
         }
 
 
