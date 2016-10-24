@@ -13,7 +13,7 @@
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
-        // vm.transition = transition;
+        vm.transition = transition;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         // vm.clear = clear;
         // vm.search = search;
@@ -98,13 +98,9 @@
             vm.loadAll()
         }
 
-        // function transition () {
-        //     $state.transitionTo($state.$current, {
-        //         page: vm.page,
-        //         sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-        //         search: vm.currentSearch
-        //     });
-        // }
+        function transition () {
+            vm.loadAll();
+        }
 
         // function search (searchQuery, searchQueryPerson) {
         //     if (!searchQueryPerson){
