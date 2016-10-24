@@ -20,6 +20,7 @@
         vm.loadAll = loadAll;
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
+		vm.searchQueryPerson = null;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
 
@@ -72,15 +73,19 @@
             });
         }
 
-        function search (searchQuery) {
-            if (!searchQuery){
+        function search (searchQuery, searchQueryPerson) {
+            if (!searchQueryPerson){
                 return vm.clear();
             }
             vm.links = null;
             vm.page = 1;
             vm.predicate = '_score';
             vm.reverse = false;
-            vm.currentSearch = searchQuery;
+			//vm.currentSearch = searchQuery;
+			if (searchQueryPerson){
+                vm.currentSearch = 'store.person.id: ' + searchQueryPerson;
+            }
+            
             vm.transition();
         }
 
@@ -93,46 +98,8 @@
             vm.transition();
         }
 		
-		$scope.getTotalZ_a = function(){
-		var total = 0;
-		 for(var i = 0; i < $scope.vm.raports.length; i++){
-			var raport = $scope.vm.raports[i];
-			total += raport.z_a;
-		}
-		return total;
-		}
-		$scope.getTotalZ_b = function(){
-		var total = 0;
-		 for(var i = 0; i < $scope.vm.raports.length; i++){
-			var raport = $scope.vm.raports[i];
-			total += raport.z_b;
-		}
-		return total;
-		}
-		$scope.getTotalZ_c = function(){
-		var total = 0;
-		 for(var i = 0; i < $scope.vm.raports.length; i++){
-			var raport = $scope.vm.raports[i];
-			total += raport.z_c;
-		}
-		return total;
-		}
-		$scope.getTotalZ_d = function(){
-		var total = 0;
-		 for(var i = 0; i < $scope.vm.raports.length; i++){
-			var raport = $scope.vm.raports[i];
-			total += raport.z_d;
-		}
-		return total;
-		}
-		$scope.getTotalZ_e = function(){
-		var total = 0;
-		 for(var i = 0; i < $scope.vm.raports.length; i++){
-			var raport = $scope.vm.raports[i];
-			total += raport.z_e;
-		}
-		return total;
-		}
+
+		
 		
 		$scope.getImage = function(data){
 			return 'data:image/jpeg;base64,' + data;
