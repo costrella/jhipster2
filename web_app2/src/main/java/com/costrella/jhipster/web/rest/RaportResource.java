@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
@@ -101,30 +102,34 @@ public class RaportResource {
      * @return the ResponseEntity with status 200 (OK) and the list of raports in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/raports",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<Raport>> getAllRaports(Pageable pageable)
-        throws URISyntaxException {
-        log.debug("REST request to get a page of Raports");
-        Page<Raport> page = raportRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/raports",
+//        method = RequestMethod.GET,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+//    public ResponseEntity<List<Raport>> getAllRaports(Pageable pageable)
+//        throws URISyntaxException {
+//        log.debug("REST request to get a page of Raports");
+//        Page<Raport> page = raportRepository.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
+//        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+//    }
 
     @RequestMapping(value = "/raports",
         method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        params = {"fromDate", "toDate"}
+        produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Timed
-    public ResponseEntity<List<Raport>> getRaportsFiltered(
-            @RequestParam(value = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-            @RequestParam(value = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-            Pageable pageable)
-                                throws URISyntaxException {
-        Page<Raport> page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+    public ResponseEntity<List<Raport>> getRaportsFiltered(Pageable pageable,
+            @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+            @RequestParam(value = "person", required = false) Long person
+            ) throws URISyntaxException {
+        Page<Raport> page;
+        if(person == -1) {
+            page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+        }else{
+            page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -37,6 +37,10 @@
 							<span class="input-group-addon">to</span>
 							<input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()" required/>
 						</p>
+                        <span class="input-group-addon">Przedstawiciel</span>
+                        <select class="form-control" id="field_person" name="person" ng-model="vm.ph" ng-change="vm.loadAll()" ng-options="person as person.surname for person in vm.people track by person.id" required>
+                            <option value=""></option>
+                        </select>
 					</div>
 				</div>
             </div>
@@ -136,9 +140,11 @@
         </table>
     </div>
     <div class="text-center">
-        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.loadPage(vm.page)"></uib-pagination>
     </div>
-    <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>
+
+
+
 <h6>Przykład zapytania: date:[2012-01-01 TO 2016-12-31] && store.person.surname: Kowalski</h6>
 <h6>2L NGAZ:z_a, 2L GAZ:z_b, 0,33L:z_c, z_d:CYT, z_e:Gratisy</h6>
 </div>

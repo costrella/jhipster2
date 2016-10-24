@@ -5,18 +5,18 @@
         .module('cechiniApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
-        vm.transition = transition;
+        // vm.transition = transition;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
-        vm.clear = clear;
-        vm.search = search;
+        // vm.clear = clear;
+        // vm.search = search;
         vm.loadAll = loadAll;
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
@@ -28,6 +28,9 @@
         vm.today = today;
         vm.previousMonth = previousMonth;
         vm.previousMonth();
+        vm.people = Person.query();
+        vm.ph = null;
+        vm.page = 1;
 
         vm.loadAll();
 
@@ -37,14 +40,22 @@
             var fromDate = $filter('date')(vm.fromDate, dateFormat);
             var toDate = $filter('date')(vm.toDate, dateFormat);
 
+
             Raport.query({
-                    page: pagingParams.page - 1,
+                    page: vm.page - 1,
                     size: vm.itemsPerPage,
                     sort: sort(),
                     fromDate: fromDate,
-                    toDate: toDate
+                    toDate: toDate,
+                    person: getPersonId()
             }, onSuccess, onError);
 
+            function getPersonId() {
+                if (vm.ph) {
+                    return vm.ph.id;
+                }
+                return -1;
+            }
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -57,7 +68,6 @@
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
                 vm.raports = data;
-                vm.page = pagingParams.page;
             }
             function onError(error) {
                 AlertService.error(error.data.message);
@@ -85,41 +95,41 @@
 
         function loadPage (page) {
             vm.page = page;
-            vm.transition();
+            vm.loadAll()
         }
 
-        function transition () {
-            $state.transitionTo($state.$current, {
-                page: vm.page,
-                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
-            });
-        }
+        // function transition () {
+        //     $state.transitionTo($state.$current, {
+        //         page: vm.page,
+        //         sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+        //         search: vm.currentSearch
+        //     });
+        // }
 
-        function search (searchQuery, searchQueryPerson) {
-            if (!searchQueryPerson){
-                return vm.clear();
-            }
-            vm.links = null;
-            vm.page = 1;
-            vm.predicate = '_score';
-            vm.reverse = false;
-			//vm.currentSearch = searchQuery;
-			if (searchQueryPerson){
-                vm.currentSearch = 'store.person.id: ' + searchQueryPerson;
-            }
+        // function search (searchQuery, searchQueryPerson) {
+        //     if (!searchQueryPerson){
+        //         return vm.clear();
+        //     }
+        //     vm.links = null;
+        //     vm.page = 1;
+        //     vm.predicate = '_score';
+        //     vm.reverse = false;
+			// //vm.currentSearch = searchQuery;
+			// if (searchQueryPerson){
+        //         vm.currentSearch = 'store.person.id: ' + searchQueryPerson;
+        //     }
+        //
+        //     vm.transition();
+        // }
 
-            vm.transition();
-        }
-
-        function clear () {
-            vm.links = null;
-            vm.page = 1;
-            vm.predicate = 'id';
-            vm.reverse = true;
-            vm.currentSearch = null;
-            vm.transition();
-        }
+        // function clear () {
+        //     vm.links = null;
+        //     vm.page = 1;
+        //     vm.predicate = 'id';
+        //     vm.reverse = true;
+        //     vm.currentSearch = null;
+        //     vm.transition();
+        // }
 
 
 

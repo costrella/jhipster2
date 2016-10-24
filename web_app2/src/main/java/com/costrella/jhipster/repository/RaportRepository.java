@@ -32,4 +32,7 @@ public interface RaportRepository extends JpaRepository<Raport,Long> {
 
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2")
     Page<Raport> getRaportsByDate(LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3")
+    Page<Raport> getRaportsByDateAndPerson(Long idPerson, LocalDate from, LocalDate to, Pageable pageable);
 }
