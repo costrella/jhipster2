@@ -28,6 +28,17 @@
                         </span>
                     </div>
                 </form>
+				 <div class="row">
+					<div class="col-md-5">
+						<h4>Filter by date</h4>
+						<p class="input-group">
+							<span class="input-group-addon">from</span>
+							<input type="date" class="input-sm form-control" name="start" ng-model="vm.fromDate" ng-change="vm.loadAll()" required/>
+							<span class="input-group-addon">to</span>
+							<input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()" required/>
+						</p>
+					</div>
+				</div>
             </div>
         </div>
     </div>
@@ -47,7 +58,7 @@
                     <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    
+
 					<th jh-sort-by="foto1"><span>Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="foto2"><span>Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="foto3"><span>Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -58,7 +69,7 @@
                 <tr ng-repeat="raport in vm.raports track by raport.id">
                     <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
                     <td>{{raport.description}}</td>
-                    
+
                         <td>{{raport.date | date:'yyyy-MM-dd'}}</td>
 						<td>
                         <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
@@ -71,17 +82,17 @@
                     <td>{{raport.z_c}}</td>
                     <td>{{raport.z_d}}</td>
                     <td>{{raport.z_e}}</td>
-                    
+
 					<td>
-						<img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>						
+						<img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
                     </td>
                     <td>
 						<img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-                        
+
                     </td>
                     <td>
 						<img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
-                        
+
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

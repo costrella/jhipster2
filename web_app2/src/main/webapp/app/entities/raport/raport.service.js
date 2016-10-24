@@ -10,7 +10,9 @@
         var resourceUrl =  'api/raports/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': { method: 'GET', isArray: true,
+                params: {fromDate: null, toDate: null}
+            },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

@@ -5,11 +5,11 @@
         .module('cechiniApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function RaportController ($scope, $state, DataUtils, Raport, RaportSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
-        
+
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -23,24 +23,28 @@
 		vm.searchQueryPerson = null;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+        vm.fromDate = null;
+        vm.toDate = null;
+        vm.today = today;
+        vm.previousMonth = previousMonth;
+        vm.previousMonth();
 
-        loadAll();
+        vm.loadAll();
+
 
         function loadAll () {
-            if (pagingParams.search) {
-                RaportSearch.query({
-                    query: pagingParams.search,
+            var dateFormat = 'yyyy-MM-dd';
+            var fromDate = $filter('date')(vm.fromDate, dateFormat);
+            var toDate = $filter('date')(vm.toDate, dateFormat);
+
+            Raport.query({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-                    sort: sort()
-                }, onSuccess, onError);
-            } else {
-                Raport.query({
-                    page: pagingParams.page - 1,
-                    size: vm.itemsPerPage,
-                    sort: sort()
-                }, onSuccess, onError);
-            }
+                    sort: sort(),
+                    fromDate: fromDate,
+                    toDate: toDate
+            }, onSuccess, onError);
+
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -59,6 +63,25 @@
                 AlertService.error(error.data.message);
             }
         }
+
+        // Date picker configuration
+        function today () {
+            // Today + 1 day - needed if the current day must be included
+            var today = new Date();
+            vm.toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+        }
+
+        function previousMonth () {
+            var fromDate = new Date();
+            if (fromDate.getMonth() === 0) {
+                fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
+            } else {
+                fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
+            }
+
+            vm.fromDate = fromDate;
+        }
+
 
         function loadPage (page) {
             vm.page = page;
@@ -85,7 +108,7 @@
 			if (searchQueryPerson){
                 vm.currentSearch = 'store.person.id: ' + searchQueryPerson;
             }
-            
+
             vm.transition();
         }
 
@@ -97,10 +120,10 @@
             vm.currentSearch = null;
             vm.transition();
         }
-		
 
-		
-		
+
+
+
 		$scope.getImage = function(data){
 			return 'data:image/jpeg;base64,' + data;
 		}

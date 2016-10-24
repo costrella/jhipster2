@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -108,6 +109,22 @@ public class RaportResource {
         throws URISyntaxException {
         log.debug("REST request to get a page of Raports");
         Page<Raport> page = raportRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/raports",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        params = {"fromDate", "toDate"}
+    )
+    @Timed
+    public ResponseEntity<List<Raport>> getRaportsFiltered(
+            @RequestParam(value = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam(value = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+            Pageable pageable)
+                                throws URISyntaxException {
+        Page<Raport> page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
