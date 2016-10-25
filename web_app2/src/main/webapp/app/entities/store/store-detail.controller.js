@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -13,10 +13,11 @@
         vm.store = entity;
         vm.previousState = previousState.name;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.loadPage = loadPage;
 
         vm.loadAll = loadAll;
 
-        var unsubscribe = $rootScope.$on('cechiniApp:storeUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('cechiniApp:storeUpdate', function (event, result) {
             vm.store = result;
         });
         $scope.$on('$destroy', unsubscribe);
@@ -24,7 +25,7 @@
         vm.loadAll();
 
 
-        function loadAll () {
+        function loadAll() {
 
             Raport.query({
                 page: vm.page - 1,
@@ -38,10 +39,21 @@
                 vm.queryCount = vm.totalItems;
                 vm.raports = data;
             }
+
             function onError(error) {
                 // AlertService.error(error.data.message);
                 console.log(error.data.message);
             }
         }
+
+        function loadPage(page) {
+            vm.page = page;
+            vm.loadAll()
+        }
+
+        function transition() {
+            vm.loadAll();
+        }
+
     }
 })();

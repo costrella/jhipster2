@@ -30,12 +30,12 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("select sum(r.z_e) from Raport r where r.person.id = ?1")
     int getZ_e(Long idPerson);
 
-    @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2")
+    @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 ORDER BY raport.date DESC")
     Page<Raport> getRaportsByDate(LocalDate from, LocalDate to, Pageable pageable);
 
-    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3")
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 ORDER BY raport.date DESC")
     Page<Raport> getRaportsByDateAndPerson(Long idPerson, LocalDate from, LocalDate to, Pageable pageable);
 
-    @Query("SELECT raport from Raport raport where raport.store.id = ?1")
+    @Query("SELECT raport from Raport raport where raport.store.id = ?1 ORDER BY raport.date DESC")
     Page<Raport> getStoresRaports(Long idStore, Pageable pageable);
 }
