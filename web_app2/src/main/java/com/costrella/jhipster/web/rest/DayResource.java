@@ -141,6 +141,13 @@ public class DayResource {
         //warunek dla www, lista dni dla trasowki
         if(weekId != null){
             page = dayRepository.getWeekDays(weekId, pageable);
+            //TODO zamienic na jedno zapytanie,
+            //chce pobrac od razu sklepy dla dnia
+            for(Day day : page.getContent()){
+                Day tmpDay = dayRepository.findOneWithEagerRelationships(day.getId());
+                day.setStores(tmpDay.getStores());
+            }
+
         }else {
             page = dayRepository.findAll(pageable);
         }
