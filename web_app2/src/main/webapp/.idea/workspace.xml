@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="049b34a6-44ad-4825-9344-d9c2291405d4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../android_app1/Cechini/app/src/main/java/com/costrella/android/cechini/activities/RaportActivity.java" afterPath="$PROJECT_DIR$/../../../../android_app1/Cechini/app/src/main/java/com/costrella/android/cechini/activities/RaportActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../android_app1/Cechini/app/src/main/java/com/costrella/android/cechini/model/Day.java" afterPath="$PROJECT_DIR$/../../../../android_app1/Cechini/app/src/main/java/com/costrella/android/cechini/model/Day.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../android_app1/Cechini/app/src/main/java/com/costrella/android/cechini/model/Raport.java" afterPath="$PROJECT_DIR$/../../../../android_app1/Cechini/app/src/main/java/com/costrella/android/cechini/model/Raport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../.jhipster/Day.json" afterPath="$PROJECT_DIR$/../../../.jhipster/Day.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../.jhipster/Raport.json" afterPath="$PROJECT_DIR$/../../../.jhipster/Raport.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../java/com/costrella/jhipster/domain/Day.java" afterPath="$PROJECT_DIR$/../java/com/costrella/jhipster/domain/Day.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../java/com/costrella/jhipster/domain/Raport.java" afterPath="$PROJECT_DIR$/../java/com/costrella/jhipster/domain/Raport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../java/com/costrella/jhipster/web/rest/RaportResource.java" afterPath="$PROJECT_DIR$/../java/com/costrella/jhipster/web/rest/RaportResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../resources/config/liquibase/changelog/20160831181602_added_entity_Raport.xml" afterPath="$PROJECT_DIR$/../resources/config/liquibase/changelog/20160831181602_added_entity_Raport.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../resources/config/liquibase/changelog/20160831181602_added_entity_constraints_Raport.xml" afterPath="$PROJECT_DIR$/../resources/config/liquibase/changelog/20160831181602_added_entity_constraints_Raport.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/entities/day/day-detail.controller.js" afterPath="$PROJECT_DIR$/app/entities/day/day-detail.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/javascript/spec/app/entities/day/day-detail.controller.spec.js" afterPath="$PROJECT_DIR$/../../test/javascript/spec/app/entities/day/day-detail.controller.spec.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/javascript/spec/app/entities/raport/raport-detail.controller.spec.js" afterPath="$PROJECT_DIR$/../../test/javascript/spec/app/entities/raport/raport-detail.controller.spec.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/entities/week/week-detail.controller.js" afterPath="$PROJECT_DIR$/app/entities/week/week-detail.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/entities/week/week-detail.html" afterPath="$PROJECT_DIR$/app/entities/week/week-detail.html" />
     </list>
     <ignored path="webapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,18 +52,18 @@
       <file leaf-file-name="day-detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/entities/day/day-detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="61" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
+            <state relative-caret-position="752">
+              <caret line="134" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="day-detail.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="day-detail.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/entities/day/day-detail.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+            <state relative-caret-position="305">
+              <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -85,6 +74,26 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="476">
               <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="week-detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/entities/week/week-detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-931">
+              <caret line="98" column="5" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="week-detail.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/entities/week/week-detail.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="60" column="27" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -103,12 +112,12 @@
         <option value="$PROJECT_DIR$/app/entities/raport/raport.service.js" />
         <option value="$PROJECT_DIR$/app/entities/raport/raports.html" />
         <option value="$PROJECT_DIR$/app/entities/store/store-detail.html" />
-        <option value="$PROJECT_DIR$/app/entities/week/week-detail.controller.js" />
-        <option value="$PROJECT_DIR$/app/entities/week/week-detail.html" />
         <option value="$PROJECT_DIR$/app/entities/store/store-detail.controller.js" />
         <option value="$PROJECT_DIR$/app/entities/day/day-detail.html" />
         <option value="$PROJECT_DIR$/app/entities/day/day.service.js" />
+        <option value="$PROJECT_DIR$/app/entities/week/week-detail.html" />
         <option value="$PROJECT_DIR$/app/entities/day/day-detail.controller.js" />
+        <option value="$PROJECT_DIR$/app/entities/week/week-detail.controller.js" />
       </list>
     </option>
   </component>
@@ -399,12 +408,12 @@
       <updated>1476998739400</updated>
       <workItem from="1476998742581" duration="12622000" />
       <workItem from="1477152157009" duration="1057000" />
-      <workItem from="1477311535573" duration="29187000" />
+      <workItem from="1477311535573" duration="30344000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42866000" />
+    <option name="totallyTimeSpent" value="44023000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="88" y="-8" width="1600" height="1066" extended-state="6" />
@@ -640,14 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/entities/week/week-detail.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/entities/store/store-detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="701">
@@ -660,14 +661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="548">
           <caret line="40" column="188" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="188" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/entities/week/week-detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="68" column="17" selection-start-line="68" selection-start-column="17" selection-end-line="68" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -698,14 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/entities/day/day-detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="61" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/entities/day/day.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -714,10 +699,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/entities/day/day-detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="752">
+          <caret line="134" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/entities/week/week-detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-931">
+          <caret line="98" column="5" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/entities/day/day-detail.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+        <state relative-caret-position="305">
+          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/entities/week/week-detail.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="60" column="27" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
           <folding />
         </state>
       </provider>

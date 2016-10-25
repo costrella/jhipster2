@@ -41,4 +41,7 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
 
     @Query("SELECT raport from Raport raport where raport.day.id = ?1 ORDER BY raport.date DESC")
     Page<Raport> getDayRaports(Long idDay, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.day.week.id = ?1 ORDER BY raport.date DESC")
+    Page<Raport> getWeekRaports(Long idWeek, Pageable pageable);
 }

@@ -132,7 +132,8 @@ public class RaportResource {
                                                            @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
                                                            @RequestParam(value = "person", required = false) Long person,
                                                            @RequestParam(value = "storeId", required = false) Long storeId,
-                                                           @RequestParam(value = "dayId", required = false) Long dayId
+                                                           @RequestParam(value = "dayId", required = false) Long dayId,
+                                                           @RequestParam(value = "weekId", required = false) Long weekId
     ) throws URISyntaxException {
         Page<Raport> page;
         //warunek dla wyswietlania raportow w 'sklepie'
@@ -140,6 +141,8 @@ public class RaportResource {
             page = raportRepository.getStoresRaports(storeId, pageable);
         } else if( dayId != null) {
             page = raportRepository.getDayRaports(dayId, pageable);
+        }else if( weekId != null) {
+            page = raportRepository.getWeekRaports(weekId, pageable);
         }
         else {
             if (person == -1) {

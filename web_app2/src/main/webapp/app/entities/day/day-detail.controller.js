@@ -29,7 +29,6 @@
             Raport.query({
                 page: vm.page - 1,
                 size: vm.itemsPerPage,
-                personId: vm.day.week.person.id,
                 dayId: vm.day.id
             }, onSuccess, onError);
 
