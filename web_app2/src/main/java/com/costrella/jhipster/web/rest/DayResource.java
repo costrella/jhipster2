@@ -133,10 +133,17 @@ public class DayResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Day>> getAllDays(Pageable pageable)
+    public ResponseEntity<List<Day>> getAllDays(Pageable pageable,
+                                                @RequestParam(value = "weekId", required = false) Long weekId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Days");
-        Page<Day> page = dayRepository.findAll(pageable);
+        Page<Day> page;
+        //warunek dla www, lista dni dla trasowki
+        if(weekId != null){
+            page = dayRepository.getWeekDays(weekId, pageable);
+        }else {
+            page = dayRepository.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/days");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

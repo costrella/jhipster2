@@ -37,3 +37,51 @@
         <span class="hidden-xs hidden-sm"> Edit</span>
     </button>
 </div>
+<div class="table-responsive">
+    <table class="jh-table table table-striped">
+        <thead>
+        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+            <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="date"><span>Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="week.name"><span>Week</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="day in vm.days track by day.id">
+            <td><a ui-sref="day-detail({id:day.id})">{{day.id}}</a></td>
+            <td>{{day.name}}</td>
+            <td>{{day.date | date:'mediumDate'}}</td>
+            <td>
+                <a ui-sref="week-detail({id:day.week.id})">{{day.week.name}}</a>
+            </td>
+            <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            ui-sref="day-detail({id:day.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="day.edit({id:day.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="day.delete({id:day.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.loadPage(vm.page)"></uib-pagination>
+</div>

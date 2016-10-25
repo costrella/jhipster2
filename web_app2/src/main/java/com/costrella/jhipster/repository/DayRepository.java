@@ -2,6 +2,8 @@ package com.costrella.jhipster.repository;
 
 import com.costrella.jhipster.domain.Day;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -15,6 +17,9 @@ public interface DayRepository extends JpaRepository<Day,Long> {
 
     @Query("SELECT day from Day day where day.week.id = ?1")
     List<Day> getWeekDays(Long id);
+
+    @Query("SELECT day from Day day where day.week.id = ?1")
+    Page<Day> getWeekDays(Long id, Pageable pageable);
 
     @Query("select distinct day from Day day left join fetch day.stores")
     List<Day> findAllWithEagerRelationships();
