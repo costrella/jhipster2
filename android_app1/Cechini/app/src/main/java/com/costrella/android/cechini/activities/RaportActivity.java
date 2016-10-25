@@ -20,6 +20,7 @@ import com.costrella.android.cechini.Constants;
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.PersonService;
 import com.costrella.android.cechini.services.StoreService;
 
@@ -143,6 +144,7 @@ public class RaportActivity extends AppCompatActivity {
     private void createRaport() {
         showProgress(true);
         Raport raport = new Raport();
+        raport.setDay(DayService.selectedDay);
         if(bitmap1 != null){
             raport.setFoto1(getImage(bitmap1));
         }

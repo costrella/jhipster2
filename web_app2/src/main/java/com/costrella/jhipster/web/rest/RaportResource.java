@@ -23,7 +23,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Null;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +64,14 @@ public class RaportResource {
         if (raport.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("raport", "idexists", "A new raport cannot already have an ID")).body(null);
         }
+        //ALBO TWORZYMY RAPORT Z TRASOWKI, ALBO NIE Z TRASOWKI
         raport.setDate(LocalDate.now());
+        if(raport.getDay() != null){
+            if(raport.getDay().getDate() != null){
+                LocalDate tmp = Instant.ofEpochMilli(raport.getDay().getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+                raport.setDate(tmp);
+            }
+        }
         Raport result = raportRepository.save(raport);
         raportSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/raports/" + result.getId()))
@@ -122,14 +131,17 @@ public class RaportResource {
                                                            @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
                                                            @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
                                                            @RequestParam(value = "person", required = false) Long person,
-                                                           @RequestParam(value = "storeId", required = false) Long storeId
+                                                           @RequestParam(value = "storeId", required = false) Long storeId,
+                                                           @RequestParam(value = "dayId", required = false) Long dayId
     ) throws URISyntaxException {
         Page<Raport> page;
         //warunek dla wyswietlania raportow w 'sklepie'
         if (storeId != null) {
             page = raportRepository.getStoresRaports(storeId, pageable);
-        } else {
-
+        } else if( dayId != null) {
+            page = raportRepository.getDayRaports(dayId, pageable);
+        }
+        else {
             if (person == -1) {
                 page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
             } else {

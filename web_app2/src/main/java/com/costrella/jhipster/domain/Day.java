@@ -1,9 +1,11 @@
 package com.costrella.jhipster.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,6 +39,10 @@ public class Day implements Serializable {
                joinColumns = @JoinColumn(name="days_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="stores_id", referencedColumnName="ID"))
     private Set<Store> stores = new HashSet<>();
+
+    @OneToMany(mappedBy = "day")
+    @JsonIgnore
+    private Set<Raport> raports = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -108,6 +114,31 @@ public class Day implements Serializable {
 
     public void setStores(Set<Store> stores) {
         this.stores = stores;
+    }
+
+    public Set<Raport> getRaports() {
+        return raports;
+    }
+
+    public Day raports(Set<Raport> raports) {
+        this.raports = raports;
+        return this;
+    }
+
+    public Day addRaport(Raport raport) {
+        raports.add(raport);
+        raport.setDay(this);
+        return this;
+    }
+
+    public Day removeRaport(Raport raport) {
+        raports.remove(raport);
+        raport.setDay(null);
+        return this;
+    }
+
+    public void setRaports(Set<Raport> raports) {
+        this.raports = raports;
     }
 
     @Override

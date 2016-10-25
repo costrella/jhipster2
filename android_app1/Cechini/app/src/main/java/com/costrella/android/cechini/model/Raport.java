@@ -45,6 +45,21 @@ public class Raport implements Serializable {
 
     private Integer z_e;
 
+    private Day day;
+
+    public Day getDay() {
+        return day;
+    }
+
+    public Raport day(Day day) {
+        this.day = day;
+        return this;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
+    }
+
     public Long getId() {
         return id;
     }

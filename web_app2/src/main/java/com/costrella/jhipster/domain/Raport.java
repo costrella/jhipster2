@@ -73,6 +73,9 @@ public class Raport implements Serializable {
     @NotNull
     private Store store;
 
+    @ManyToOne
+    private Day day;
+
     public Long getId() {
         return id;
     }
@@ -274,6 +277,19 @@ public class Raport implements Serializable {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public Day getDay() {
+        return day;
+    }
+
+    public Raport day(Day day) {
+        this.day = day;
+        return this;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
     }
 
     @Override

@@ -14,6 +14,12 @@
             "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "day"
+        },
+        {
+            "relationshipName": "raport",
+            "otherEntityName": "raport",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "day"
         }
     ],
     "fields": [

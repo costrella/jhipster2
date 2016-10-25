@@ -22,7 +22,7 @@
         });
         $scope.$on('$destroy', unsubscribe);
 
-        // vm.loadAll();
+        vm.loadAll();
 
         function loadAll() {
 
@@ -30,7 +30,7 @@
                 page: vm.page - 1,
                 size: vm.itemsPerPage,
                 personId: vm.day.week.person.id,
-                date: vm.day.date
+                dayId: vm.day.id
             }, onSuccess, onError);
 
             function onSuccess(data, headers) {

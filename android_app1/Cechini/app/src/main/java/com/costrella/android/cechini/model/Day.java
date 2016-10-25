@@ -23,6 +23,8 @@ public class Day implements Serializable {
 
     private Set<Store> stores = new HashSet<>();
 
+    private Set<Raport> raports = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -93,6 +95,31 @@ public class Day implements Serializable {
 
     public void setStores(Set<Store> stores) {
         this.stores = stores;
+    }
+
+    public Set<Raport> getRaports() {
+        return raports;
+    }
+
+    public Day raports(Set<Raport> raports) {
+        this.raports = raports;
+        return this;
+    }
+
+    public Day addRaport(Raport raport) {
+        raports.add(raport);
+        raport.setDay(this);
+        return this;
+    }
+
+    public Day removeRaport(Raport raport) {
+        raports.remove(raport);
+        raport.setDay(null);
+        return this;
+    }
+
+    public void setRaports(Set<Raport> raports) {
+        this.raports = raports;
     }
 
     @Override
