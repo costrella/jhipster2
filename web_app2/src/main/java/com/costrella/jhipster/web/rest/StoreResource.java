@@ -116,6 +116,7 @@ public class StoreResource {
     }
 
     private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {
+        if(raportDate == null) return false;
         return raportDate.getYear() == year && raportDate.getMonth().equals(month);
     }
 

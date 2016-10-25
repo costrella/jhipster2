@@ -51,3 +51,96 @@
         <span class="hidden-xs hidden-sm"> Edit</span>
     </button>
 </div>
+<br/>
+<div class="table-responsive">
+    <table class="jh-table table table-striped">
+        <thead>
+        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+            <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+            <th jh-sort-by="date"><span>Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="person.surname"><span>PH</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="store.name"><span>Sklep</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+            <th jh-sort-by="foto1"><span>Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="foto2"><span>Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="foto3"><span>Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="raport in vm.raports track by raport.id">
+            <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
+            <td>{{raport.description}}</td>
+
+            <td>{{raport.date | date:'yyyy-MM-dd'}}</td>
+            <td>
+                <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
+            </td>
+            <td>
+                <a ui-sref="store-detail({id:raport.store.id})">{{raport.store.name}}</a>
+            </td>
+            <td>{{raport.z_a}}</td>
+            <td>{{raport.z_b}}</td>
+            <td>{{raport.z_c}}</td>
+            <td>{{raport.z_d}}</td>
+            <td>{{raport.z_e}}</td>
+
+            <td>
+                <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+            </td>
+            <td>
+                <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+
+            </td>
+            <td>
+                <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+
+            </td>
+            <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            ui-sref="raport-detail({id:raport.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="raport.edit({id:raport.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="raport.delete({id:raport.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Suma:</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><b>{{ getTotalZ_a() }}</b></td>
+            <td><b>{{ getTotalZ_b() }}</b></td>
+            <td><b>{{ getTotalZ_c() }}</b></td>
+            <td><b>{{ getTotalZ_d() }}</b></td>
+            <td><b>{{ getTotalZ_e() }}</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

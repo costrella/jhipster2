@@ -14,7 +14,7 @@ import java.util.List;
  * Spring Data JPA repository for the Raport entity.
  */
 @SuppressWarnings("unused")
-public interface RaportRepository extends JpaRepository<Raport,Long> {
+public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("select sum(raport.z_a) from Raport raport where raport.person.id = ?1")
     int getZ_a(Long idPerson);
 
@@ -35,4 +35,7 @@ public interface RaportRepository extends JpaRepository<Raport,Long> {
 
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3")
     Page<Raport> getRaportsByDateAndPerson(Long idPerson, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.store.id = ?1")
+    Page<Raport> getStoresRaports(Long idStore, Pageable pageable);
 }

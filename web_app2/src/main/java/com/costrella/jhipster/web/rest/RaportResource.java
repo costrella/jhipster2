@@ -113,22 +113,28 @@ public class RaportResource {
 //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
 //        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 //    }
-
     @RequestMapping(value = "/raports",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Timed
     public ResponseEntity<List<Raport>> getRaportsFiltered(Pageable pageable,
-            @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-            @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-            @RequestParam(value = "person", required = false) Long person
-            ) throws URISyntaxException {
+                                                           @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+                                                           @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+                                                           @RequestParam(value = "person", required = false) Long person,
+                                                           @RequestParam(value = "storeId", required = false) Long storeId
+    ) throws URISyntaxException {
         Page<Raport> page;
-        if(person == -1) {
-            page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
-        }else{
-            page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+        //warunek dla wyswietlania raportow w 'sklepie'
+        if (storeId != null) {
+            page = raportRepository.getStoresRaports(storeId, pageable);
+        } else {
+
+            if (person == -1) {
+                page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+            } else {
+                page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+            }
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -161,6 +167,7 @@ public class RaportResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
     /**
      * GET  /raports/:id : get the "id" raport.
      *
@@ -202,7 +209,7 @@ public class RaportResource {
      * SEARCH  /_search/raports?query=:query : search for the raport corresponding
      * to the query.
      *
-     * @param query the query of the raport search
+     * @param query    the query of the raport search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
