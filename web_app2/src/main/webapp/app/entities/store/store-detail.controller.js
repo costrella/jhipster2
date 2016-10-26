@@ -14,7 +14,7 @@
         vm.previousState = previousState.name;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.loadPage = loadPage;
-
+        vm.visitCount = visitCount;
         vm.loadAll = loadAll;
 
         var unsubscribe = $rootScope.$on('cechiniApp:storeUpdate', function (event, result) {
@@ -23,6 +23,7 @@
         $scope.$on('$destroy', unsubscribe);
 
         vm.loadAll();
+        vm.visitCount();
 
 
         function loadAll() {
@@ -53,6 +54,23 @@
 
         function transition() {
             vm.loadAll();
+        }
+
+        function visitCount() {
+            Store.queryCount({
+                storeId: vm.store.id
+            }, onSuccess, onError);
+
+            function onSuccess(data, headers) {
+                vm.month = data.month;
+                vm.monthAgo = data.monthAgo;
+                vm.allCount = data.allCount;
+            }
+
+            function onError(error) {
+                // AlertService.error(error.data.message);
+                console.log(error.data.message);
+            }
         }
 
     }

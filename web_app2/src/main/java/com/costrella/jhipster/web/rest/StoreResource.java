@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +26,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -220,5 +223,42 @@ public class StoreResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/stores",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        params = {"storeId"}
+    )
+    @Timed
+    public ResponseEntity<Map<String, Integer>> getVisitCount(@RequestParam(value = "storeId", required = true) Long storeId
+    ) throws URISyntaxException {
+
+        LocalDate today = LocalDate.now();
+        LocalDate monthAgo = today.minusMonths(1);
+
+        Month month = today.getMonth();
+        int year = today.getYear();
+        int monthCount = 0;
+        int monthAgoCount = 0;
+        List<Raport> raports = storeRepository.getStoresRaport(storeId);
+        for (Raport r : raports) {
+            if(checkMonthAndYear(r.getDate(), month, year)){
+                monthCount++;
+            }
+            if(checkMonthAndYear(r.getDate(), monthAgo.getMonth(), monthAgo.getYear())){
+                monthAgoCount++;
+            }
+        }
+
+        Map<String, Integer> myMap = new HashMap<>();
+        myMap.put("allCount", raports.size());
+        myMap.put("month", monthCount);
+        myMap.put("monthAgo", monthAgoCount);
+
+        return Optional.ofNullable(myMap)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 }

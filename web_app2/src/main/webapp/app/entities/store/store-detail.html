@@ -4,39 +4,33 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Name</span></dt>
+        <dt><span>Nazwa</span></dt>
         <dd>
             <span>{{vm.store.name}}</span>
         </dd>
-        <dt><span>City</span></dt>
+        <dt><span>Adres</span></dt>
         <dd>
-            <span>{{vm.store.city}}</span>
+            <span>{{vm.store.city}}, {{vm.store.street}} {{vm.store.number}} </span>
         </dd>
-        <dt><span>Visited</span></dt>
-        <dd>
-            <span>{{vm.store.visited}}</span>
-        </dd>
-        <dt><span>Street</span></dt>
-        <dd>
-            <span>{{vm.store.street}}</span>
-        </dd>
-        <dt><span>Number</span></dt>
-        <dd>
-            <span>{{vm.store.number}}</span>
-        </dd>
-        <dt><span>Description</span></dt>
+        <dt><span>Opis</span></dt>
         <dd>
             <span>{{vm.store.description}}</span>
         </dd>
-        <dt><span>Person</span></dt>
+        <dt><span>PH</span></dt>
         <dd>
             <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
         </dd>
-        <dt><span>Day</span></dt>
+        <dt><span>Wszystkie wizyty</span></dt>
         <dd>
-            <span ng-repeat="day in vm.store.days">
-                <a ui-sref="day-detail({id: day.id})">{{day.name}}</a>{{$last ? '' : ', '}}
-            </span>
+            <span>{{vm.allCount}}</span>
+        </dd>
+        <dt><span>Wizyty w tym miesiącu</span></dt>
+        <dd>
+           <span>{{vm.month}} {{vm.store.visited}}</span>
+        </dd>
+        <dt><span>Wizyty w poprzednim miesiącu</span></dt>
+        <dd>
+            <span>{{vm.monthAgo}}</span>
         </dd>
     </dl>
 
