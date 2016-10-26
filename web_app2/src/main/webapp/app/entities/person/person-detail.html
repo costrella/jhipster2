@@ -42,6 +42,7 @@
     </button>
 </div>
 <br/>
+<h3>Raporty PH</h3>
 <div class="table-responsive">
     <table class="jh-table table table-striped">
         <thead>
@@ -49,16 +50,14 @@
             <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-            <th jh-sort-by="date"><span>Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="date"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-            <th jh-sort-by="foto1"><span>Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="foto2"><span>Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="foto3"><span>Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="foto1"><span>Zdjęcia</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th></th>
         </tr>
         </thead>
@@ -76,12 +75,7 @@
 
             <td>
                 <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-            </td>
-            <td>
                 <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-
-            </td>
-            <td>
                 <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
 
             </td>

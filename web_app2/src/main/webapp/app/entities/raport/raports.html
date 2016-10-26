@@ -11,11 +11,11 @@
                     </span>
                 </button>
 
-                <h5>2L NGAZ: <b>{{vm.a}}</b></h5>
-                <h5>2L GAZ:  <b>{{vm.b}}</b></h5>
-                <h5>0,33L:   <b>{{vm.c}}</b></h5>
-                <h5>CYT:     <b>{{vm.d}}</b></h5>
-                <h5>Gratisy: <b>{{vm.e}}</b></h5>
+                <!--<h5>2L NGAZ: <b>{{vm.a}}</b></h5>-->
+                <!--<h5>2L GAZ:  <b>{{vm.b}}</b></h5>-->
+                <!--<h5>0,33L:   <b>{{vm.c}}</b></h5>-->
+                <!--<h5>CYT:     <b>{{vm.d}}</b></h5>-->
+                <!--<h5>Gratisy: <b>{{vm.e}}</b></h5>-->
 
             </div>
             <div class="col-xs-8 no-padding-right">
@@ -54,9 +54,7 @@
                     <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-					<th jh-sort-by="foto1"><span>Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="foto2"><span>Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="foto3"><span>Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th jh-sort-by="foto1"><span>Zdjęcia</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -80,12 +78,7 @@
 
 					<td>
 						<img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-                    </td>
-                    <td>
 						<img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-
-                    </td>
-                    <td>
 						<img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
 
                     </td>
@@ -113,7 +106,7 @@
                     </td>
                 </tr>
 				<tr>
-					<td>Suma:</td>
+					<td>Suma*:</td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -136,6 +129,5 @@
 
 
 
-<h6>Przykład zapytania: date:[2012-01-01 TO 2016-12-31] && store.person.surname: Kowalski</h6>
-<h6>2L NGAZ:z_a, 2L GAZ:z_b, 0,33L:z_c, z_d:CYT, z_e:Gratisy</h6>
+<h6>*Suma: sumowane są pola z wszystkich stron prezentowanej listy raportów</h6>
 </div>

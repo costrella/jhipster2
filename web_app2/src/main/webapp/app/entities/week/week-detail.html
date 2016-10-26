@@ -1,6 +1,6 @@
 
 <div>
-    <h2><span>Week</span> {{vm.week.id}}</h2>
+    <h2><span>Trasówka</span> {{vm.week.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
@@ -8,19 +8,15 @@
         <dd>
             <span>{{vm.week.name}}</span>
         </dd>
-        <dt><span>Date Before</span></dt>
+        <dt><span>data od</span></dt>
         <dd>
             <span>{{vm.week.dateBefore | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Date After</span></dt>
+        <dt><span>data do</span></dt>
         <dd>
             <span>{{vm.week.dateAfter | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Week Of Year</span></dt>
-        <dd>
-            <span>{{vm.week.weekOfYear}}</span>
-        </dd>
-        <dt><span>Person</span></dt>
+        <dt><span>PH</span></dt>
         <dd>
             <a ui-sref="person-detail({id:vm.week.person.id})">{{vm.week.person.surname}}</a>
         </dd>
@@ -37,6 +33,8 @@
         <span class="hidden-xs hidden-sm"> Edit</span>
     </button>
 </div>
+<br/>
+<h3>Poszczególne dni trasówki</h3>
 <div class="table-responsive">
     <table class="jh-table table table-striped">
         <thead>
@@ -97,7 +95,7 @@
     <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.loadPage(vm.page)"></uib-pagination>
 </div>
 <br/>
-<h2>Raporty trasówki</h2>
+<h3>Raporty trasówki</h3>
 <br/>
 <div class="table-responsive">
     <table class="jh-table table table-striped">
@@ -115,9 +113,7 @@
             <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-            <th jh-sort-by="foto1"><span>Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="foto2"><span>Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="foto3"><span>Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="foto1"><span>Zdjęcia</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th></th>
         </tr>
         </thead>
@@ -141,12 +137,7 @@
 
             <td>
                 <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-            </td>
-            <td>
                 <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-
-            </td>
-            <td>
                 <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
 
             </td>
@@ -172,21 +163,6 @@
                     </button>
                 </div>
             </td>
-        </tr>
-        <tr>
-            <td>Suma:</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><b>{{ getTotalZ_a() }}</b></td>
-            <td><b>{{ getTotalZ_b() }}</b></td>
-            <td><b>{{ getTotalZ_c() }}</b></td>
-            <td><b>{{ getTotalZ_d() }}</b></td>
-            <td><b>{{ getTotalZ_e() }}</b></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         </tbody>
     </table>
