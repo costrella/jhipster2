@@ -83,7 +83,10 @@
 
 
             Raport.queryCount({
-                test: 123
+                test: 123,
+                fromDate: fromDate,
+                toDate: toDate,
+                person: getPersonId()
             }, onSuccess2, onError2);
 
             function getPersonId() {
@@ -93,10 +96,12 @@
                 return -1;
             }
             function onSuccess2(data, headers) {
-                vm.links = ParseLinks.parse(headers('link'));
-                vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
-               // vm.raports = data;
+                vm.a = data.a;
+                vm.b = data.b;
+                vm.c = data.c;
+                vm.d = data.d;
+                vm.e = data.e;
             }
             function onError2(error) {
                 AlertService.error(error.data.message);

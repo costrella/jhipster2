@@ -66,8 +66,8 @@ public class RaportResource {
         }
         //ALBO TWORZYMY RAPORT Z TRASOWKI, ALBO NIE Z TRASOWKI
         raport.setDate(LocalDate.now());
-        if(raport.getDay() != null){
-            if(raport.getDay().getDate() != null){
+        if (raport.getDay() != null) {
+            if (raport.getDay().getDate() != null) {
                 LocalDate tmp = Instant.ofEpochMilli(raport.getDay().getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
                 raport.setDate(tmp);
             }
@@ -139,12 +139,11 @@ public class RaportResource {
         //warunek dla wyswietlania raportow w 'sklepie'
         if (storeId != null) {
             page = raportRepository.getStoresRaports(storeId, pageable);
-        } else if( dayId != null) {
+        } else if (dayId != null) {
             page = raportRepository.getDayRaports(dayId, pageable);
-        }else if( weekId != null) {
+        } else if (weekId != null) {
             page = raportRepository.getWeekRaports(weekId, pageable);
-        }
-        else {
+        } else {
             if (person == -1) {
                 page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
             } else {
@@ -163,19 +162,34 @@ public class RaportResource {
     )
     @Timed
     public ResponseEntity<Map<String, Integer>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-                                                           @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-                                                           @RequestParam(value = "person", required = false) Long person,
-                                                           @RequestParam(value = "storeId", required = false) Long storeId,
-                                                           @RequestParam(value = "dayId", required = false) Long dayId,
-                                                           @RequestParam(value = "weekId", required = false) Long weekId,
-                                                            @RequestParam(value = "test", required = false) Long test
+                                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+                                                                @RequestParam(value = "person", required = false) Long person,
+                                                                @RequestParam(value = "storeId", required = false) Long storeId,
+                                                                @RequestParam(value = "dayId", required = false) Long dayId,
+                                                                @RequestParam(value = "weekId", required = false) Long weekId,
+                                                                @RequestParam(value = "test", required = false) Long test
     ) throws URISyntaxException {
+        List<Raport> raportsList;
+        if (person == -1) {
+            raportsList = raportRepository.getRaportsByDate(fromDate, toDate);
+        } else {
+            raportsList = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate);
+        }
+        int a = 0, b = 0, c = 0, d = 0, e = 0;
+        for (Raport r : raportsList) {
+            a += r.getz_a();
+            b += r.getz_b();
+            c += r.getz_c();
+            d += r.getz_d();
+            e += r.getz_e();
+        }
+
         Map<String, Integer> myMap = new HashMap<>();
-        myMap.put("2L NGAZ: ", 3);
-        myMap.put("2L GAZ: ", 4);
-        myMap.put("0,33L: ", 5);
-        myMap.put("CYT: ", 6);
-        myMap.put("gratisy: ", 7);
+        myMap.put("a", a);
+        myMap.put("b", b);
+        myMap.put("c", c);
+        myMap.put("d", d);
+        myMap.put("e", e);
 
         return Optional.ofNullable(myMap)
             .map(result -> new ResponseEntity<>(
