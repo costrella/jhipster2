@@ -63,5 +63,8 @@
   },
   "scripts": {
     "test": "gulp test"
+  },
+  "dependencies": {
+    "angular-bootstrap-lightbox": "^0.12.0"
   }
 }

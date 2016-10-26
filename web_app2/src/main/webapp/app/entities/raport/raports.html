@@ -76,10 +76,16 @@
                     <td>{{raport.z_d}}</td>
                     <td>{{raport.z_e}}</td>
 
-					<td>
-						<img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-						<img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-						<img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                    <td>
+                        <a ng-if="raport.foto1" ng-click="vm.openFile(raport.foto1ContentType, raport.foto1)">
+                            <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+                        </a>
+                        <a ng-if="raport.foto2" ng-click="vm.openFile(raport.foto2ContentType, raport.foto2)">
+                            <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+                        </a>
+                        <a ng-if="raport.foto3" ng-click="vm.openFile(raport.foto3ContentType, raport.foto3)">
+                            <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                        </a>
 
                     </td>
                     <td class="text-right">
