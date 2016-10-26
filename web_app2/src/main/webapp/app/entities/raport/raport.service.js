@@ -13,6 +13,9 @@
             'query': { method: 'GET', isArray: true,
                 params: {fromDate: null, toDate: null}
             },
+            'queryCount': { method: 'GET', isArray: false,
+                params: {fromDate: null, toDate: null}
+            },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

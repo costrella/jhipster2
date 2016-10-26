@@ -18,6 +18,7 @@
         // vm.clear = clear;
         // vm.search = search;
         vm.loadAll = loadAll;
+        vm.raportCount = raportCount;
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
 		vm.searchQueryPerson = null;
@@ -68,12 +69,39 @@
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
                 vm.raports = data;
+                vm.raportCount();
             }
             function onError(error) {
                 AlertService.error(error.data.message);
             }
         }
 
+        function raportCount () {
+            var dateFormat = 'yyyy-MM-dd';
+            var fromDate = $filter('date')(vm.fromDate, dateFormat);
+            var toDate = $filter('date')(vm.toDate, dateFormat);
+
+
+            Raport.queryCount({
+                test: 123
+            }, onSuccess2, onError2);
+
+            function getPersonId() {
+                if (vm.ph) {
+                    return vm.ph.id;
+                }
+                return -1;
+            }
+            function onSuccess2(data, headers) {
+                vm.links = ParseLinks.parse(headers('link'));
+                vm.totalItems = headers('X-Total-Count');
+                vm.queryCount = vm.totalItems;
+               // vm.raports = data;
+            }
+            function onError2(error) {
+                AlertService.error(error.data.message);
+            }
+        }
         // Date picker configuration
         function today () {
             // Today + 1 day - needed if the current day must be included
