@@ -42,6 +42,27 @@ public class Person implements Serializable {
     @Column(name = "pass", nullable = false)
     private String pass;
 
+    @Column(name = "target_01")
+    private Integer target01;
+
+    @Column(name = "target_02")
+    private Integer target02;
+
+    @Column(name = "target_03")
+    private Integer target03;
+
+    @Column(name = "target_04")
+    private Integer target04;
+
+    @Column(name = "target_05")
+    private Integer target05;
+
+    @Column(name = "target_06")
+    private Integer target06;
+
+    @Column(name = "target_07")
+    private Integer target07;
+
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private Set<Store> stores = new HashSet<>();
@@ -112,6 +133,97 @@ public class Person implements Serializable {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public Integer getTarget01() {
+        return target01;
+    }
+
+    public Person target01(Integer target01) {
+        this.target01 = target01;
+        return this;
+    }
+
+    public void setTarget01(Integer target01) {
+        this.target01 = target01;
+    }
+
+    public Integer getTarget02() {
+        return target02;
+    }
+
+    public Person target02(Integer target02) {
+        this.target02 = target02;
+        return this;
+    }
+
+    public void setTarget02(Integer target02) {
+        this.target02 = target02;
+    }
+
+    public Integer getTarget03() {
+        return target03;
+    }
+
+    public Person target03(Integer target03) {
+        this.target03 = target03;
+        return this;
+    }
+
+    public void setTarget03(Integer target03) {
+        this.target03 = target03;
+    }
+
+    public Integer getTarget04() {
+        return target04;
+    }
+
+    public Person target04(Integer target04) {
+        this.target04 = target04;
+        return this;
+    }
+
+    public void setTarget04(Integer target04) {
+        this.target04 = target04;
+    }
+
+    public Integer getTarget05() {
+        return target05;
+    }
+
+    public Person target05(Integer target05) {
+        this.target05 = target05;
+        return this;
+    }
+
+    public void setTarget05(Integer target05) {
+        this.target05 = target05;
+    }
+
+    public Integer getTarget06() {
+        return target06;
+    }
+
+    public Person target06(Integer target06) {
+        this.target06 = target06;
+        return this;
+    }
+
+    public void setTarget06(Integer target06) {
+        this.target06 = target06;
+    }
+
+    public Integer getTarget07() {
+        return target07;
+    }
+
+    public Person target07(Integer target07) {
+        this.target07 = target07;
+        return this;
+    }
+
+    public void setTarget07(Integer target07) {
+        this.target07 = target07;
     }
 
     public Set<Store> getStores() {
@@ -217,6 +329,13 @@ public class Person implements Serializable {
             ", surname='" + surname + "'" +
             ", login='" + login + "'" +
             ", pass='" + pass + "'" +
+            ", target01='" + target01 + "'" +
+            ", target02='" + target02 + "'" +
+            ", target03='" + target03 + "'" +
+            ", target04='" + target04 + "'" +
+            ", target05='" + target05 + "'" +
+            ", target06='" + target06 + "'" +
+            ", target07='" + target07 + "'" +
             '}';
     }
 }

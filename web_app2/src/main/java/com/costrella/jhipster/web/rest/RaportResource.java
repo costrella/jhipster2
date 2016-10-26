@@ -147,7 +147,12 @@ public class RaportResource {
             if (person == -1) {
                 page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
             } else {
-                page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+                if(fromDate == null && toDate == null){
+                    //przypadek dla raportow w "person"
+                    page = raportRepository.getPersonRaports(person, pageable);
+                }else {
+                    page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+                }
             }
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/raports");

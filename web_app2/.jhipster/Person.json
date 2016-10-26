@@ -52,6 +52,34 @@
                 "minlength"
             ],
             "fieldValidateRulesMinlength": "4"
+        },
+        {
+            "fieldName": "target01",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "target02",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "target03",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "target04",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "target05",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "target06",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "target07",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20160831181148",

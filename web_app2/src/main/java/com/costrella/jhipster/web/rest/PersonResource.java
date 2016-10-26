@@ -3,8 +3,10 @@ package com.costrella.jhipster.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Person;
 
+import com.costrella.jhipster.domain.Raport;
 import com.costrella.jhipster.domain.Week;
 import com.costrella.jhipster.repository.PersonRepository;
+import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.search.PersonSearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
 import com.costrella.jhipster.web.rest.util.PaginationUtil;
@@ -22,7 +24,11 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -40,6 +46,9 @@ public class PersonResource {
 
     @Inject
     private PersonRepository personRepository;
+
+    @Inject
+    private RaportRepository raportRepository;
 
     @Inject
     private PersonSearchRepository personSearchRepository;
@@ -76,18 +85,18 @@ public class PersonResource {
         if (personPost.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "idexists", "A person cannot already have an ID")).body(null);
         }
-        if(personPost.getLogin() == null){
+        if (personPost.getLogin() == null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "loginNPE", "A person have a null LOGIN")).body(null);
         }
-        if(personPost.getPass() == null){
+        if (personPost.getPass() == null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "passNPE", "A person have a null PASSWORD")).body(null);
         }
 
         Person result = personRepository.login(personPost.getLogin());
-        if(result == null){
+        if (result == null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "personDoesNotExist", "A person does not exist")).body(null);
         }
-        if(!result.getPass().equals(personPost.getPass())){
+        if (!result.getPass().equals(personPost.getPass())) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("person", "personDoesNotExist", "A person does not exist")).body(null);
         }
 
@@ -181,7 +190,7 @@ public class PersonResource {
      * SEARCH  /_search/people?query=:query : search for the person corresponding
      * to the query.
      *
-     * @param query the query of the person search
+     * @param query    the query of the person search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
@@ -198,5 +207,70 @@ public class PersonResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/people",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        params = {"personId"}
+    )
+    @Timed
+    public ResponseEntity<Map<String, Double>> getTargets(@RequestParam(value = "personId", required = true) Long personId
+    ) throws URISyntaxException {
+        LocalDate today = LocalDate.now();
+        Person person = personRepository.findOne(personId);
+        int targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0;
+        List<Raport> raports = raportRepository.getPersonRaports(personId);
+        for (Raport r : raports) {
+            if (checkMonthAndYear(r.getDate(), today.getMonth(), today.getYear())) {
+                targetSum01 += r.getz_a();
+                targetSum02 += r.getz_b();
+                targetSum03 += r.getz_c();
+                targetSum04 += r.getz_d();
+                targetSum05 += r.getz_e();
+            }
+        }
+
+        double percent01, percent02, percent03, percent04, percent05;
+        percent01 = getPercent(person.getTarget01() != null ? person.getTarget01() : 0, targetSum01);
+        percent02 = getPercent(person.getTarget02() != null ? person.getTarget02() : 0, targetSum02);
+        percent03 = getPercent(person.getTarget03() != null ? person.getTarget03() : 0, targetSum03);
+        percent04 = getPercent(person.getTarget04() != null ? person.getTarget04() : 0, targetSum04);
+        percent05 = getPercent(person.getTarget05() != null ? person.getTarget05() : 0, targetSum05);
+
+
+        Map<String, Double> myMap = new HashMap<>();
+        myMap.put("target01", percent01);
+        myMap.put("target02", percent02);
+        myMap.put("target03", percent03);
+        myMap.put("target04", percent04);
+        myMap.put("target05", percent05);
+
+        return Optional.ofNullable(myMap)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    //TODO DUBLOWANIE KODU, juz jest taka metoda w STORERESOURCE
+    private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {
+        if(raportDate == null) return false;
+        return raportDate.getYear() == year && raportDate.getMonth().equals(month);
+    }
+
+    private double getPercent(int target, int targetSum){
+        double percent = 0;
+        double targetD = (double)target;
+        double targetSumD = (double)targetSum;
+
+        if(target != 0 && targetSum != 0){
+            percent = (targetSumD / targetD) * 100;
+
+            //zaokraglenie do 2 miejsc po przecinku
+            percent *= 100; // pi = pi * 100;
+            percent = Math.round(percent);
+            percent /= 100; // pi = pi / 100;
+        }
+        return percent;
+    }
 
 }

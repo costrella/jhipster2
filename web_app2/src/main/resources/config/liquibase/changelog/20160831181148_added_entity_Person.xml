@@ -37,6 +37,34 @@
                 <constraints nullable="false" />
             </column>
             
+            <column name="target_01" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="target_02" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="target_03" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="target_04" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="target_05" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="target_06" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="target_07" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

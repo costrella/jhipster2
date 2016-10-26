@@ -1,22 +1,33 @@
 
 <div>
-    <h2><span>Person</span> {{vm.person.id}}</h2>
+    <h2><span>PH:</span> {{vm.person.name}} {{vm.person.surname}} ({{vm.person.login}}) id:{{vm.person.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Name</span></dt>
+        <dt><span></span></dt>
         <dd>
-            <span>{{vm.person.name}}</span>
+            <span>target / wykonany target w tym miesiącu %</span>
         </dd>
-        <dt><span>Surname</span></dt>
+        <dt><span>2L NGAZ</span></dt>
         <dd>
-            <span>{{vm.person.surname}}</span>
+            <span>{{vm.person.target01}} / <b>{{vm.target01}}%</b></span>
         </dd>
-        <dt><span>Login</span></dt>
+        <dt><span>2L GAZ</span></dt>
         <dd>
-            <span>{{vm.person.login}}</span>
+            <span>{{vm.person.target02}} / <b>{{vm.target02}}%</b></span>
         </dd>
-
+        <dt><span>0,33L</span></dt>
+        <dd>
+            <span>{{vm.person.target03}} / <b>{{vm.target04}}%</b></span>
+        </dd>
+        <dt><span>CYT</span></dt>
+        <dd>
+            <span>{{vm.person.target04}} / <b>{{vm.target04}}%</b></span>
+        </dd>
+        <dt><span>Gratisy	</span></dt>
+        <dd>
+            <span>{{vm.person.target05}} / <b>{{vm.target05}}%</b></span>
+        </dd>
     </dl>
 
     <button type="submit"
@@ -29,4 +40,77 @@
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm"> Edit</span>
     </button>
+</div>
+<br/>
+<div class="table-responsive">
+    <table class="jh-table table table-striped">
+        <thead>
+        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+            <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+            <th jh-sort-by="date"><span>Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+            <th jh-sort-by="foto1"><span>Foto 1</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="foto2"><span>Foto 2</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="foto3"><span>Foto 3</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="raport in vm.raports track by raport.id">
+            <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
+            <td>{{raport.description}}</td>
+
+            <td>{{raport.date | date:'yyyy-MM-dd'}}</td>
+            <td>{{raport.z_a}}</td>
+            <td>{{raport.z_b}}</td>
+            <td>{{raport.z_c}}</td>
+            <td>{{raport.z_d}}</td>
+            <td>{{raport.z_e}}</td>
+
+            <td>
+                <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+            </td>
+            <td>
+                <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+
+            </td>
+            <td>
+                <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+
+            </td>
+            <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            ui-sref="raport-detail({id:raport.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="raport.edit({id:raport.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="raport.delete({id:raport.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.loadPage(vm.page)"></uib-pagination>
 </div>

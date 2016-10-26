@@ -119,6 +119,13 @@
                                 surname: null,
                                 login: null,
                                 pass: null,
+                                target01: null,
+                                target02: null,
+                                target03: null,
+                                target04: null,
+                                target05: null,
+                                target06: null,
+                                target07: null,
                                 id: null
                             };
                         }

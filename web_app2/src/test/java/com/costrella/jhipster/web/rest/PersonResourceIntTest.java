@@ -46,6 +46,27 @@ public class PersonResourceIntTest {
     private static final String DEFAULT_PASS = "AAAA";
     private static final String UPDATED_PASS = "BBBB";
 
+    private static final Integer DEFAULT_TARGET_01 = 1;
+    private static final Integer UPDATED_TARGET_01 = 2;
+
+    private static final Integer DEFAULT_TARGET_02 = 1;
+    private static final Integer UPDATED_TARGET_02 = 2;
+
+    private static final Integer DEFAULT_TARGET_03 = 1;
+    private static final Integer UPDATED_TARGET_03 = 2;
+
+    private static final Integer DEFAULT_TARGET_04 = 1;
+    private static final Integer UPDATED_TARGET_04 = 2;
+
+    private static final Integer DEFAULT_TARGET_05 = 1;
+    private static final Integer UPDATED_TARGET_05 = 2;
+
+    private static final Integer DEFAULT_TARGET_06 = 1;
+    private static final Integer UPDATED_TARGET_06 = 2;
+
+    private static final Integer DEFAULT_TARGET_07 = 1;
+    private static final Integer UPDATED_TARGET_07 = 2;
+
     @Inject
     private PersonRepository personRepository;
 
@@ -88,7 +109,14 @@ public class PersonResourceIntTest {
                 .name(DEFAULT_NAME)
                 .surname(DEFAULT_SURNAME)
                 .login(DEFAULT_LOGIN)
-                .pass(DEFAULT_PASS);
+                .pass(DEFAULT_PASS)
+                .target01(DEFAULT_TARGET_01)
+                .target02(DEFAULT_TARGET_02)
+                .target03(DEFAULT_TARGET_03)
+                .target04(DEFAULT_TARGET_04)
+                .target05(DEFAULT_TARGET_05)
+                .target06(DEFAULT_TARGET_06)
+                .target07(DEFAULT_TARGET_07);
         return person;
     }
 
@@ -118,6 +146,13 @@ public class PersonResourceIntTest {
         assertThat(testPerson.getSurname()).isEqualTo(DEFAULT_SURNAME);
         assertThat(testPerson.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(testPerson.getPass()).isEqualTo(DEFAULT_PASS);
+        assertThat(testPerson.getTarget01()).isEqualTo(DEFAULT_TARGET_01);
+        assertThat(testPerson.getTarget02()).isEqualTo(DEFAULT_TARGET_02);
+        assertThat(testPerson.getTarget03()).isEqualTo(DEFAULT_TARGET_03);
+        assertThat(testPerson.getTarget04()).isEqualTo(DEFAULT_TARGET_04);
+        assertThat(testPerson.getTarget05()).isEqualTo(DEFAULT_TARGET_05);
+        assertThat(testPerson.getTarget06()).isEqualTo(DEFAULT_TARGET_06);
+        assertThat(testPerson.getTarget07()).isEqualTo(DEFAULT_TARGET_07);
 
         // Validate the Person in ElasticSearch
         Person personEs = personSearchRepository.findOne(testPerson.getId());
@@ -210,7 +245,14 @@ public class PersonResourceIntTest {
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())))
                 .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN.toString())))
-                .andExpect(jsonPath("$.[*].pass").value(hasItem(DEFAULT_PASS.toString())));
+                .andExpect(jsonPath("$.[*].pass").value(hasItem(DEFAULT_PASS.toString())))
+                .andExpect(jsonPath("$.[*].target01").value(hasItem(DEFAULT_TARGET_01)))
+                .andExpect(jsonPath("$.[*].target02").value(hasItem(DEFAULT_TARGET_02)))
+                .andExpect(jsonPath("$.[*].target03").value(hasItem(DEFAULT_TARGET_03)))
+                .andExpect(jsonPath("$.[*].target04").value(hasItem(DEFAULT_TARGET_04)))
+                .andExpect(jsonPath("$.[*].target05").value(hasItem(DEFAULT_TARGET_05)))
+                .andExpect(jsonPath("$.[*].target06").value(hasItem(DEFAULT_TARGET_06)))
+                .andExpect(jsonPath("$.[*].target07").value(hasItem(DEFAULT_TARGET_07)));
     }
 
     @Test
@@ -227,7 +269,14 @@ public class PersonResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME.toString()))
             .andExpect(jsonPath("$.login").value(DEFAULT_LOGIN.toString()))
-            .andExpect(jsonPath("$.pass").value(DEFAULT_PASS.toString()));
+            .andExpect(jsonPath("$.pass").value(DEFAULT_PASS.toString()))
+            .andExpect(jsonPath("$.target01").value(DEFAULT_TARGET_01))
+            .andExpect(jsonPath("$.target02").value(DEFAULT_TARGET_02))
+            .andExpect(jsonPath("$.target03").value(DEFAULT_TARGET_03))
+            .andExpect(jsonPath("$.target04").value(DEFAULT_TARGET_04))
+            .andExpect(jsonPath("$.target05").value(DEFAULT_TARGET_05))
+            .andExpect(jsonPath("$.target06").value(DEFAULT_TARGET_06))
+            .andExpect(jsonPath("$.target07").value(DEFAULT_TARGET_07));
     }
 
     @Test
@@ -252,7 +301,14 @@ public class PersonResourceIntTest {
                 .name(UPDATED_NAME)
                 .surname(UPDATED_SURNAME)
                 .login(UPDATED_LOGIN)
-                .pass(UPDATED_PASS);
+                .pass(UPDATED_PASS)
+                .target01(UPDATED_TARGET_01)
+                .target02(UPDATED_TARGET_02)
+                .target03(UPDATED_TARGET_03)
+                .target04(UPDATED_TARGET_04)
+                .target05(UPDATED_TARGET_05)
+                .target06(UPDATED_TARGET_06)
+                .target07(UPDATED_TARGET_07);
 
         restPersonMockMvc.perform(put("/api/people")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -267,6 +323,13 @@ public class PersonResourceIntTest {
         assertThat(testPerson.getSurname()).isEqualTo(UPDATED_SURNAME);
         assertThat(testPerson.getLogin()).isEqualTo(UPDATED_LOGIN);
         assertThat(testPerson.getPass()).isEqualTo(UPDATED_PASS);
+        assertThat(testPerson.getTarget01()).isEqualTo(UPDATED_TARGET_01);
+        assertThat(testPerson.getTarget02()).isEqualTo(UPDATED_TARGET_02);
+        assertThat(testPerson.getTarget03()).isEqualTo(UPDATED_TARGET_03);
+        assertThat(testPerson.getTarget04()).isEqualTo(UPDATED_TARGET_04);
+        assertThat(testPerson.getTarget05()).isEqualTo(UPDATED_TARGET_05);
+        assertThat(testPerson.getTarget06()).isEqualTo(UPDATED_TARGET_06);
+        assertThat(testPerson.getTarget07()).isEqualTo(UPDATED_TARGET_07);
 
         // Validate the Person in ElasticSearch
         Person personEs = personSearchRepository.findOne(testPerson.getId());
@@ -310,6 +373,13 @@ public class PersonResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())))
             .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN.toString())))
-            .andExpect(jsonPath("$.[*].pass").value(hasItem(DEFAULT_PASS.toString())));
+            .andExpect(jsonPath("$.[*].pass").value(hasItem(DEFAULT_PASS.toString())))
+            .andExpect(jsonPath("$.[*].target01").value(hasItem(DEFAULT_TARGET_01)))
+            .andExpect(jsonPath("$.[*].target02").value(hasItem(DEFAULT_TARGET_02)))
+            .andExpect(jsonPath("$.[*].target03").value(hasItem(DEFAULT_TARGET_03)))
+            .andExpect(jsonPath("$.[*].target04").value(hasItem(DEFAULT_TARGET_04)))
+            .andExpect(jsonPath("$.[*].target05").value(hasItem(DEFAULT_TARGET_05)))
+            .andExpect(jsonPath("$.[*].target06").value(hasItem(DEFAULT_TARGET_06)))
+            .andExpect(jsonPath("$.[*].target07").value(hasItem(DEFAULT_TARGET_07)));
     }
 }
