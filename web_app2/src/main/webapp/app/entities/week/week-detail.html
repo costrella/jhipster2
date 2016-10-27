@@ -40,9 +40,9 @@
         <thead>
         <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
             <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="date"><span>Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="week.name"><span>Week</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="name"><span>Nazwa</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="date"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="week.name"><span>Trasówka</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="week.name"><span>Sklepy</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th></th>
         </tr>
@@ -62,7 +62,7 @@
                 <!--<select class="form-control" id="field_store" multiple name="store" ng-model="day.stores" ng-options="store as store.name for store in day.stores track by store.id"></select>-->
 
                 <span ng-repeat="store in day.stores">
-                <a ui-sref="store-detail({id: store.id})">{{store.name}}</a></br>
+                <a ui-sref="store-detail({id: store.id})">{{store.name}}</a>, {{store.city}}, {{store.street}}</br>
             </span>
             </td>
             <td class="text-right">
