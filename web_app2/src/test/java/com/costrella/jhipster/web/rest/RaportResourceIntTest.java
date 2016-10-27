@@ -78,6 +78,15 @@ public class RaportResourceIntTest {
     private static final Integer DEFAULT_Z_E = 1;
     private static final Integer UPDATED_Z_E = 2;
 
+    private static final Integer DEFAULT_Z_F = 1;
+    private static final Integer UPDATED_Z_F = 2;
+
+    private static final Integer DEFAULT_Z_G = 1;
+    private static final Integer UPDATED_Z_G = 2;
+
+    private static final Integer DEFAULT_Z_H = 1;
+    private static final Integer UPDATED_Z_H = 2;
+
     @Inject
     private RaportRepository raportRepository;
 
@@ -129,7 +138,10 @@ public class RaportResourceIntTest {
                 .z_b(DEFAULT_Z_B)
                 .z_c(DEFAULT_Z_C)
                 .z_d(DEFAULT_Z_D)
-                .z_e(DEFAULT_Z_E);
+                .z_e(DEFAULT_Z_E)
+                .z_f(DEFAULT_Z_F)
+                .z_g(DEFAULT_Z_G)
+                .z_h(DEFAULT_Z_H);
         // Add required entity
         Person person = PersonResourceIntTest.createEntity(em);
         em.persist(person);
@@ -178,6 +190,9 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getz_c()).isEqualTo(DEFAULT_Z_C);
         assertThat(testRaport.getz_d()).isEqualTo(DEFAULT_Z_D);
         assertThat(testRaport.getz_e()).isEqualTo(DEFAULT_Z_E);
+        assertThat(testRaport.getz_f()).isEqualTo(DEFAULT_Z_F);
+        assertThat(testRaport.getz_g()).isEqualTo(DEFAULT_Z_G);
+        assertThat(testRaport.getz_h()).isEqualTo(DEFAULT_Z_H);
 
         // Validate the Raport in ElasticSearch
         Raport raportEs = raportSearchRepository.findOne(testRaport.getId());
@@ -225,7 +240,10 @@ public class RaportResourceIntTest {
                 .andExpect(jsonPath("$.[*].z_b").value(hasItem(DEFAULT_Z_B)))
                 .andExpect(jsonPath("$.[*].z_c").value(hasItem(DEFAULT_Z_C)))
                 .andExpect(jsonPath("$.[*].z_d").value(hasItem(DEFAULT_Z_D)))
-                .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)));
+                .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)))
+                .andExpect(jsonPath("$.[*].z_f").value(hasItem(DEFAULT_Z_F)))
+                .andExpect(jsonPath("$.[*].z_g").value(hasItem(DEFAULT_Z_G)))
+                .andExpect(jsonPath("$.[*].z_h").value(hasItem(DEFAULT_Z_H)));
     }
 
     @Test
@@ -251,7 +269,10 @@ public class RaportResourceIntTest {
             .andExpect(jsonPath("$.z_b").value(DEFAULT_Z_B))
             .andExpect(jsonPath("$.z_c").value(DEFAULT_Z_C))
             .andExpect(jsonPath("$.z_d").value(DEFAULT_Z_D))
-            .andExpect(jsonPath("$.z_e").value(DEFAULT_Z_E));
+            .andExpect(jsonPath("$.z_e").value(DEFAULT_Z_E))
+            .andExpect(jsonPath("$.z_f").value(DEFAULT_Z_F))
+            .andExpect(jsonPath("$.z_g").value(DEFAULT_Z_G))
+            .andExpect(jsonPath("$.z_h").value(DEFAULT_Z_H));
     }
 
     @Test
@@ -285,7 +306,10 @@ public class RaportResourceIntTest {
                 .z_b(UPDATED_Z_B)
                 .z_c(UPDATED_Z_C)
                 .z_d(UPDATED_Z_D)
-                .z_e(UPDATED_Z_E);
+                .z_e(UPDATED_Z_E)
+                .z_f(UPDATED_Z_F)
+                .z_g(UPDATED_Z_G)
+                .z_h(UPDATED_Z_H);
 
         restRaportMockMvc.perform(put("/api/raports")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -309,6 +333,9 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getz_c()).isEqualTo(UPDATED_Z_C);
         assertThat(testRaport.getz_d()).isEqualTo(UPDATED_Z_D);
         assertThat(testRaport.getz_e()).isEqualTo(UPDATED_Z_E);
+        assertThat(testRaport.getz_f()).isEqualTo(UPDATED_Z_F);
+        assertThat(testRaport.getz_g()).isEqualTo(UPDATED_Z_G);
+        assertThat(testRaport.getz_h()).isEqualTo(UPDATED_Z_H);
 
         // Validate the Raport in ElasticSearch
         Raport raportEs = raportSearchRepository.findOne(testRaport.getId());
@@ -361,6 +388,9 @@ public class RaportResourceIntTest {
             .andExpect(jsonPath("$.[*].z_b").value(hasItem(DEFAULT_Z_B)))
             .andExpect(jsonPath("$.[*].z_c").value(hasItem(DEFAULT_Z_C)))
             .andExpect(jsonPath("$.[*].z_d").value(hasItem(DEFAULT_Z_D)))
-            .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)));
+            .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)))
+            .andExpect(jsonPath("$.[*].z_f").value(hasItem(DEFAULT_Z_F)))
+            .andExpect(jsonPath("$.[*].z_g").value(hasItem(DEFAULT_Z_G)))
+            .andExpect(jsonPath("$.[*].z_h").value(hasItem(DEFAULT_Z_H)));
     }
 }

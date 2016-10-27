@@ -128,6 +128,9 @@
                                 z_c: null,
                                 z_d: null,
                                 z_e: null,
+                                z_f: null,
+                                z_g: null,
+                                z_h: null,
                                 id: null
                             };
                         }

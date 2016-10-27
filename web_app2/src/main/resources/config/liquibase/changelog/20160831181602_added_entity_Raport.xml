@@ -70,6 +70,18 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="z_f" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="z_g" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="z_h" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="person_id" type="bigint">
                 <constraints nullable="false" />
             </column>

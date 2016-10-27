@@ -72,6 +72,18 @@
         {
             "fieldName": "z_e",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_f",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_g",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "z_h",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20160831181602",

@@ -65,6 +65,15 @@ public class Raport implements Serializable {
     @Column(name = "z_e")
     private Integer z_e;
 
+    @Column(name = "z_f")
+    private Integer z_f;
+
+    @Column(name = "z_g")
+    private Integer z_g;
+
+    @Column(name = "z_h")
+    private Integer z_h;
+
     @ManyToOne
     @NotNull
     private Person person;
@@ -253,6 +262,45 @@ public class Raport implements Serializable {
         this.z_e = z_e;
     }
 
+    public Integer getz_f() {
+        return z_f;
+    }
+
+    public Raport z_f(Integer z_f) {
+        this.z_f = z_f;
+        return this;
+    }
+
+    public void setz_f(Integer z_f) {
+        this.z_f = z_f;
+    }
+
+    public Integer getz_g() {
+        return z_g;
+    }
+
+    public Raport z_g(Integer z_g) {
+        this.z_g = z_g;
+        return this;
+    }
+
+    public void setz_g(Integer z_g) {
+        this.z_g = z_g;
+    }
+
+    public Integer getz_h() {
+        return z_h;
+    }
+
+    public Raport z_h(Integer z_h) {
+        this.z_h = z_h;
+        return this;
+    }
+
+    public void setz_h(Integer z_h) {
+        this.z_h = z_h;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -329,6 +377,9 @@ public class Raport implements Serializable {
             ", z_c='" + z_c + "'" +
             ", z_d='" + z_d + "'" +
             ", z_e='" + z_e + "'" +
+            ", z_f='" + z_f + "'" +
+            ", z_g='" + z_g + "'" +
+            ", z_h='" + z_h + "'" +
             '}';
     }
 }

@@ -102,6 +102,9 @@
                 vm.c = data.c;
                 vm.d = data.d;
                 vm.e = data.e;
+                vm.f = data.f;
+                vm.g = data.g;
+                vm.h = data.h;
             }
             function onError2(error) {
                 AlertService.error(error.data.message);

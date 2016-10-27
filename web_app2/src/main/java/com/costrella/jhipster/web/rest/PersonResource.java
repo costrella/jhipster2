@@ -217,7 +217,8 @@ public class PersonResource {
     ) throws URISyntaxException {
         LocalDate today = LocalDate.now();
         Person person = personRepository.findOne(personId);
-        int targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0;
+        int targetMain = person.getTarget01();
+        int targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0, targetSum06 = 0, targetSum07 = 0, targetSum08 = 0;
         List<Raport> raports = raportRepository.getPersonRaports(personId);
         for (Raport r : raports) {
             if (checkMonthAndYear(r.getDate(), today.getMonth(), today.getYear())) {
@@ -226,23 +227,34 @@ public class PersonResource {
                 targetSum03 += r.getz_c();
                 targetSum04 += r.getz_d();
                 targetSum05 += r.getz_e();
+                targetSum06 += r.getz_f();
+                targetSum07 += r.getz_g();
+                targetSum08 += r.getz_h();
             }
         }
 
         double percent01, percent02, percent03, percent04, percent05;
-        percent01 = getPercent(person.getTarget01() != null ? person.getTarget01() : 0, targetSum01);
-        percent02 = getPercent(person.getTarget02() != null ? person.getTarget02() : 0, targetSum02);
-        percent03 = getPercent(person.getTarget03() != null ? person.getTarget03() : 0, targetSum03);
-        percent04 = getPercent(person.getTarget04() != null ? person.getTarget04() : 0, targetSum04);
-        percent05 = getPercent(person.getTarget05() != null ? person.getTarget05() : 0, targetSum05);
+//        percent01 = getPercent(person.getTarget01() != null ? person.getTarget01() : 0, targetSum01);
+//        percent02 = getPercent(person.getTarget02() != null ? person.getTarget02() : 0, targetSum02);
+//        percent03 = getPercent(person.getTarget03() != null ? person.getTarget03() : 0, targetSum03);
+//        percent04 = getPercent(person.getTarget04() != null ? person.getTarget04() : 0, targetSum04);
+//        percent05 = getPercent(person.getTarget05() != null ? person.getTarget05() : 0, targetSum05);
 
+        double sumAll = (double)targetSum01 + (double)targetSum02 + (double)targetSum03 + (double)targetSum04 + (double)targetSum05;
+        double sumAllPercent = getPercent(targetMain, sumAll);
 
         Map<String, Double> myMap = new HashMap<>();
-        myMap.put("target01", percent01);
-        myMap.put("target02", percent02);
-        myMap.put("target03", percent03);
-        myMap.put("target04", percent04);
-        myMap.put("target05", percent05);
+        myMap.put("targetMain", (double) targetMain);
+        myMap.put("sumAll", sumAll);
+        myMap.put("sumAllPercent", sumAllPercent);
+        myMap.put("target01", (double) targetSum01);
+        myMap.put("target02", (double) targetSum02);
+        myMap.put("target03", (double) targetSum03);
+        myMap.put("target04", (double) targetSum04);
+        myMap.put("target05", (double) targetSum05);
+        myMap.put("target06", (double) targetSum06);
+        myMap.put("target07", (double) targetSum07);
+        myMap.put("target08", (double) targetSum08);
 
         return Optional.ofNullable(myMap)
             .map(result -> new ResponseEntity<>(
@@ -257,12 +269,10 @@ public class PersonResource {
         return raportDate.getYear() == year && raportDate.getMonth().equals(month);
     }
 
-    private double getPercent(int target, int targetSum){
+    private double getPercent(double targetD, double targetSumD){
         double percent = 0;
-        double targetD = (double)target;
-        double targetSumD = (double)targetSum;
 
-        if(target != 0 && targetSum != 0){
+        if(targetD != 0 && targetSumD != 0){
             percent = (targetSumD / targetD) * 100;
 
             //zaokraglenie do 2 miejsc po przecinku

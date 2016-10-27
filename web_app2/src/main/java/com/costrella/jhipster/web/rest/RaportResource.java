@@ -180,13 +180,16 @@ public class RaportResource {
         } else {
             raportsList = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate);
         }
-        int a = 0, b = 0, c = 0, d = 0, e = 0;
+        int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0;
         for (Raport r : raportsList) {
             a += r.getz_a();
             b += r.getz_b();
             c += r.getz_c();
             d += r.getz_d();
             e += r.getz_e();
+            f += r.getz_f();
+            g += r.getz_g();
+            h += r.getz_h();
         }
 
         Map<String, Integer> myMap = new HashMap<>();
@@ -195,6 +198,9 @@ public class RaportResource {
         myMap.put("c", c);
         myMap.put("d", d);
         myMap.put("e", e);
+        myMap.put("f", f);
+        myMap.put("g", g);
+        myMap.put("h", h);
 
         return Optional.ofNullable(myMap)
             .map(result -> new ResponseEntity<>(
