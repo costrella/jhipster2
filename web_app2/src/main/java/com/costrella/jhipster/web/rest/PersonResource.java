@@ -218,18 +218,18 @@ public class PersonResource {
         LocalDate today = LocalDate.now();
         Person person = personRepository.findOne(personId);
         int targetMain = person.getTarget01();
-        int targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0, targetSum06 = 0, targetSum07 = 0, targetSum08 = 0;
+        double targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0, targetSum06 = 0, targetSum07 = 0, targetSum08 = 0;
         List<Raport> raports = raportRepository.getPersonRaports(personId);
         for (Raport r : raports) {
             if (checkMonthAndYear(r.getDate(), today.getMonth(), today.getYear())) {
-                targetSum01 += r.getz_a();
-                targetSum02 += r.getz_b();
-                targetSum03 += r.getz_c();
-                targetSum04 += r.getz_d();
-                targetSum05 += r.getz_e();
-                targetSum06 += r.getz_f();
-                targetSum07 += r.getz_g();
-                targetSum08 += r.getz_h();
+                targetSum01 += r.getz_a(); //2l ngaz
+                targetSum02 += r.getz_b(); //2l gaz
+                targetSum03 += ((double)r.getz_c() / 2); //0,33l
+                targetSum04 += ((double)r.getz_d() / 2); // 0,33l cyt
+                targetSum05 += r.getz_e(); // gratisy
+                targetSum06 += r.getz_f(); // 2l ngaz biala
+                targetSum07 += ((double)r.getz_g() / 2); // 0,75; sport
+                targetSum08 += ((double)r.getz_h() / 2); //0,33l szklo
             }
         }
 
@@ -240,7 +240,8 @@ public class PersonResource {
 //        percent04 = getPercent(person.getTarget04() != null ? person.getTarget04() : 0, targetSum04);
 //        percent05 = getPercent(person.getTarget05() != null ? person.getTarget05() : 0, targetSum05);
 
-        double sumAll = (double)targetSum01 + (double)targetSum02 + (double)targetSum03 + (double)targetSum04 + (double)targetSum05;
+        double sumAll = (double)targetSum01 + (double)targetSum02 + (double)targetSum03 + (double)targetSum04 + (double)targetSum05
+            + (double)targetSum06 + (double)targetSum07 + (double)targetSum08;
         double sumAllPercent = getPercent(targetMain, sumAll);
 
         Map<String, Double> myMap = new HashMap<>();

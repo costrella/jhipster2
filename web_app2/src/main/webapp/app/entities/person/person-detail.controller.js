@@ -5,11 +5,13 @@
         .module('cechiniApp')
         .controller('PersonDetailController', PersonDetailController);
 
-    PersonDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Person', 'Store', 'Raport', 'Week', 'ParseLinks', 'paginationConstants'];
+    PersonDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'previousState', 'entity', 'Person', 'Store', 'Raport', 'Week', 'ParseLinks', 'paginationConstants'];
 
-    function PersonDetailController($scope, $rootScope, $stateParams, previousState, entity, Person, Store, Raport, Week, ParseLinks, paginationConstants) {
+    function PersonDetailController($scope, $rootScope, $stateParams, DataUtils, previousState, entity, Person, Store, Raport, Week, ParseLinks, paginationConstants) {
         var vm = this;
 
+        vm.openFile = DataUtils.openFile;
+        vm.byteSize = DataUtils.byteSize;
         vm.person = entity;
         vm.previousState = previousState.name;
         vm.loadAll = loadAll;
@@ -63,6 +65,9 @@
                 vm.target03 = data.target03;
                 vm.target04 = data.target04;
                 vm.target05 = data.target05;
+                vm.target06 = data.target06;
+                vm.target07 = data.target07;
+                vm.target08 = data.target08;
             }
 
             function onError(error) {

@@ -6,7 +6,7 @@
     <dl class="dl-horizontal jh-entity-details">
         <dt><span></span></dt>
         <dd>
-            <span>sprzedaż w tym miesiącu</span>
+            <span>sprzedaż w tym miesiącu</span><h6>Suma jest liczona tylko z obecnego miesiąca. * - 1/2</h6>
         </dd>
         <dt><span>2L NGAZ</span></dt>
         <dd>
@@ -16,11 +16,11 @@
         <dd>
             <span>{{vm.target02}}</span>
         </dd>
-        <dt><span>0,33L</span></dt>
+        <dt><span>0,33L*</span></dt>
         <dd>
             <span>{{vm.target03}}</span>
         </dd>
-        <dt><span>0,33L CYT</span></dt>
+        <dt><span>0,33L CYT*</span></dt>
         <dd>
             <span>{{vm.target04}}</span>
         </dd>
@@ -30,19 +30,19 @@
         </dd>
         <dt><span>2L NGAZ (BIAŁA)</span></dt>
         <dd>
-            <span>{{vm.target05}}</span>
+            <span>{{vm.target06}}</span>
         </dd>
-        <dt><span>0,75L SPORT</span></dt>
+        <dt><span>0,75L SPORT*</span></dt>
         <dd>
-            <span>{{vm.target05}}</span>
+            <span>{{vm.target07}}</span>
         </dd>
-        <dt><span>0,33L SZKŁO</span></dt>
+        <dt><span>0,33L SZKŁO*</span></dt>
         <dd>
-            <span>{{vm.target05}}</span>
+            <span>{{vm.target08}}</span>
         </dd>
         <dt><span></span></dt>
         <dd>
-            <span>sprzedano <b>{{vm.sumAll}}</b> z {{vm.targetMain}} ({{vm.sumAllPercent}})</span>
+            <span>sprzedano <b>{{vm.sumAll}}</b> z {{vm.targetMain}} ({{vm.sumAllPercent}}%)</span>
         </dd>
     </dl>
 
@@ -64,14 +64,17 @@
         <thead>
         <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
             <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="date" width="90px"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-            <th jh-sort-by="date"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_f"><span translate="cechiniApp.raport.z_f">2L NGAZ (BIAŁA)</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_g"><span translate="cechiniApp.raport.z_g">0,75L SPORT</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_h"><span translate="cechiniApp.raport.z_h">0,33L SZKŁO</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
 
             <th jh-sort-by="foto1"><span>Zdjęcia</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th></th>
@@ -80,7 +83,6 @@
         <tbody>
         <tr ng-repeat="raport in vm.raports track by raport.id">
             <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
-            <td>{{raport.description}}</td>
 
             <td>{{raport.date | date:'yyyy-MM-dd'}}</td>
             <td>{{raport.z_a}}</td>
@@ -88,12 +90,21 @@
             <td>{{raport.z_c}}</td>
             <td>{{raport.z_d}}</td>
             <td>{{raport.z_e}}</td>
+            <td>{{raport.z_f}}</td>
+            <td>{{raport.z_g}}</td>
+            <td>{{raport.z_h}}</td>
+            <td>{{raport.description}}</td>
 
             <td>
-                <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-                <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-                <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
-
+                <a ng-if="raport.foto1" ng-click="vm.openFile(raport.foto1ContentType, raport.foto1)">
+                    <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+                </a>
+                <a ng-if="raport.foto2" ng-click="vm.openFile(raport.foto2ContentType, raport.foto2)">
+                    <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+                </a>
+                <a ng-if="raport.foto3" ng-click="vm.openFile(raport.foto3ContentType, raport.foto3)">
+                    <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                </a>
             </td>
             <td class="text-right">
                 <div class="btn-group flex-btn-group-container">
