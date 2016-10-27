@@ -136,9 +136,15 @@ public class RaportResource {
                                                            @RequestParam(value = "weekId", required = false) Long weekId
     ) throws URISyntaxException {
         Page<Raport> page;
-        //warunek dla wyswietlania raportow w 'sklepie'
         if (storeId != null) {
-            page = raportRepository.getStoresRaports(storeId, pageable);
+            if(fromDate == null && toDate == null){
+                //warunek dla wyswietlania raportow w 'sklepie'
+                page = raportRepository.getStoresRaports(storeId, pageable);
+            }else if(person == -1){
+                page = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate, pageable);
+            }else{
+                page = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate, pageable);
+            }
         } else if (dayId != null) {
             page = raportRepository.getDayRaports(dayId, pageable);
         } else if (weekId != null) {
@@ -175,21 +181,27 @@ public class RaportResource {
                                                                 @RequestParam(value = "test", required = false) Long test
     ) throws URISyntaxException {
         List<Raport> raportsList;
-        if (person == -1) {
+        if (person == -1 && storeId == null) {
             raportsList = raportRepository.getRaportsByDate(fromDate, toDate);
-        } else {
+        } else if (person == -1 && storeId != null) {
+            raportsList = raportRepository.getRaportsByDateAndStore(person, fromDate, toDate);
+        } else if (person != -1 && storeId == null) {
             raportsList = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate);
+        } else if (person != -1 && storeId != null) {
+            raportsList = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate);
+        }else {
+            raportsList = null;
         }
         int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0;
         for (Raport r : raportsList) {
-            a += r.getz_a();
-            b += r.getz_b();
-            c += r.getz_c();
-            d += r.getz_d();
-            e += r.getz_e();
-            f += r.getz_f();
-            g += r.getz_g();
-            h += r.getz_h();
+            a += r.getz_a()!=null?r.getz_a():0;
+            b += r.getz_b()!=null?r.getz_b():0;
+            c += r.getz_c()!=null?r.getz_c():0;
+            d += r.getz_d()!=null?r.getz_d():0;
+            e += r.getz_e()!=null?r.getz_e():0;
+            f += r.getz_f()!=null?r.getz_f():0;
+            g += r.getz_g()!=null?r.getz_g():0;
+            h += r.getz_h()!=null?r.getz_h():0;
         }
 
         Map<String, Integer> myMap = new HashMap<>();

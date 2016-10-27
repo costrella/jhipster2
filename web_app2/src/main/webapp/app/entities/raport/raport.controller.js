@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'Lightbox'];
+    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Store', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'Lightbox'];
 
-    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants, Lightbox) {
+    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, Store, ParseLinks, AlertService, pagingParams, paginationConstants, Lightbox) {
         var vm = this;
 
         vm.loadPage = loadPage;
@@ -30,11 +30,25 @@
         vm.previousMonth = previousMonth;
         vm.previousMonth();
         vm.people = Person.query();
+        vm.stores = Store.query();
         vm.ph = null;
         vm.page = 1;
 
         vm.loadAll();
 
+        function getStoreId() {
+            if (vm.store) {
+                return vm.store.id;
+            }
+            return null;
+        }
+
+        function getPersonId() {
+            if (vm.ph) {
+                return vm.ph.id;
+            }
+            return -1;
+        }
 
         function loadAll () {
             var dateFormat = 'yyyy-MM-dd';
@@ -48,15 +62,10 @@
                     sort: sort(),
                     fromDate: fromDate,
                     toDate: toDate,
-                    person: getPersonId()
+                    person: getPersonId(),
+                    storeId: getStoreId()
             }, onSuccess, onError);
 
-            function getPersonId() {
-                if (vm.ph) {
-                    return vm.ph.id;
-                }
-                return -1;
-            }
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -86,15 +95,10 @@
                 test: 123,
                 fromDate: fromDate,
                 toDate: toDate,
-                person: getPersonId()
+                person: getPersonId(),
+                storeId: getStoreId()
             }, onSuccess2, onError2);
 
-            function getPersonId() {
-                if (vm.ph) {
-                    return vm.ph.id;
-                }
-                return -1;
-            }
             function onSuccess2(data, headers) {
                 vm.queryCount = vm.totalItems;
                 vm.a = data.a;

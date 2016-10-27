@@ -36,8 +36,20 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 ORDER BY raport.date DESC")
     List<Raport> getRaportsByDate(LocalDate from, LocalDate to);
 
-    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 ORDER BY raport.date DESC")
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 ")
     Page<Raport> getRaportsByDateAndPerson(Long idPerson, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 ")
+    Page<Raport> getRaportsByDateAndPersonAndStore(Long idPerson, Long storeId, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 ")
+    List<Raport> getRaportsByDateAndPersonAndStore(Long idPerson, Long storeId, LocalDate from, LocalDate to);
+
+    @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 ")
+    Page<Raport> getRaportsByDateAndStore(Long storeId, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 ")
+    List<Raport> getRaportsByDateAndStore(Long storeId, LocalDate from, LocalDate to);
 
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 ORDER BY raport.date DESC")
     Page<Raport> getPersonRaports(Long idPerson, Pageable pageable);

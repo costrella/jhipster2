@@ -29,7 +29,11 @@
 							<input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()" required/>
 						</p>
                         <span class="input-group-addon">Przedstawiciel</span>
-                        <select class="form-control" id="field_person" name="person" ng-model="vm.ph" ng-change="vm.loadAll()" ng-options="person as person.surname for person in vm.people track by person.id" required>
+                        <select class="form-control" id="field_person" name="person" ng-model="vm.ph" ng-change="vm.loadAll()" ng-options="person as person.surname+' '+person.name for person in vm.people track by person.id" required>
+                            <option value=""></option>
+                        </select>
+                        <span class="input-group-addon">Sklep</span>
+                        <select class="form-control" id="field_store" name="store" ng-model="vm.store" ng-change="vm.loadAll()" ng-options="store as store.name+', '+store.street+', '+store.city for store in vm.stores track by store.id" required>
                             <option value=""></option>
                         </select>
 					</div>
