@@ -1,7 +1,6 @@
 package com.costrella.android.cechini.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +14,10 @@ public class Week implements Serializable {
     private Long id;
 
     private String name;
-
-    private Date dateBefore;
-
-    private Date dateAfter;
+//nie uzywamy w androidzie daty. date weeksu ustawiamy w backendzie
+//    private Date dateBefore;
+//
+//    private Date dateAfter;
 
     private Integer weekOfYear;
 
@@ -47,31 +46,31 @@ public class Week implements Serializable {
         this.name = name;
     }
 
-    public Date getDateBefore() {
-        return dateBefore;
-    }
-
-    public Week dateBefore(Date dateBefore) {
-        this.dateBefore = dateBefore;
-        return this;
-    }
-
-    public void setDateBefore(Date dateBefore) {
-        this.dateBefore = dateBefore;
-    }
-
-    public Date getDateAfter() {
-        return dateAfter;
-    }
-
-    public Week dateAfter(Date dateAfter) {
-        this.dateAfter = dateAfter;
-        return this;
-    }
-
-    public void setDateAfter(Date dateAfter) {
-        this.dateAfter = dateAfter;
-    }
+//    public Date getDateBefore() {
+//        return dateBefore;
+//    }
+//
+//    public Week dateBefore(Date dateBefore) {
+//        this.dateBefore = dateBefore;
+//        return this;
+//    }
+//
+//    public void setDateBefore(Date dateBefore) {
+//        this.dateBefore = dateBefore;
+//    }
+//
+//    public Date getDateAfter() {
+//        return dateAfter;
+//    }
+//
+//    public Week dateAfter(Date dateAfter) {
+//        this.dateAfter = dateAfter;
+//        return this;
+//    }
+//
+//    public void setDateAfter(Date dateAfter) {
+//        this.dateAfter = dateAfter;
+//    }
 
     public Integer getWeekOfYear() {
         return weekOfYear;
@@ -129,8 +128,8 @@ public class Week implements Serializable {
         return "Week{" +
                 "id=" + id +
                 ", name='" + name + "'" +
-                ", dateBefore='" + dateBefore + "'" +
-                ", dateAfter='" + dateAfter + "'" +
+//                ", dateBefore='" + dateBefore + "'" +
+//                ", dateAfter='" + dateAfter + "'" +
                 ", weekOfYear='" + weekOfYear + "'" +
                 '}';
     }

@@ -2,7 +2,9 @@ package com.costrella.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Day;
+import com.costrella.jhipster.domain.Week;
 import com.costrella.jhipster.repository.DayRepository;
+import com.costrella.jhipster.repository.WeekRepository;
 import com.costrella.jhipster.repository.search.DaySearchRepository;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
 import com.costrella.jhipster.web.rest.util.PaginationUtil;
@@ -19,6 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +41,9 @@ public class DayResource {
 
     @Inject
     private DayRepository dayRepository;
+
+    @Inject
+    private WeekRepository weekRepository;
 
     @Inject
     private DaySearchRepository daySearchRepository;
@@ -71,6 +80,19 @@ public class DayResource {
 //        if (day.getId() != null) {
 //            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("day", "idexists", "A new day cannot already have an ID")).body(null);
 //        }
+
+        Collections.sort(days, new Comparator<Day>() {
+            @Override
+            public int compare(Day o1, Day o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+        Day from = days.get(0);
+        Day to = days.get(days.size()-1);
+        Week week = weekRepository.findOne(from.getWeek().getId());
+        week.setDateBefore(Instant.ofEpochMilli(from.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
+        week.setDateAfter(Instant.ofEpochMilli(to.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
+        weekRepository.save(week);
         for(Day day: days){
             Day result = dayRepository.save(day);
             ResponseEntity.created(new URI("/api/days/" + result.getId()))
