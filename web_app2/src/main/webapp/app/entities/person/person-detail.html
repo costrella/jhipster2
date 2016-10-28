@@ -1,4 +1,3 @@
-
 <div>
     <h2><span>PH:</span> {{vm.person.name}} {{vm.person.surname}} ({{vm.person.login}}) id:{{vm.person.id}}</h2>
     <hr>
@@ -59,6 +58,18 @@
 </div>
 <br/>
 <h3>Raporty PH</h3>
+<div class="row">
+    <div class="col-md-5">
+        <p class="input-group">
+            <span class="input-group-addon">data od</span>
+            <input type="date" class="input-sm form-control" name="start" ng-model="vm.fromDate"
+                   ng-change="vm.loadAll()" required/>
+            <span class="input-group-addon">data do</span>
+            <input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()"
+                   required/>
+        </p>
+    </div>
+</div><br>
 <div class="table-responsive">
     <table class="jh-table table table-striped">
         <thead>
@@ -66,14 +77,22 @@
             <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="date" width="90px"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-            <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_f"><span translate="cechiniApp.raport.z_f">2L NGAZ (BIAŁA)</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_g"><span translate="cechiniApp.raport.z_g">0,75L SPORT</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_h"><span translate="cechiniApp.raport.z_h">0,33L SZKŁO</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_f"><span translate="cechiniApp.raport.z_f">2L NGAZ (BIAŁA)</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_g"><span translate="cechiniApp.raport.z_g">0,75L SPORT</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_h"><span translate="cechiniApp.raport.z_h">0,33L SZKŁO</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
 
             <th jh-sort-by="foto1"><span>Zdjęcia</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -97,13 +116,16 @@
 
             <td>
                 <a ng-if="raport.foto1" ng-click="vm.openFile(raport.foto1ContentType, raport.foto1)">
-                    <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+                    <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}"
+                         style="max-height: 30px;"/>
                 </a>
                 <a ng-if="raport.foto2" ng-click="vm.openFile(raport.foto2ContentType, raport.foto2)">
-                    <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+                    <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}"
+                         style="max-height: 30px;"/>
                 </a>
                 <a ng-if="raport.foto3" ng-click="vm.openFile(raport.foto3ContentType, raport.foto3)">
-                    <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                    <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}"
+                         style="max-height: 30px;"/>
                 </a>
             </td>
             <td class="text-right">
@@ -133,5 +155,6 @@
     </table>
 </div>
 <div class="text-center">
-    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.loadPage(vm.page)"></uib-pagination>
+    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                    ng-change="vm.loadPage(vm.page)"></uib-pagination>
 </div>

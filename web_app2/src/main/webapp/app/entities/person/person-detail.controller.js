@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('PersonDetailController', PersonDetailController);
 
-    PersonDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'previousState', 'entity', 'Person', 'Store', 'Raport', 'Week', 'ParseLinks', 'paginationConstants'];
+    PersonDetailController.$inject = ['$filter', '$scope', '$rootScope', '$stateParams', 'DataUtils', 'previousState', 'entity', 'Person', 'Store', 'Raport', 'Week', 'ParseLinks', 'paginationConstants'];
 
-    function PersonDetailController($scope, $rootScope, $stateParams, DataUtils, previousState, entity, Person, Store, Raport, Week, ParseLinks, paginationConstants) {
+    function PersonDetailController($filter, $scope, $rootScope, $stateParams, DataUtils, previousState, entity, Person, Store, Raport, Week, ParseLinks, paginationConstants) {
         var vm = this;
 
         vm.openFile = DataUtils.openFile;
@@ -16,6 +16,11 @@
         vm.previousState = previousState.name;
         vm.loadAll = loadAll;
         vm.getTarget = getTarget;
+        vm.fromDate = null;
+        vm.toDate = null;
+        vm.today = today;
+        vm.previousDay = previousDay;
+        vm.previousDay();
 
         var unsubscribe = $rootScope.$on('cechiniApp:personUpdate', function (event, result) {
             vm.person = result;
@@ -27,9 +32,15 @@
 
         function loadAll() {
 
+            var dateFormat = 'yyyy-MM-dd';
+            var fromDate = $filter('date')(vm.fromDate, dateFormat);
+            var toDate = $filter('date')(vm.toDate, dateFormat);
+
             Raport.query({
                 page: vm.page - 1,
                 size: vm.itemsPerPage,
+                fromDate: fromDate,
+                toDate: toDate,
                 person: vm.person.id
             }, onSuccess, onError);
 
@@ -74,6 +85,20 @@
                 // AlertService.error(error.data.message);
                 console.log(error.data.message);
             }
+        }
+
+        function today () {
+            var today = new Date();
+            vm.toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+        }
+
+        function previousDay () {
+            var fromDate = new Date();
+            var toDate = new Date();
+            // fromDate.setDate(fromDate.getDate()-1);
+            fromDate.setMonth(fromDate.getMonth()-1);
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
         }
     }
 })();
