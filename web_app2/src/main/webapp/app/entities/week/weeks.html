@@ -11,6 +11,23 @@
                     </span>
                 </button>
             </div>
+            <div class="col-xs-8 no-padding-right">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4>Filtrowanie</h4>
+                        <p class="input-group">
+                            <span class="input-group-addon">data od</span>
+                            <input type="date" class="input-sm form-control" name="start" ng-model="vm.fromDate" ng-change="vm.loadAll()" required/>
+                            <span class="input-group-addon">data do</span>
+                            <input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()" required/>
+                        </p>
+                        <span class="input-group-addon">Przedstawiciel</span>
+                        <select class="form-control" id="field_person" name="person" ng-model="vm.ph" ng-change="vm.loadAll()" ng-options="person as person.surname+' '+person.name for person in vm.people track by person.id" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br/>
@@ -30,8 +47,8 @@
                 <tr ng-repeat="week in vm.weeks track by week.id">
                     <td><a ui-sref="week-detail({id:week.id})">{{week.id}}</a></td>
                     <td>{{week.name}}</td>
-                        <td>{{week.dateBefore | date:'mediumDate'}}</td>
-                        <td>{{week.dateAfter | date:'mediumDate'}}</td>
+                        <td>{{week.dateBefore | date:'yyyy-MM-dd'}}</td>
+                        <td>{{week.dateAfter | date:'yyyy-MM-dd'}}</td>
                     <td>
                         <a ui-sref="person-detail({id:week.person.id})">{{week.person.surname}}</a>
                     </td>

@@ -5,11 +5,11 @@
         .module('cechiniApp')
         .controller('WeekController', WeekController);
 
-    WeekController.$inject = ['$scope', '$state', 'Week', 'WeekSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    WeekController.$inject = ['$filter', '$scope', '$state', 'Week', 'Person', 'WeekSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function WeekController ($scope, $state, Week, WeekSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function WeekController ($filter, $scope, $state, Week, Person, WeekSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
-        
+
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -21,23 +21,37 @@
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
 
+        vm.fromDate = null;
+        vm.toDate = null;
+        vm.today = today;
+        vm.previousMonth = previousMonth;
+        vm.previousMonth();
+        vm.people = Person.query();
+        vm.ph = null;
+        vm.page = 1;
+
         loadAll();
 
+        function getPersonId() {
+            if (vm.ph) {
+                return vm.ph.id;
+            }
+            return null;
+        }
+
         function loadAll () {
-            if (pagingParams.search) {
-                WeekSearch.query({
-                    query: pagingParams.search,
-                    page: pagingParams.page - 1,
-                    size: vm.itemsPerPage,
-                    sort: sort()
-                }, onSuccess, onError);
-            } else {
+            var dateFormat = 'yyyy-MM-dd';
+            var fromDate = $filter('date')(vm.fromDate, dateFormat);
+            var toDate = $filter('date')(vm.toDate, dateFormat);
+
                 Week.query({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-                    sort: sort()
+                    sort: sort(),
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    personId: getPersonId(),
                 }, onSuccess, onError);
-            }
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -62,12 +76,21 @@
             vm.transition();
         }
 
+        function today () {
+            var today = new Date();
+            vm.toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+        }
+
+        function previousMonth () {
+            var fromDate = new Date();
+            var toDate = new Date();
+            toDate.setMonth(toDate.getMonth()+1);
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+        }
+
         function transition () {
-            $state.transitionTo($state.$current, {
-                page: vm.page,
-                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
-            });
+            vm.loadAll();
         }
 
         function search (searchQuery) {
