@@ -33,7 +33,7 @@ public class Store implements Serializable {
     private String city;
 
     @Column(name = "visited")
-    private Boolean visited = false;
+    private Boolean visited;
 
     @Column(name = "street")
     private String street;
@@ -43,6 +43,20 @@ public class Store implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @Lob
+    @Column(name = "picture_01")
+    private byte[] picture01;
+
+    @Column(name = "picture_01_content_type")
+    private String picture01ContentType;
+
+    @Lob
+    @Column(name = "picture_02")
+    private byte[] picture02;
+
+    @Column(name = "picture_02_content_type")
+    private String picture02ContentType;
 
     @ManyToOne
     private Person person;
@@ -143,6 +157,58 @@ public class Store implements Serializable {
         this.description = description;
     }
 
+    public byte[] getPicture01() {
+        return picture01;
+    }
+
+    public Store picture01(byte[] picture01) {
+        this.picture01 = picture01;
+        return this;
+    }
+
+    public void setPicture01(byte[] picture01) {
+        this.picture01 = picture01;
+    }
+
+    public String getPicture01ContentType() {
+        return picture01ContentType;
+    }
+
+    public Store picture01ContentType(String picture01ContentType) {
+        this.picture01ContentType = picture01ContentType;
+        return this;
+    }
+
+    public void setPicture01ContentType(String picture01ContentType) {
+        this.picture01ContentType = picture01ContentType;
+    }
+
+    public byte[] getPicture02() {
+        return picture02;
+    }
+
+    public Store picture02(byte[] picture02) {
+        this.picture02 = picture02;
+        return this;
+    }
+
+    public void setPicture02(byte[] picture02) {
+        this.picture02 = picture02;
+    }
+
+    public String getPicture02ContentType() {
+        return picture02ContentType;
+    }
+
+    public Store picture02ContentType(String picture02ContentType) {
+        this.picture02ContentType = picture02ContentType;
+        return this;
+    }
+
+    public void setPicture02ContentType(String picture02ContentType) {
+        this.picture02ContentType = picture02ContentType;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -236,6 +302,10 @@ public class Store implements Serializable {
             ", street='" + street + "'" +
             ", number='" + number + "'" +
             ", description='" + description + "'" +
+            ", picture01='" + picture01 + "'" +
+            ", picture01ContentType='" + picture01ContentType + "'" +
+            ", picture02='" + picture02 + "'" +
+            ", picture02ContentType='" + picture02ContentType + "'" +
             '}';
     }
 }

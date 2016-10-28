@@ -5,13 +5,15 @@
         .module('cechiniApp')
         .controller('StoreDialogController', StoreDialogController);
 
-    StoreDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Store', 'Person', 'Raport', 'Day'];
+    StoreDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Store', 'Person', 'Raport', 'Day'];
 
-    function StoreDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Store, Person, Raport, Day) {
+    function StoreDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Store, Person, Raport, Day) {
         var vm = this;
 
         vm.store = entity;
         vm.clear = clear;
+        vm.byteSize = DataUtils.byteSize;
+        vm.openFile = DataUtils.openFile;
         vm.save = save;
         vm.people = Person.query();
         vm.raports = Raport.query();
@@ -44,6 +46,34 @@
             vm.isSaving = false;
         }
 
+
+        vm.setPicture01 = function ($file, store) {
+            if ($file && $file.$error === 'pattern') {
+                return;
+            }
+            if ($file) {
+                DataUtils.toBase64($file, function(base64Data) {
+                    $scope.$apply(function() {
+                        store.picture01 = base64Data;
+                        store.picture01ContentType = $file.type;
+                    });
+                });
+            }
+        };
+
+        vm.setPicture02 = function ($file, store) {
+            if ($file && $file.$error === 'pattern') {
+                return;
+            }
+            if ($file) {
+                DataUtils.toBase64($file, function(base64Data) {
+                    $scope.$apply(function() {
+                        store.picture02 = base64Data;
+                        store.picture02ContentType = $file.type;
+                    });
+                });
+            }
+        };
 
     }
 })();

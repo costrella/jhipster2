@@ -19,6 +19,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -50,6 +51,16 @@ public class StoreResourceIntTest {
     private static final String UPDATED_NUMBER = "BBBBB";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
+
+    private static final byte[] DEFAULT_PICTURE_01 = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PICTURE_01 = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_PICTURE_01_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PICTURE_01_CONTENT_TYPE = "image/png";
+
+    private static final byte[] DEFAULT_PICTURE_02 = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PICTURE_02 = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_PICTURE_02_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PICTURE_02_CONTENT_TYPE = "image/png";
 
     @Inject
     private StoreRepository storeRepository;
@@ -95,7 +106,11 @@ public class StoreResourceIntTest {
                 .visited(DEFAULT_VISITED)
                 .street(DEFAULT_STREET)
                 .number(DEFAULT_NUMBER)
-                .description(DEFAULT_DESCRIPTION);
+                .description(DEFAULT_DESCRIPTION)
+                .picture01(DEFAULT_PICTURE_01)
+                .picture01ContentType(DEFAULT_PICTURE_01_CONTENT_TYPE)
+                .picture02(DEFAULT_PICTURE_02)
+                .picture02ContentType(DEFAULT_PICTURE_02_CONTENT_TYPE);
         return store;
     }
 
@@ -127,6 +142,10 @@ public class StoreResourceIntTest {
         assertThat(testStore.getStreet()).isEqualTo(DEFAULT_STREET);
         assertThat(testStore.getNumber()).isEqualTo(DEFAULT_NUMBER);
         assertThat(testStore.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testStore.getPicture01()).isEqualTo(DEFAULT_PICTURE_01);
+        assertThat(testStore.getPicture01ContentType()).isEqualTo(DEFAULT_PICTURE_01_CONTENT_TYPE);
+        assertThat(testStore.getPicture02()).isEqualTo(DEFAULT_PICTURE_02);
+        assertThat(testStore.getPicture02ContentType()).isEqualTo(DEFAULT_PICTURE_02_CONTENT_TYPE);
 
         // Validate the Store in ElasticSearch
         Store storeEs = storeSearchRepository.findOne(testStore.getId());
@@ -185,7 +204,11 @@ public class StoreResourceIntTest {
                 .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())))
                 .andExpect(jsonPath("$.[*].street").value(hasItem(DEFAULT_STREET.toString())))
                 .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+                .andExpect(jsonPath("$.[*].picture01ContentType").value(hasItem(DEFAULT_PICTURE_01_CONTENT_TYPE)))
+                .andExpect(jsonPath("$.[*].picture01").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_01))))
+                .andExpect(jsonPath("$.[*].picture02ContentType").value(hasItem(DEFAULT_PICTURE_02_CONTENT_TYPE)))
+                .andExpect(jsonPath("$.[*].picture02").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_02))));
     }
 
     @Test
@@ -204,7 +227,11 @@ public class StoreResourceIntTest {
             .andExpect(jsonPath("$.visited").value(DEFAULT_VISITED.booleanValue()))
             .andExpect(jsonPath("$.street").value(DEFAULT_STREET.toString()))
             .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.picture01ContentType").value(DEFAULT_PICTURE_01_CONTENT_TYPE))
+            .andExpect(jsonPath("$.picture01").value(Base64Utils.encodeToString(DEFAULT_PICTURE_01)))
+            .andExpect(jsonPath("$.picture02ContentType").value(DEFAULT_PICTURE_02_CONTENT_TYPE))
+            .andExpect(jsonPath("$.picture02").value(Base64Utils.encodeToString(DEFAULT_PICTURE_02)));
     }
 
     @Test
@@ -231,7 +258,11 @@ public class StoreResourceIntTest {
                 .visited(UPDATED_VISITED)
                 .street(UPDATED_STREET)
                 .number(UPDATED_NUMBER)
-                .description(UPDATED_DESCRIPTION);
+                .description(UPDATED_DESCRIPTION)
+                .picture01(UPDATED_PICTURE_01)
+                .picture01ContentType(UPDATED_PICTURE_01_CONTENT_TYPE)
+                .picture02(UPDATED_PICTURE_02)
+                .picture02ContentType(UPDATED_PICTURE_02_CONTENT_TYPE);
 
         restStoreMockMvc.perform(put("/api/stores")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -248,6 +279,10 @@ public class StoreResourceIntTest {
         assertThat(testStore.getStreet()).isEqualTo(UPDATED_STREET);
         assertThat(testStore.getNumber()).isEqualTo(UPDATED_NUMBER);
         assertThat(testStore.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testStore.getPicture01()).isEqualTo(UPDATED_PICTURE_01);
+        assertThat(testStore.getPicture01ContentType()).isEqualTo(UPDATED_PICTURE_01_CONTENT_TYPE);
+        assertThat(testStore.getPicture02()).isEqualTo(UPDATED_PICTURE_02);
+        assertThat(testStore.getPicture02ContentType()).isEqualTo(UPDATED_PICTURE_02_CONTENT_TYPE);
 
         // Validate the Store in ElasticSearch
         Store storeEs = storeSearchRepository.findOne(testStore.getId());
@@ -293,6 +328,10 @@ public class StoreResourceIntTest {
             .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())))
             .andExpect(jsonPath("$.[*].street").value(hasItem(DEFAULT_STREET.toString())))
             .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].picture01ContentType").value(hasItem(DEFAULT_PICTURE_01_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].picture01").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_01))))
+            .andExpect(jsonPath("$.[*].picture02ContentType").value(hasItem(DEFAULT_PICTURE_02_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].picture02").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_02))));
     }
 }

@@ -121,6 +121,10 @@
                                 street: null,
                                 number: null,
                                 description: null,
+                                picture01: null,
+                                picture01ContentType: null,
+                                picture02: null,
+                                picture02ContentType: null,
                                 id: null
                             };
                         }

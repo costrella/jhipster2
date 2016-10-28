@@ -45,6 +45,20 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="picture_01" type="blob">
+                <constraints nullable="true" />
+            </column>
+            <column name="picture_01_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="picture_02" type="blob">
+                <constraints nullable="true" />
+            </column>
+            <column name="picture_02_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="person_id" type="bigint">
                 <constraints nullable="true" />
             </column>

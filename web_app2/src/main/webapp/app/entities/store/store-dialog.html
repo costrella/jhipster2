@@ -61,6 +61,50 @@
                     ng-model="vm.store.description"
                      />
         </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setPicture01($file, vm.store)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_picture01">Picture 01</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.store.picture01ContentType + ';base64,' + vm.store.picture01}}" style="max-height: 100px;" ng-if="vm.store.picture01"/>
+                <div ng-if="vm.store.picture01" class="help-block clearfix">
+                    <span class="pull-left">{{vm.store.picture01ContentType}}, {{vm.byteSize(vm.store.picture01)}}</span>
+                    <button ng-click="vm.store.picture01=null;vm.store.picture01ContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setPicture01($file, vm.store)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="picture01" id="field_picture01"
+                    ng-model="vm.store.picture01"
+                     />
+            <input type="hidden" class="form-control" name="picture01ContentType" id="field_picture01ContentType"
+                    ng-model="vm.store.picture01ContentType" />
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setPicture02($file, vm.store)" ngf-pattern="'image/*'">
+            <label class="control-label" for="field_picture02">Picture 02</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.store.picture02ContentType + ';base64,' + vm.store.picture02}}" style="max-height: 100px;" ng-if="vm.store.picture02"/>
+                <div ng-if="vm.store.picture02" class="help-block clearfix">
+                    <span class="pull-left">{{vm.store.picture02ContentType}}, {{vm.byteSize(vm.store.picture02)}}</span>
+                    <button ng-click="vm.store.picture02=null;vm.store.picture02ContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setPicture02($file, vm.store)" accept="image/*">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="picture02" id="field_picture02"
+                    ng-model="vm.store.picture02"
+                     />
+            <input type="hidden" class="form-control" name="picture02ContentType" id="field_picture02ContentType"
+                    ng-model="vm.store.picture02ContentType" />
+        </div>
 
         <div class="form-group">
             <label for="field_person">Person</label>

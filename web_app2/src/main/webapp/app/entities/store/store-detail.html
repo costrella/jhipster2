@@ -1,49 +1,74 @@
-
 <div>
     <h2>sklep: {{vm.store.name}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Nazwa</span></dt>
-        <dd>
-            <span>{{vm.store.name}}</span>
-        </dd>
-        <dt><span>Adres</span></dt>
-        <dd>
-            <span>{{vm.store.city}}, {{vm.store.street}} {{vm.store.number}} </span>
-        </dd>
-        <dt><span>Opis</span></dt>
-        <dd>
-            <span>{{vm.store.description}}</span>
-        </dd>
-        <dt><span>PH</span></dt>
-        <dd>
-            <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
-        </dd>
-        <dt><span>Wizyty w tym miesiącu</span></dt>
-        <dd>
-            <span>{{vm.month}} {{vm.store.visited}}</span>
-        </dd>
-        <dt><span>Wizyty w poprzednim miesiącu</span></dt>
-        <dd>
-            <span>{{vm.monthAgo}}</span>
-        </dd>
-        <dt><span>Wszystkie wizyty</span></dt>
-        <dd>
-        <span>{{vm.allCount}}</span>
-        </dd>
-    </dl>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <dl class="dl-horizontal jh-entity-details">
+                    <dt><span>Nazwa</span></dt>
+                    <dd>
+                        <span>{{vm.store.name}}</span>
+                    </dd>
+                    <dt><span>Adres</span></dt>
+                    <dd>
+                        <span>{{vm.store.city}}, {{vm.store.street}} {{vm.store.number}} </span>
+                    </dd>
+                    <dt><span>Opis</span></dt>
+                    <dd>
+                        <span>{{vm.store.description}}</span>
+                    </dd>
+                    <dt><span>PH</span></dt>
+                    <dd>
+                        <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
+                    </dd>
+                    <dt><span>Wizyty w tym miesiącu</span></dt>
+                    <dd>
+                        <span>{{vm.month}} {{vm.store.visited}}</span>
+                    </dd>
+                    <dt><span>Wizyty w poprzednim miesiącu</span></dt>
+                    <dd>
+                        <span>{{vm.monthAgo}}</span>
+                    </dd>
+                    <dt><span>Wszystkie wizyty</span></dt>
+                    <dd>
+                        <span>{{vm.allCount}}</span>
+                    </dd>
+                </dl>
 
-    <button type="submit"
-            ui-sref="{{ vm.previousState }}"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
+                <button type="submit"
+                        ui-sref="{{ vm.previousState }}"
+                        class="btn btn-info">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+                </button>
 
-    <button type="button" ui-sref="store-detail.edit({id:vm.store.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm"> Edit</span>
-    </button>
+                <button type="button" ui-sref="store-detail.edit({id:vm.store.id})" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="hidden-xs hidden-sm"> Edit</span>
+                </button>
+            </div>
+            <div class="col-xs-8 no-padding-right">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div ng-if="vm.store.picture01">
+                            <a ng-click="vm.openFile(vm.store.picture01ContentType, vm.store.picture01)">
+                                <img
+                                    data-ng-src="{{'data:' + vm.store.picture01ContentType + ';base64,' + vm.store.picture01}}"
+                                    style="max-width: 100%;"/>
+                            </a>
+                        </div><br/>
+                        <div ng-if="vm.store.picture02">
+                            <a ng-click="vm.openFile(vm.store.picture02ContentType, vm.store.picture02)">
+                                <img
+                                    data-ng-src="{{'data:' + vm.store.picture02ContentType + ';base64,' + vm.store.picture02}}"
+                                    style="max-width: 100%;"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <br/>
 <h3>Raporty sklepu</h3>
@@ -56,11 +81,16 @@
 
             <th jh-sort-by="date"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th jh-sort-by="person.surname"><span>PH</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span class="glyphicon glyphicon-sort"></span></th>
-            <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_c"><span translate="cechiniApp.raport.z_c">0,33L</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_d"><span translate="cechiniApp.raport.z_d">CYT</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="z_e"><span translate="cechiniApp.raport.z_e">Gratisy</span> <span
+                class="glyphicon glyphicon-sort"></span></th>
 
             <th jh-sort-by="foto1"><span>Zdjęcia</span> <span class="glyphicon glyphicon-sort"></span></th>
             <th></th>
@@ -82,9 +112,12 @@
             <td>{{raport.z_e}}</td>
 
             <td>
-                <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
-                <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
-                <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                <img ng-if="raport.foto1" data-ng-src="{{'data:' + raport.foto1 + ';base64,' + raport.foto1}}"
+                     style="max-height: 30px;"/>
+                <img ng-if="raport.foto2" data-ng-src="{{'data:' + raport.foto2 + ';base64,' + raport.foto2}}"
+                     style="max-height: 30px;"/>
+                <img ng-if="raport.foto3" data-ng-src="{{'data:' + raport.foto3 + ';base64,' + raport.foto3}}"
+                     style="max-height: 30px;"/>
 
             </td>
             <td class="text-right">
@@ -114,5 +147,6 @@
     </table>
 </div>
 <div class="text-center">
-    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.loadPage(vm.page)"></uib-pagination>
+    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                    ng-change="vm.loadPage(vm.page)"></uib-pagination>
 </div>

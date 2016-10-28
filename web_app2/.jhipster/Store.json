@@ -52,6 +52,16 @@
         {
             "fieldName": "description",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "picture01",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "picture02",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
         }
     ],
     "changelogDate": "20160831181410",

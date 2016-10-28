@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('StoreController', StoreController);
 
-    StoreController.$inject = ['$scope', '$state', 'Store', 'StoreSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    StoreController.$inject = ['$scope', '$state', 'DataUtils', 'Store', 'StoreSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function StoreController ($scope, $state, Store, StoreSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function StoreController ($scope, $state, DataUtils, Store, StoreSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -20,6 +20,8 @@
         vm.loadAll = loadAll;
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
+        vm.openFile = DataUtils.openFile;
+        vm.byteSize = DataUtils.byteSize;
 
         loadAll();
 
