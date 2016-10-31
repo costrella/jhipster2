@@ -5,11 +5,11 @@
         .module('cechiniApp')
         .controller('StoreController', StoreController);
 
-    StoreController.$inject = ['$scope', '$state', 'DataUtils', 'Store', 'StoreSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    StoreController.$inject = ['$scope', '$state', 'DataUtils', 'Store', 'StoreSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function StoreController ($scope, $state, DataUtils, Store, StoreSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function StoreController ($scope, $state, DataUtils, Store, StoreSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
-        
+
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -22,24 +22,25 @@
         vm.currentSearch = pagingParams.search;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+        vm.people = Person.query();
+        vm.ph = null;
 
         loadAll();
 
+        function getPersonId() {
+            if (vm.ph) {
+                return vm.ph.id;
+            }
+            return null;
+        }
+
         function loadAll () {
-            if (pagingParams.search) {
-                StoreSearch.query({
-                    query: pagingParams.search,
-                    page: pagingParams.page - 1,
-                    size: vm.itemsPerPage,
-                    sort: sort()
-                }, onSuccess, onError);
-            } else {
                 Store.query({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-                    sort: sort()
+                    sort: sort(),
+                    personId: getPersonId()
                 }, onSuccess, onError);
-            }
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {

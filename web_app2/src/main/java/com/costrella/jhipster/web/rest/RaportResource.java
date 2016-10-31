@@ -136,7 +136,9 @@ public class RaportResource {
                                                            @RequestParam(value = "weekId", required = false) Long weekId
     ) throws URISyntaxException {
         Page<Raport> page;
-        if (storeId != null) {
+        if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null && weekId == null) {
+            return null;
+        } else if (storeId != null) {
             if(fromDate == null && toDate == null){
                 //warunek dla wyswietlania raportow w 'sklepie'
                 page = raportRepository.getStoresRaports(storeId, pageable);

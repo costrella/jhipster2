@@ -11,6 +11,16 @@
                     </span>
                 </button>
             </div>
+            <div class="col-xs-8 no-padding-right">
+                <div class="row">
+                    <div class="col-md-5">
+                        <span class="input-group-addon">Przedstawiciel</span>
+                        <select class="form-control" id="field_person" name="person" ng-model="vm.ph" ng-change="vm.loadAll()" ng-options="person as person.surname+' '+person.name for person in vm.people track by person.id" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br/>

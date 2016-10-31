@@ -109,10 +109,15 @@ public class StoreResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Store>> getAllStores(Pageable pageable)
+    public ResponseEntity<List<Store>> getAllStores(Pageable pageable, @RequestParam(value = "personId", required = false) Long personId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Stores");
-        Page<Store> page = storeRepository.findAll(pageable);
+        Page<Store> page;
+        if(personId == null) {
+            page = storeRepository.findAll(pageable);
+        }else{
+            page = storeRepository.getPersonStores(personId, pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stores");
 
         return new ResponseEntity<>(checVisited(page.getContent()), headers, HttpStatus.OK);
