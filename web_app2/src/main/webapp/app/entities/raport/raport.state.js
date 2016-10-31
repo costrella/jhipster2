@@ -131,6 +131,7 @@
                                 z_f: null,
                                 z_g: null,
                                 z_h: null,
+                                adminDesc: null,
                                 id: null
                             };
                         }

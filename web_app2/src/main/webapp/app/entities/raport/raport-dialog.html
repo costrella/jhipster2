@@ -14,7 +14,7 @@
                     ng-model="vm.raport.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_description">Description</label>
+            <label class="control-label" for="field_description">Opis</label>
             <input type="text" class="form-control" name="description" id="field_description"
                     ng-model="vm.raport.description"
                     required />
@@ -24,6 +24,11 @@
                     This field is required.
                 </p>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Opis admina</label>
+            <input type="text" class="form-control" name="description" id="field_adminDesc"
+                   ng-model="vm.raport.adminDesc" />
         </div>
         <div class="form-group" ngf-drop ngf-change="vm.setFoto1($file, vm.raport)" ngf-pattern="'image/*'">
             <label class="control-label" for="field_foto1">Foto 1</label>

@@ -84,6 +84,10 @@
         {
             "fieldName": "z_h",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "adminDesc",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160831181602",

@@ -74,6 +74,9 @@ public class Raport implements Serializable {
     @Column(name = "z_h")
     private Integer z_h;
 
+    @Column(name = "admin_desc")
+    private String adminDesc;
+
     @ManyToOne
     @NotNull
     private Person person;
@@ -301,6 +304,19 @@ public class Raport implements Serializable {
         this.z_h = z_h;
     }
 
+    public String getAdminDesc() {
+        return adminDesc;
+    }
+
+    public Raport adminDesc(String adminDesc) {
+        this.adminDesc = adminDesc;
+        return this;
+    }
+
+    public void setAdminDesc(String adminDesc) {
+        this.adminDesc = adminDesc;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -380,6 +396,7 @@ public class Raport implements Serializable {
             ", z_f='" + z_f + "'" +
             ", z_g='" + z_g + "'" +
             ", z_h='" + z_h + "'" +
+            ", adminDesc='" + adminDesc + "'" +
             '}';
     }
 }

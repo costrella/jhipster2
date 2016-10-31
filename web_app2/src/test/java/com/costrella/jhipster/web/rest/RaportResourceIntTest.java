@@ -86,6 +86,8 @@ public class RaportResourceIntTest {
 
     private static final Integer DEFAULT_Z_H = 1;
     private static final Integer UPDATED_Z_H = 2;
+    private static final String DEFAULT_ADMIN_DESC = "AAAAA";
+    private static final String UPDATED_ADMIN_DESC = "BBBBB";
 
     @Inject
     private RaportRepository raportRepository;
@@ -141,7 +143,8 @@ public class RaportResourceIntTest {
                 .z_e(DEFAULT_Z_E)
                 .z_f(DEFAULT_Z_F)
                 .z_g(DEFAULT_Z_G)
-                .z_h(DEFAULT_Z_H);
+                .z_h(DEFAULT_Z_H)
+                .adminDesc(DEFAULT_ADMIN_DESC);
         // Add required entity
         Person person = PersonResourceIntTest.createEntity(em);
         em.persist(person);
@@ -193,6 +196,7 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getz_f()).isEqualTo(DEFAULT_Z_F);
         assertThat(testRaport.getz_g()).isEqualTo(DEFAULT_Z_G);
         assertThat(testRaport.getz_h()).isEqualTo(DEFAULT_Z_H);
+        assertThat(testRaport.getAdminDesc()).isEqualTo(DEFAULT_ADMIN_DESC);
 
         // Validate the Raport in ElasticSearch
         Raport raportEs = raportSearchRepository.findOne(testRaport.getId());
@@ -243,7 +247,8 @@ public class RaportResourceIntTest {
                 .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)))
                 .andExpect(jsonPath("$.[*].z_f").value(hasItem(DEFAULT_Z_F)))
                 .andExpect(jsonPath("$.[*].z_g").value(hasItem(DEFAULT_Z_G)))
-                .andExpect(jsonPath("$.[*].z_h").value(hasItem(DEFAULT_Z_H)));
+                .andExpect(jsonPath("$.[*].z_h").value(hasItem(DEFAULT_Z_H)))
+                .andExpect(jsonPath("$.[*].adminDesc").value(hasItem(DEFAULT_ADMIN_DESC.toString())));
     }
 
     @Test
@@ -272,7 +277,8 @@ public class RaportResourceIntTest {
             .andExpect(jsonPath("$.z_e").value(DEFAULT_Z_E))
             .andExpect(jsonPath("$.z_f").value(DEFAULT_Z_F))
             .andExpect(jsonPath("$.z_g").value(DEFAULT_Z_G))
-            .andExpect(jsonPath("$.z_h").value(DEFAULT_Z_H));
+            .andExpect(jsonPath("$.z_h").value(DEFAULT_Z_H))
+            .andExpect(jsonPath("$.adminDesc").value(DEFAULT_ADMIN_DESC.toString()));
     }
 
     @Test
@@ -309,7 +315,8 @@ public class RaportResourceIntTest {
                 .z_e(UPDATED_Z_E)
                 .z_f(UPDATED_Z_F)
                 .z_g(UPDATED_Z_G)
-                .z_h(UPDATED_Z_H);
+                .z_h(UPDATED_Z_H)
+                .adminDesc(UPDATED_ADMIN_DESC);
 
         restRaportMockMvc.perform(put("/api/raports")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -336,6 +343,7 @@ public class RaportResourceIntTest {
         assertThat(testRaport.getz_f()).isEqualTo(UPDATED_Z_F);
         assertThat(testRaport.getz_g()).isEqualTo(UPDATED_Z_G);
         assertThat(testRaport.getz_h()).isEqualTo(UPDATED_Z_H);
+        assertThat(testRaport.getAdminDesc()).isEqualTo(UPDATED_ADMIN_DESC);
 
         // Validate the Raport in ElasticSearch
         Raport raportEs = raportSearchRepository.findOne(testRaport.getId());
@@ -391,6 +399,7 @@ public class RaportResourceIntTest {
             .andExpect(jsonPath("$.[*].z_e").value(hasItem(DEFAULT_Z_E)))
             .andExpect(jsonPath("$.[*].z_f").value(hasItem(DEFAULT_Z_F)))
             .andExpect(jsonPath("$.[*].z_g").value(hasItem(DEFAULT_Z_G)))
-            .andExpect(jsonPath("$.[*].z_h").value(hasItem(DEFAULT_Z_H)));
+            .andExpect(jsonPath("$.[*].z_h").value(hasItem(DEFAULT_Z_H)))
+            .andExpect(jsonPath("$.[*].adminDesc").value(hasItem(DEFAULT_ADMIN_DESC.toString())));
     }
 }
