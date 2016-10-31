@@ -144,7 +144,8 @@ public class RaportActivity extends AppCompatActivity {
     private void createRaport() {
         showProgress(true);
         Raport raport = new Raport();
-        raport.setDay(DayService.selectedDay);
+        if(DayService.selectedDay != null)
+            raport.setDay(DayService.selectedDay);
         if(bitmap1 != null){
             raport.setFoto1(getImage(bitmap1));
         }

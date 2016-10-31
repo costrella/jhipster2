@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class MyStoresActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores);
+        DayService.selectedDay = null;
         listValues = new ArrayList<>();
         listValues.addAll(StoreService.STORES_LIST);
         StoreAdapter adapter = new StoreAdapter(this, listValues);
