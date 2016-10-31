@@ -63,6 +63,9 @@ public class Person implements Serializable {
     @Column(name = "target_07")
     private Integer target07;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private Set<Store> stores = new HashSet<>();
@@ -226,6 +229,19 @@ public class Person implements Serializable {
         this.target07 = target07;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public Person description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Set<Store> getStores() {
         return stores;
     }
@@ -336,6 +352,7 @@ public class Person implements Serializable {
             ", target05='" + target05 + "'" +
             ", target06='" + target06 + "'" +
             ", target07='" + target07 + "'" +
+            ", description='" + description + "'" +
             '}';
     }
 }

@@ -126,6 +126,7 @@
                                 target05: null,
                                 target06: null,
                                 target07: null,
+                                description: null,
                                 id: null
                             };
                         }

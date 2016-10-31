@@ -14,7 +14,7 @@
                     ng-model="vm.person.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_name">Name</label>
+            <label class="control-label" for="field_name">Imie</label>
             <input type="text" class="form-control" name="name" id="field_name"
                     ng-model="vm.person.name"
                     required />
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_surname">Surname</label>
+            <label class="control-label" for="field_surname">Nazwisko</label>
             <input type="text" class="form-control" name="surname" id="field_surname"
                     ng-model="vm.person.surname"
                     required />
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_pass">Pass</label>
+            <label class="control-label" for="field_pass">Haslo</label>
             <input type="password" class="form-control" name="pass" id="field_pass"
                     ng-model="vm.person.pass"
                     required ng-minlength="4" />
@@ -74,6 +74,11 @@
             <input type="number" class="form-control" name="target01" id="field_target01"
                     ng-model="vm.person.target01"
                      />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Uwagi</label>
+            <input type="text" class="form-control" name="surname" id="field_description"
+                   ng-model="vm.person.description"/>
         </div>
 
 

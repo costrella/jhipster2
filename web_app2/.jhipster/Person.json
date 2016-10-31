@@ -80,6 +80,10 @@
         {
             "fieldName": "target07",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160831181148",

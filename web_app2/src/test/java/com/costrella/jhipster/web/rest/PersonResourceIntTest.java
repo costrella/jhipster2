@@ -66,6 +66,8 @@ public class PersonResourceIntTest {
 
     private static final Integer DEFAULT_TARGET_07 = 1;
     private static final Integer UPDATED_TARGET_07 = 2;
+    private static final String DEFAULT_DESCRIPTION = "AAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBB";
 
     @Inject
     private PersonRepository personRepository;
@@ -116,7 +118,8 @@ public class PersonResourceIntTest {
                 .target04(DEFAULT_TARGET_04)
                 .target05(DEFAULT_TARGET_05)
                 .target06(DEFAULT_TARGET_06)
-                .target07(DEFAULT_TARGET_07);
+                .target07(DEFAULT_TARGET_07)
+                .description(DEFAULT_DESCRIPTION);
         return person;
     }
 
@@ -153,6 +156,7 @@ public class PersonResourceIntTest {
         assertThat(testPerson.getTarget05()).isEqualTo(DEFAULT_TARGET_05);
         assertThat(testPerson.getTarget06()).isEqualTo(DEFAULT_TARGET_06);
         assertThat(testPerson.getTarget07()).isEqualTo(DEFAULT_TARGET_07);
+        assertThat(testPerson.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
 
         // Validate the Person in ElasticSearch
         Person personEs = personSearchRepository.findOne(testPerson.getId());
@@ -252,7 +256,8 @@ public class PersonResourceIntTest {
                 .andExpect(jsonPath("$.[*].target04").value(hasItem(DEFAULT_TARGET_04)))
                 .andExpect(jsonPath("$.[*].target05").value(hasItem(DEFAULT_TARGET_05)))
                 .andExpect(jsonPath("$.[*].target06").value(hasItem(DEFAULT_TARGET_06)))
-                .andExpect(jsonPath("$.[*].target07").value(hasItem(DEFAULT_TARGET_07)));
+                .andExpect(jsonPath("$.[*].target07").value(hasItem(DEFAULT_TARGET_07)))
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 
     @Test
@@ -276,7 +281,8 @@ public class PersonResourceIntTest {
             .andExpect(jsonPath("$.target04").value(DEFAULT_TARGET_04))
             .andExpect(jsonPath("$.target05").value(DEFAULT_TARGET_05))
             .andExpect(jsonPath("$.target06").value(DEFAULT_TARGET_06))
-            .andExpect(jsonPath("$.target07").value(DEFAULT_TARGET_07));
+            .andExpect(jsonPath("$.target07").value(DEFAULT_TARGET_07))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -308,7 +314,8 @@ public class PersonResourceIntTest {
                 .target04(UPDATED_TARGET_04)
                 .target05(UPDATED_TARGET_05)
                 .target06(UPDATED_TARGET_06)
-                .target07(UPDATED_TARGET_07);
+                .target07(UPDATED_TARGET_07)
+                .description(UPDATED_DESCRIPTION);
 
         restPersonMockMvc.perform(put("/api/people")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -330,6 +337,7 @@ public class PersonResourceIntTest {
         assertThat(testPerson.getTarget05()).isEqualTo(UPDATED_TARGET_05);
         assertThat(testPerson.getTarget06()).isEqualTo(UPDATED_TARGET_06);
         assertThat(testPerson.getTarget07()).isEqualTo(UPDATED_TARGET_07);
+        assertThat(testPerson.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
 
         // Validate the Person in ElasticSearch
         Person personEs = personSearchRepository.findOne(testPerson.getId());
@@ -380,6 +388,7 @@ public class PersonResourceIntTest {
             .andExpect(jsonPath("$.[*].target04").value(hasItem(DEFAULT_TARGET_04)))
             .andExpect(jsonPath("$.[*].target05").value(hasItem(DEFAULT_TARGET_05)))
             .andExpect(jsonPath("$.[*].target06").value(hasItem(DEFAULT_TARGET_06)))
-            .andExpect(jsonPath("$.[*].target07").value(hasItem(DEFAULT_TARGET_07)));
+            .andExpect(jsonPath("$.[*].target07").value(hasItem(DEFAULT_TARGET_07)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 }
