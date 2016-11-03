@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Store', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'Lightbox'];
+    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Store', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, Store, ParseLinks, AlertService, pagingParams, paginationConstants, Lightbox) {
+    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, Store, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.loadPage = loadPage;
