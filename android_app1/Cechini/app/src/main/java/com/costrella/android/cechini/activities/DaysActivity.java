@@ -15,6 +15,7 @@ import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.services.DayService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DaysActivity extends ListActivity {
@@ -32,9 +33,14 @@ public class DaysActivity extends ListActivity {
 // Create the adapter to convert the array to views
         DayAdapter adapter = new DayAdapter(this, listValues);
 
-
+        String title="";
         text = (TextView) findViewById(R.id.storesMainText);
 
+        if(!DayService.DAYS.isEmpty()){
+            title += DayService.DAYS.get(0).getWeek().getName();
+        }
+
+        text.setText(title);
         // initiate the listadapter
 //        ArrayAdapter<Day> myAdapter = new ArrayAdapter<String>(this,
 //                R.layout.day_row_layout, R.id.listText, listValues);
@@ -51,7 +57,6 @@ public class DaysActivity extends ListActivity {
 
         Day selectedItem = (Day) getListView().getItemAtPosition(position);
         DayService.selectedDay = selectedItem;
-        text.setText("You clicked " + selectedItem.getName() + " at position " + position);
 
         Intent intent = new Intent(this, StoresActivity.class);
         startActivity(intent);
@@ -74,7 +79,7 @@ public class DaysActivity extends ListActivity {
             TextView tvName = (TextView) convertView.findViewById(R.id.listText);
 //            TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
             // Populate the data into the template view using the data object
-            tvName.setText(day.getName());
+            tvName.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
 //            tvHome.setText(day.hometown);
             // Return the completed view to render on screen
             return convertView;

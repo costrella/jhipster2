@@ -20,6 +20,7 @@ import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.StoreService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class StoresActivity extends ListActivity {
 
         final Day day = DayService.selectedDay;
 
-        text.setText(day.getName());
+        text.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
 
         setListAdapter(adapter);
 

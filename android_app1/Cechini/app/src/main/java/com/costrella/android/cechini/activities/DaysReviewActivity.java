@@ -34,6 +34,11 @@ public class DaysReviewActivity extends ListActivity {
         DayAdapter adapter = new DayAdapter(this, listValues);
 
         text = (TextView) findViewById(R.id.storesMainText);
+        String title = "";
+        if(!DayService.DAYS.isEmpty()){
+            title += DayService.DAYS.get(0).getWeek().getName();
+        }
+        text.setText(title);
         setListAdapter(adapter);
 
     }
@@ -45,7 +50,6 @@ public class DaysReviewActivity extends ListActivity {
 
         Day selectedItem = (Day) getListView().getItemAtPosition(position);
         DayService.selectedDay = selectedItem;
-        text.setText("You clicked " + selectedItem.getName() + " at position " + position);
 
         Intent intent = new Intent(this, StoresInDayActivity.class);
         startActivity(intent);

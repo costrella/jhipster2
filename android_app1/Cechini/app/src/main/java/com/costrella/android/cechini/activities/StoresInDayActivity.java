@@ -18,6 +18,7 @@ import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.StoreService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class StoresInDayActivity extends ListActivity {
         final StoreAdapter adapter = new StoreAdapter(this, listValues);
         text = (TextView) findViewById(R.id.storesMainText);
         final Day day = DayService.selectedDay;
-        text.setText(day.getName());
+        text.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
 
         Call<Day> callDayStores = CechiniService.getInstance().getCechiniAPI().getDay(day.getId());
         callDayStores.enqueue(new Callback<Day>() {
