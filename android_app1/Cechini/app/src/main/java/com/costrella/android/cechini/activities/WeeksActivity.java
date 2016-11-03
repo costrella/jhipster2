@@ -1,8 +1,12 @@
 package com.costrella.android.cechini.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -31,16 +35,20 @@ import retrofit2.Response;
 
 public class WeeksActivity extends ListActivity {
 
+    private View mProgressView;
     private TextView text;
     private ArrayList<Week> listValues;
+    WeekAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weeks);
-
+        mProgressView = findViewById(R.id.weeks_progress);
         listValues = new ArrayList<>();
-        final WeekAdapter adapter = new WeekAdapter(this, listValues);
+        adapter = new WeekAdapter(this, listValues);
+
+        showProgress(true);
 
         Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
         call.enqueue(new Callback<List<Store>>() {
@@ -58,10 +66,13 @@ public class WeeksActivity extends ListActivity {
                         final int code = response.code();
                         if (code == 200) {
                             List<Week> weeks = response.body();
+                            listValues.clear();
                             listValues.addAll(weeks);
 
                             text = (TextView) findViewById(R.id.weeksMainText);
                             setListAdapter(adapter);
+
+                            showProgress(false);
                         }
                     }
 
@@ -99,6 +110,51 @@ public class WeeksActivity extends ListActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showProgress(true);
+        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+        call.enqueue(new Callback<List<Store>>() {
+            @Override
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                List<Store> list = response.body();
+                StoreService.STORES_LIST.clear();
+                StoreService.STORES_LIST = list;
+
+                Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
+                callPersonWeeks.enqueue(new Callback<List<Week>>() {
+                    @Override
+                    public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
+
+                        final int code = response.code();
+                        if (code == 200) {
+                            List<Week> weeks = response.body();
+                            listValues.clear();
+                            listValues.addAll(weeks);
+
+                            text = (TextView) findViewById(R.id.weeksMainText);
+                            setListAdapter(adapter);
+
+                            showProgress(false);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Week>> call, Throwable t) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.e("s", "f");
+            }
+        });
     }
 
     // when an item of the list is clicked
@@ -144,6 +200,29 @@ public class WeeksActivity extends ListActivity {
             TextView tvName = (TextView) convertView.findViewById(R.id.listText);
             tvName.setText(week.getId() + ", " + week.getName());
             return convertView;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 
