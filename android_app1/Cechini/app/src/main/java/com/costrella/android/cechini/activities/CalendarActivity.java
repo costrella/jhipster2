@@ -99,8 +99,8 @@ public class CalendarActivity extends AppCompatActivity {
                 String from = "";
                 String to = "";
                 if(!dates.isEmpty()){
-                    from = new SimpleDateFormat("MM/dd/yyyy").format(dates.get(0).getDate());
-                    to = new SimpleDateFormat("MM/dd/yyyy").format(dates.get(dates.size()-1).getDate());
+                    from = new SimpleDateFormat("dd/MM/yyyy").format(dates.get(0).getDate());
+                    to = new SimpleDateFormat("dd/MM/yyyy").format(dates.get(dates.size()-1).getDate());
                 }
 
                 week.setName("Trasówka "+ from + " - " + to);
