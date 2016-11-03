@@ -109,7 +109,7 @@ public class StoresActivity extends ListActivity {
             });
 //            TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
             // Populate the data into the template view using the data object
-            checkBox.setText(store.getName());
+            checkBox.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
 //            tvHome.setText(day.hometown);
             // Return the completed view to render on screen
             return convertView;

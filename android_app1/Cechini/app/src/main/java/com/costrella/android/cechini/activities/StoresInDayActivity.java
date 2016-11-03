@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public class StoresInDayActivity extends ListActivity {
         text = (TextView) findViewById(R.id.storesMainText);
         final Day day = DayService.selectedDay;
         text.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
+        FloatingActionButton updateDay = (FloatingActionButton) findViewById(R.id.updateDay);
+        updateDay.setVisibility(View.INVISIBLE);
 
         Call<Day> callDayStores = CechiniService.getInstance().getCechiniAPI().getDay(day.getId());
         callDayStores.enqueue(new Callback<Day>() {
@@ -90,7 +93,7 @@ public class StoresInDayActivity extends ListActivity {
             // Lookup view for data population
             TextView textView = (TextView) convertView.findViewById(R.id.listText);
             // Populate the data into the template view using the data object
-            textView.setText(store.getName());
+            textView.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
 //            tvHome.setText(day.hometown);
             // Return the completed view to render on screen
             return convertView;
