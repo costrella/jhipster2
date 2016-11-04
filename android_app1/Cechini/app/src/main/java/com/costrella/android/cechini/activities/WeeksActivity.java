@@ -50,46 +50,7 @@ public class WeeksActivity extends ListActivity {
 
         showProgress(true);
 
-        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
-        call.enqueue(new Callback<List<Store>>() {
-            @Override
-            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
-                List<Store> list = response.body();
-                StoreService.STORES_LIST.clear();
-                StoreService.STORES_LIST = list;
-
-                Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
-                callPersonWeeks.enqueue(new Callback<List<Week>>() {
-                    @Override
-                    public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
-
-                        final int code = response.code();
-                        if (code == 200) {
-                            List<Week> weeks = response.body();
-                            listValues.clear();
-                            listValues.addAll(weeks);
-
-                            text = (TextView) findViewById(R.id.weeksMainText);
-                            setListAdapter(adapter);
-
-                            showProgress(false);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Week>> call, Throwable t) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Store>> call, Throwable t) {
-                Log.e("s", "f");
-            }
-        });
-
+        refresh();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.weeksAddWeek);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -115,46 +76,8 @@ public class WeeksActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showProgress(true);
-        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
-        call.enqueue(new Callback<List<Store>>() {
-            @Override
-            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
-                List<Store> list = response.body();
-                StoreService.STORES_LIST.clear();
-                StoreService.STORES_LIST = list;
+        refresh();
 
-                Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
-                callPersonWeeks.enqueue(new Callback<List<Week>>() {
-                    @Override
-                    public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
-
-                        final int code = response.code();
-                        if (code == 200) {
-                            List<Week> weeks = response.body();
-                            listValues.clear();
-                            listValues.addAll(weeks);
-
-                            text = (TextView) findViewById(R.id.weeksMainText);
-                            setListAdapter(adapter);
-
-                            showProgress(false);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Week>> call, Throwable t) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Store>> call, Throwable t) {
-                Log.e("s", "f");
-            }
-        });
     }
 
     // when an item of the list is clicked
@@ -226,4 +149,46 @@ public class WeeksActivity extends ListActivity {
         }
     }
 
+    private void refresh() {
+        showProgress(true);
+        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+        call.enqueue(new Callback<List<Store>>() {
+            @Override
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                List<Store> list = response.body();
+                StoreService.STORES_LIST.clear();
+                StoreService.STORES_LIST = list;
+
+                Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
+                callPersonWeeks.enqueue(new Callback<List<Week>>() {
+                    @Override
+                    public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
+
+                        final int code = response.code();
+                        if (code == 200) {
+                            List<Week> weeks = response.body();
+                            listValues.clear();
+                            listValues.addAll(weeks);
+
+                            text = (TextView) findViewById(R.id.weeksMainText);
+                            setListAdapter(adapter);
+
+                            showProgress(false);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Week>> call, Throwable t) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.e("s", "f");
+            }
+        });
+    }
 }

@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,10 @@ public class MyStoresActivity extends ListActivity {
         listValues.addAll(StoreService.STORES_LIST);
         StoreAdapter adapter = new StoreAdapter(this, listValues);
         setListAdapter(adapter);
+        FloatingActionButton updateDay = (FloatingActionButton) findViewById(R.id.updateDay);
+        updateDay.setVisibility(View.INVISIBLE);
+        TextView title = (TextView) findViewById(R.id.storesMainText);
+        title.setText("Moje sklepy");
     }
 
     @Override
@@ -62,7 +67,7 @@ public class MyStoresActivity extends ListActivity {
                 textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
             }
 
-            textView.setText(store.getName());
+            textView.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
             return convertView;
         }
     }
