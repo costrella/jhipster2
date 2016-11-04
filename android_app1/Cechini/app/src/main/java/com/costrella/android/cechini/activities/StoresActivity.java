@@ -29,11 +29,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/*
+Klasa do której przechodzimy zaraz po kalendarzu!
+ */
 public class StoresActivity extends ListActivity {
 
     private TextView text;
     private ArrayList<Store> listValues;
-    private ArrayList<Store> listCheckedValues;
+    private Set<Store> listCheckedValues;
+    private Day day;
 
 
     @Override
@@ -41,13 +45,18 @@ public class StoresActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores);
         listValues = new ArrayList<>();
-        listCheckedValues = new ArrayList<>();
+        listCheckedValues = new HashSet<Store>();
+        listCheckedValues.clear();
         listValues.addAll(StoreService.STORES_LIST);
         StoreAdapter adapter = new StoreAdapter(this, listValues);
 
         text = (TextView) findViewById(R.id.storesMainText);
 
-        final Day day = DayService.selectedDay;
+        day = DayService.selectedDay;
+
+        if(day.getStores() != null) {
+            listCheckedValues.addAll(day.getStores());
+        }
 
         text.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
 
@@ -89,29 +98,29 @@ public class StoresActivity extends ListActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // Get the data item for this position
             final Store store = getItem(position);
-            // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.store_row_layout, parent, false);
             }
-            // Lookup view for data population
             CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.storeCheckBoxRow);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(b){
+                    if (b) {
                         listCheckedValues.add(store);
-                    }else {
+                    } else {
                         listCheckedValues.remove(store);
                     }
                 }
             });
-//            TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
-            // Populate the data into the template view using the data object
+            checkBox.setChecked(listCheckedValues.contains(store));
             checkBox.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
-//            tvHome.setText(day.hometown);
-            // Return the completed view to render on screen
+//            if (day.getStores() != null) {
+//                if (day.getStores().contains(store)) {
+//                    checkBox.setChecked(true);
+//                    listCheckedValues.add(store);
+//                }
+//            }
             return convertView;
         }
     }
