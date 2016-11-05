@@ -45,6 +45,12 @@ public class Raport implements Serializable {
 
     private Integer z_e;
 
+    private Integer z_f;
+
+    private Integer z_g;
+
+    private Integer z_h;
+
     private Day day;
 
     public Day getDay() {
@@ -75,6 +81,30 @@ public class Raport implements Serializable {
     public Raport description(String description) {
         this.description = description;
         return this;
+    }
+
+    public Integer getZ_f() {
+        return z_f;
+    }
+
+    public void setZ_f(Integer z_f) {
+        this.z_f = z_f;
+    }
+
+    public Integer getZ_g() {
+        return z_g;
+    }
+
+    public void setZ_g(Integer z_g) {
+        this.z_g = z_g;
+    }
+
+    public Integer getZ_h() {
+        return z_h;
+    }
+
+    public void setZ_h(Integer z_h) {
+        this.z_h = z_h;
     }
 
     public void setDescription(String description) {

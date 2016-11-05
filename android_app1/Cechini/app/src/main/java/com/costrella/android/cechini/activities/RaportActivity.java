@@ -47,7 +47,7 @@ public class RaportActivity extends AppCompatActivity {
     Bitmap bitmap1;
     Bitmap bitmap2;
     Bitmap bitmap3;
-    EditText editText, z_a, z_b, z_c, z_d, z_e;
+    EditText editText, z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h;
     private int idImgView = 0;
     private View mProgressView;
     private View scroolView;
@@ -76,6 +76,9 @@ public class RaportActivity extends AppCompatActivity {
         z_c = (EditText) findViewById(R.id.z_c);
         z_d = (EditText) findViewById(R.id.z_d);
         z_e = (EditText) findViewById(R.id.z_e);
+        z_f = (EditText) findViewById(R.id.z_f);
+        z_g = (EditText) findViewById(R.id.z_g);
+        z_h = (EditText) findViewById(R.id.z_h);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +228,6 @@ public class RaportActivity extends AppCompatActivity {
                             try {
                                 bitmap1 = MediaStore.Images.Media.getBitmap(
                                         getContentResolver(), imageUri);
-//                                bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth() / scale, bitmap1.getHeight() / scale, true);
                                 bitmap1 = scale(bitmap1);
                                 imageView1.setImageBitmap(bitmap1);
                             } catch (IOException e) {
@@ -235,14 +237,12 @@ public class RaportActivity extends AppCompatActivity {
                         case 2:
                             bitmap2 = MediaStore.Images.Media.getBitmap(
                                     getContentResolver(), imageUri);
-//                            bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth() / scale, bitmap2.getHeight() / scale, true);
                             bitmap2 = scale(bitmap2);
                             imageView2.setImageBitmap(bitmap2);
                             break;
                         case 3:
                             bitmap3 = MediaStore.Images.Media.getBitmap(
                                     getContentResolver(), imageUri);
-//                            bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth() / scale, bitmap3.getHeight() / scale, true);
                             bitmap3 = scale(bitmap3);
                             imageView3.setImageBitmap(bitmap3);
                             break;
@@ -325,6 +325,9 @@ public class RaportActivity extends AppCompatActivity {
         raport.setZ_c(getInt(z_c));
         raport.setZ_d(getInt(z_d));
         raport.setZ_e(getInt(z_e));
+        raport.setZ_f(getInt(z_f));
+        raport.setZ_g(getInt(z_g));
+        raport.setZ_h(getInt(z_h));
 
         Call<Raport> callRaport = CechiniService.getInstance().getCechiniAPI().createRaport(raport);
         callRaport.enqueue(new Callback<Raport>() {
