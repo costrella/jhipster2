@@ -3,10 +3,13 @@ package com.costrella.android.cechini.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -37,8 +40,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RaportActivity extends AppCompatActivity {
+    private static final int ACTION_TAKE_PHOTO_6 = 6;
     private static final int ACTION_TAKE_PHOTO_S = 2;
     private int PICK_IMAGE_REQUEST = 1;
+    private int scale = 6;
     Bitmap bitmap1;
     Bitmap bitmap2;
     Bitmap bitmap3;
@@ -71,6 +76,7 @@ public class RaportActivity extends AppCompatActivity {
         z_c = (EditText) findViewById(R.id.z_c);
         z_d = (EditText) findViewById(R.id.z_d);
         z_e = (EditText) findViewById(R.id.z_e);
+
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,48 +125,61 @@ public class RaportActivity extends AppCompatActivity {
         );
 
     }
+
+    Uri imageUri;
+    ContentValues values;
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    private void goToMediaStore(int value) {
+
+        idImgView = value;
+        values = new ContentValues();
+        imageUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, ACTION_TAKE_PHOTO_6);
+    }
+
     Button.OnClickListener mTakePicSOnClickListener1 =
             new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    idImgView = 1;
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, ACTION_TAKE_PHOTO_S);
+                    goToMediaStore(1);
                 }
             };
     Button.OnClickListener mTakePicSOnClickListener2 =
             new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    idImgView = 2;
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, ACTION_TAKE_PHOTO_S);
+                    goToMediaStore(2);
                 }
             };
     Button.OnClickListener mTakePicSOnClickListener3 =
             new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    idImgView = 3;
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, ACTION_TAKE_PHOTO_S);
+                    goToMediaStore(3);
                 }
             };
 
-    private void handleSmallCameraPhoto1(Intent intent) {
-        Bundle extras = intent.getExtras();
-        bitmap1 = (Bitmap) extras.get("data");
-        imageView1.setImageBitmap(bitmap1);
-    }
-    private void handleSmallCameraPhoto2(Intent intent) {
-        Bundle extras = intent.getExtras();
-        bitmap2 = (Bitmap) extras.get("data");
-        imageView2.setImageBitmap(bitmap2);
-    }
-    private void handleSmallCameraPhoto3(Intent intent) {
-        Bundle extras = intent.getExtras();
-        bitmap3 = (Bitmap) extras.get("data");
-        imageView3.setImageBitmap(bitmap3);
+    private void handleSmallCameraPhoto(Bitmap bitmap, ImageView imageView) {
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(
+                    getContentResolver(), imageUri);
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, true);
+            imageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setBtnListenerOrDisable(
@@ -198,18 +217,38 @@ public class RaportActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == ACTION_TAKE_PHOTO_S) {
-            if (resultCode == RESULT_OK) {
-                switch (idImgView) {
-                    case 1:
-                        handleSmallCameraPhoto1(data);
-                        break;
-                    case 2:
-                        handleSmallCameraPhoto2(data);;
-                        break;
-                    case 3:
-                        handleSmallCameraPhoto3(data);
-                        break;
+        if (requestCode == ACTION_TAKE_PHOTO_6) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    switch (idImgView) {
+                        case 1:
+                            try {
+                                bitmap1 = MediaStore.Images.Media.getBitmap(
+                                        getContentResolver(), imageUri);
+//                                bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth() / scale, bitmap1.getHeight() / scale, true);
+                                bitmap1 = scale(bitmap1);
+                                imageView1.setImageBitmap(bitmap1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 2:
+                            bitmap2 = MediaStore.Images.Media.getBitmap(
+                                    getContentResolver(), imageUri);
+//                            bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth() / scale, bitmap2.getHeight() / scale, true);
+                            bitmap2 = scale(bitmap2);
+                            imageView2.setImageBitmap(bitmap2);
+                            break;
+                        case 3:
+                            bitmap3 = MediaStore.Images.Media.getBitmap(
+                                    getContentResolver(), imageUri);
+//                            bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth() / scale, bitmap3.getHeight() / scale, true);
+                            bitmap3 = scale(bitmap3);
+                            imageView3.setImageBitmap(bitmap3);
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -222,14 +261,17 @@ public class RaportActivity extends AppCompatActivity {
                 switch (idImgView) {
                     case 1:
                         bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        bitmap1 = scale(bitmap1);
                         imageView1.setImageBitmap(bitmap1);
                         break;
                     case 2:
                         bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        bitmap2 = scale(bitmap2);
                         imageView2.setImageBitmap(bitmap2);
                         break;
                     case 3:
                         bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        bitmap3 = scale(bitmap3);
                         imageView3.setImageBitmap(bitmap3);
                         break;
                 }
@@ -240,17 +282,21 @@ public class RaportActivity extends AppCompatActivity {
         }
     }
 
-    private byte[] getImage(Bitmap bitmap){
+    private Bitmap scale (Bitmap bitmap){
+        return Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, true);
+    }
+
+    private byte[] getImage(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
         byte[] byteArray = baos.toByteArray();
         return byteArray;
     }
 
-    private int getInt(EditText editText){
-        if(editText.getText().toString().isEmpty()){
+    private int getInt(EditText editText) {
+        if (editText.getText().toString().isEmpty()) {
             return 0;
-        }else{
+        } else {
             return ((Integer.parseInt(editText.getText().toString())));
         }
     }
@@ -258,15 +304,15 @@ public class RaportActivity extends AppCompatActivity {
     private void createRaport() {
         showProgress(true);
         Raport raport = new Raport();
-        if(DayService.selectedDay != null)
+        if (DayService.selectedDay != null)
             raport.setDay(DayService.selectedDay);
-        if(bitmap1 != null){
+        if (bitmap1 != null) {
             raport.setFoto1(getImage(bitmap1));
         }
-        if(bitmap2 != null){
+        if (bitmap2 != null) {
             raport.setFoto2(getImage(bitmap2));
         }
-        if(bitmap3 != null){
+        if (bitmap3 != null) {
             raport.setFoto3(getImage(bitmap3));
         }
 
@@ -286,9 +332,9 @@ public class RaportActivity extends AppCompatActivity {
             public void onResponse(Call<Raport> call, Response<Raport> response) {
                 int code = response.code();
                 showProgress(false);
-                if(code == 201){
+                if (code == 201) {
                     Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
                 }
                 finish();
