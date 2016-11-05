@@ -3,7 +3,10 @@ package com.costrella.android.cechini.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,12 +30,14 @@ import com.costrella.android.cechini.services.StoreService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RaportActivity extends AppCompatActivity {
+    private static final int ACTION_TAKE_PHOTO_S = 2;
     private int PICK_IMAGE_REQUEST = 1;
     Bitmap bitmap1;
     Bitmap bitmap2;
@@ -40,16 +46,24 @@ public class RaportActivity extends AppCompatActivity {
     private int idImgView = 0;
     private View mProgressView;
     private View scroolView;
+    ImageView imageView1;
+    ImageView imageView2;
+    ImageView imageView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_raport);
+
+        imageView1 = (ImageView) findViewById(R.id.imageView1);
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
+        imageView3 = (ImageView) findViewById(R.id.imageView3);
+
         mProgressView = findViewById(R.id.raport_progress);
         scroolView = findViewById(R.id.scrollView);
-        Button btnImg1 = (Button) findViewById(R.id.btnImg1);
-        Button btnImg2 = (Button) findViewById(R.id.btnImg2);
-        Button btnImg3 = (Button) findViewById(R.id.btnImg3);
+        ImageButton btnImg1 = (ImageButton) findViewById(R.id.btnImg1);
+        ImageButton btnImg2 = (ImageButton) findViewById(R.id.btnImg2);
+        ImageButton btnImg3 = (ImageButton) findViewById(R.id.btnImg3);
         Button btnSend = (Button) findViewById(R.id.btnSend);
         editText = (EditText) findViewById(R.id.editText2);
         z_a = (EditText) findViewById(R.id.z_a);
@@ -83,6 +97,93 @@ public class RaportActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton picSBtn1 = (ImageButton) findViewById(R.id.btnImg1a);
+        setBtnListenerOrDisable(
+                picSBtn1,
+                mTakePicSOnClickListener1,
+                MediaStore.ACTION_IMAGE_CAPTURE
+        );
+
+        ImageButton picSBtn2 = (ImageButton) findViewById(R.id.btnImg2a);
+        setBtnListenerOrDisable(
+                picSBtn2,
+                mTakePicSOnClickListener2,
+                MediaStore.ACTION_IMAGE_CAPTURE
+        );
+
+        ImageButton picSBtn3 = (ImageButton) findViewById(R.id.btnImg3a);
+        setBtnListenerOrDisable(
+                picSBtn3,
+                mTakePicSOnClickListener3,
+                MediaStore.ACTION_IMAGE_CAPTURE
+        );
+
+    }
+    Button.OnClickListener mTakePicSOnClickListener1 =
+            new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    idImgView = 1;
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePictureIntent, ACTION_TAKE_PHOTO_S);
+                }
+            };
+    Button.OnClickListener mTakePicSOnClickListener2 =
+            new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    idImgView = 2;
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePictureIntent, ACTION_TAKE_PHOTO_S);
+                }
+            };
+    Button.OnClickListener mTakePicSOnClickListener3 =
+            new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    idImgView = 3;
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePictureIntent, ACTION_TAKE_PHOTO_S);
+                }
+            };
+
+    private void handleSmallCameraPhoto1(Intent intent) {
+        Bundle extras = intent.getExtras();
+        bitmap1 = (Bitmap) extras.get("data");
+        imageView1.setImageBitmap(bitmap1);
+    }
+    private void handleSmallCameraPhoto2(Intent intent) {
+        Bundle extras = intent.getExtras();
+        bitmap2 = (Bitmap) extras.get("data");
+        imageView2.setImageBitmap(bitmap2);
+    }
+    private void handleSmallCameraPhoto3(Intent intent) {
+        Bundle extras = intent.getExtras();
+        bitmap3 = (Bitmap) extras.get("data");
+        imageView3.setImageBitmap(bitmap3);
+    }
+
+    private void setBtnListenerOrDisable(
+            ImageButton btn,
+            ImageButton.OnClickListener onClickListener,
+            String intentName
+    ) {
+        if (isIntentAvailable(this, intentName)) {
+            btn.setOnClickListener(onClickListener);
+        } else {
+//            btn.setText(
+//                    "cannot" + " " + btn.getText());
+            btn.setClickable(false);
+        }
+    }
+
+    public static boolean isIntentAvailable(Context context, String action) {
+        final PackageManager packageManager = context.getPackageManager();
+        final Intent intent = new Intent(action);
+        List<ResolveInfo> list =
+                packageManager.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
     }
 
     private void startImgSelected(int id) {
@@ -97,6 +198,22 @@ public class RaportActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == ACTION_TAKE_PHOTO_S) {
+            if (resultCode == RESULT_OK) {
+                switch (idImgView) {
+                    case 1:
+                        handleSmallCameraPhoto1(data);
+                        break;
+                    case 2:
+                        handleSmallCameraPhoto2(data);;
+                        break;
+                    case 3:
+                        handleSmallCameraPhoto3(data);
+                        break;
+                }
+            }
+        }
+
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             Uri uri = data.getData();
@@ -105,17 +222,14 @@ public class RaportActivity extends AppCompatActivity {
                 switch (idImgView) {
                     case 1:
                         bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        ImageView imageView1 = (ImageView) findViewById(R.id.imageView1);
                         imageView1.setImageBitmap(bitmap1);
                         break;
                     case 2:
                         bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        ImageView imageView2 = (ImageView) findViewById(R.id.imageView2);
                         imageView2.setImageBitmap(bitmap2);
                         break;
                     case 3:
                         bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        ImageView imageView3 = (ImageView) findViewById(R.id.imageView3);
                         imageView3.setImageBitmap(bitmap3);
                         break;
                 }
