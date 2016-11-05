@@ -3,7 +3,9 @@ package com.costrella.android.cechini.activities;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +35,10 @@ public class DaysActivity extends ListActivity {
 // Create the adapter to convert the array to views
         DayAdapter adapter = new DayAdapter(this, listValues);
 
-        String title="";
+        String title = "";
         text = (TextView) findViewById(R.id.storesMainText);
 
-        if(!DayService.DAYS.isEmpty()){
+        if (!DayService.DAYS.isEmpty()) {
             title += DayService.DAYS.get(0).getWeek().getName();
         }
 
@@ -86,4 +88,26 @@ public class DaysActivity extends ListActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Snackbar snackbar = Snackbar
+                .make(getCurrentFocus(), "Czy skończyłeś planować trasówkę?", Snackbar.LENGTH_LONG)
+                .setAction("TAK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        back();
+
+                    }
+
+                });
+        snackbar.setActionTextColor(Color.RED);
+        snackbar.show();
+
+    }
+
+    private void back(){
+        Intent intent = new Intent(this, WeeksActivity.class);
+        startActivity(intent);
+//        super.onBackPressed();
+    }
 }
