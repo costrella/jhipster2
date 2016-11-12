@@ -8,6 +8,50 @@
         <dd>
             <span>{{vm.raport.description}} <font color="red">{{vm.raport.adminDesc}}</font></span>
         </dd>
+        <dt><span>Data</span></dt>
+        <dd>
+            <span>{{vm.raport.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>PH</span></dt>
+        <dd>
+            <a ui-sref="person-detail({id:vm.raport.person.id})">{{vm.raport.person.surname}}</a>
+        </dd>
+        <dt><span>Sklep</span></dt>
+        <dd>
+            <a ui-sref="store-detail({id:vm.raport.store.id})">{{vm.raport.store.name}}</a>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_a">2L NGAZ</span></dt>
+        <dd>
+            <span>{{vm.raport.z_a}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_b">2L GAZ</span></dt>
+        <dd>
+            <span>{{vm.raport.z_b}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_c">0,33L</span></dt>
+        <dd>
+            <span>{{vm.raport.z_c}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_d">0,33L CYT</span></dt>
+        <dd>
+            <span>{{vm.raport.z_d}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_f">2L NGAZ (BIAŁA)</span></dt>
+        <dd>
+            <span>{{vm.raport.z_f}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_g">0,75L SPORT</span></dt>
+        <dd>
+            <span>{{vm.raport.z_g}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_h">0,33L SZKŁO</span></dt>
+        <dd>
+            <span>{{vm.raport.z_h}}</span>
+        </dd>
+        <dt><span translate="cechiniApp.raport.z_e">Gratisy</span></dt>
+        <dd>
+            <span>{{vm.raport.z_e}}</span>
+        </dd>
         <dt><span>Foto 1</span></dt>
         <dd>
             <div ng-if="vm.raport.foto1">
@@ -34,50 +78,6 @@
                 </a>
                 {{vm.raport.foto3ContentType}}, {{vm.byteSize(vm.raport.foto3)}}
             </div>
-        </dd>
-        <dt><span>Date</span></dt>
-        <dd>
-            <span>{{vm.raport.date | date:'mediumDate'}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_a">2L NGAZ</span></dt>
-        <dd>
-            <span>{{vm.raport.z_a}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_b">2L GAZ</span></dt>
-        <dd>
-            <span>{{vm.raport.z_b}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_c">0,33L</span></dt>
-        <dd>
-            <span>{{vm.raport.z_c}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_d">0,33L CYT</span></dt>
-        <dd>
-            <span>{{vm.raport.z_d}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_e">Gratisy</span></dt>
-        <dd>
-            <span>{{vm.raport.z_e}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_f">2L NGAZ (BIAŁA)</span></dt>
-        <dd>
-            <span>{{vm.raport.z_f}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_g">0,75L SPORT</span></dt>
-        <dd>
-            <span>{{vm.raport.z_g}}</span>
-        </dd>
-        <dt><span translate="cechiniApp.raport.z_h">0,33L SZKŁO</span></dt>
-        <dd>
-            <span>{{vm.raport.z_h}}</span>
-        </dd>
-        <dt><span>PH</span></dt>
-        <dd>
-            <a ui-sref="person-detail({id:vm.raport.person.id})">{{vm.raport.person.surname}}</a>
-        </dd>
-        <dt><span>Sklep</span></dt>
-        <dd>
-            <a ui-sref="store-detail({id:vm.raport.store.id})">{{vm.raport.store.name}}</a>
         </dd>
     </dl>
 
