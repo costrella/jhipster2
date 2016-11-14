@@ -233,14 +233,8 @@ public class PersonResource {
             }
         }
 
-        double percent01, percent02, percent03, percent04, percent05;
-//        percent01 = getPercent(person.getTarget01() != null ? person.getTarget01() : 0, targetSum01);
-//        percent02 = getPercent(person.getTarget02() != null ? person.getTarget02() : 0, targetSum02);
-//        percent03 = getPercent(person.getTarget03() != null ? person.getTarget03() : 0, targetSum03);
-//        percent04 = getPercent(person.getTarget04() != null ? person.getTarget04() : 0, targetSum04);
-//        percent05 = getPercent(person.getTarget05() != null ? person.getTarget05() : 0, targetSum05);
-
-        double sumAll = (double)targetSum01 + (double)targetSum02 + (double)targetSum03 + (double)targetSum04 + (double)targetSum05
+        double sumAll = (double)targetSum01 + (double)targetSum02 + (double)targetSum03 + (double)targetSum04
+//            + (double)targetSum05 BEZ GRATISOW
             + (double)targetSum06 + (double)targetSum07 + (double)targetSum08;
         double sumAllPercent = getPercent(targetMain, sumAll);
 
