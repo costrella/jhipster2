@@ -45,7 +45,7 @@
             var toDate = $filter('date')(vm.toDate, dateFormat);
 
                 Week.query({
-                    page: pagingParams.page - 1,
+                    page: vm.page - 1,
                     size: vm.itemsPerPage,
                     sort: sort(),
                     fromDate: fromDate,
@@ -64,7 +64,6 @@
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
                 vm.weeks = data;
-                vm.page = pagingParams.page;
             }
             function onError(error) {
                 AlertService.error(error.data.message);
@@ -73,7 +72,7 @@
 
         function loadPage (page) {
             vm.page = page;
-            vm.transition();
+            vm.loadAll();
         }
 
         function today () {

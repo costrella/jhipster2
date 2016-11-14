@@ -24,6 +24,7 @@
         vm.byteSize = DataUtils.byteSize;
         vm.people = Person.query();
         vm.ph = null;
+        vm.page = 1;
 
         loadAll();
 
@@ -36,7 +37,7 @@
 
         function loadAll () {
                 Store.query({
-                    page: pagingParams.page - 1,
+                    page: vm.page - 1,
                     size: vm.itemsPerPage,
                     sort: sort(),
                     personId: getPersonId()
@@ -53,7 +54,6 @@
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
                 vm.stores = data;
-                vm.page = pagingParams.page;
             }
             function onError(error) {
                 AlertService.error(error.data.message);
@@ -62,15 +62,11 @@
 
         function loadPage (page) {
             vm.page = page;
-            vm.transition();
+            vm.loadAll()
         }
 
         function transition () {
-            $state.transitionTo($state.$current, {
-                page: vm.page,
-                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
-            });
+            vm.loadAll();
         }
 
         function search (searchQuery) {
