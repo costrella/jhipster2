@@ -51,6 +51,7 @@
                     <th jh-sort-by="date" width="90px"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="store.name"><span>Sklep</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="store.name"><span>Ulica</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="store.name"><span>Hurtownia</span> <span class="glyphicon glyphicon-sort"></span></th>
 
                     <th jh-sort-by="z_a"><span translate="cechiniApp.raport.z_a">2L NGAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="z_b"><span translate="cechiniApp.raport.z_b">2L GAZ</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -78,7 +79,11 @@
                             {{raport.store.city}}
                     </td>
                     <td>{{raport.store.street}}</td>
-
+                    <td>
+                        <a ui-sref="warehouse-detail({id:raport.warehouse.id})">
+                        {{raport.warehouse.name}}
+                        </a>
+                    </td>
                     <td>{{raport.z_a}}</td>
                     <td>{{raport.z_b}}</td>
                     <td>{{raport.z_c}}</td>

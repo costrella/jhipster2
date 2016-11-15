@@ -2,9 +2,9 @@
 
 describe('Controller Tests', function() {
 
-    describe('Raport Management Detail Controller', function() {
+    describe('Warehouse Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockRaport, MockPerson, MockStore, MockDay, MockWarehouse;
+        var MockEntity, MockPreviousState, MockWarehouse, MockRaport;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,11 +12,8 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
-            MockRaport = jasmine.createSpy('MockRaport');
-            MockPerson = jasmine.createSpy('MockPerson');
-            MockStore = jasmine.createSpy('MockStore');
-            MockDay = jasmine.createSpy('MockDay');
             MockWarehouse = jasmine.createSpy('MockWarehouse');
+            MockRaport = jasmine.createSpy('MockRaport');
             
 
             var locals = {
@@ -24,21 +21,18 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
-                'Raport': MockRaport,
-                'Person': MockPerson,
-                'Store': MockStore,
-                'Day': MockDay,
-                'Warehouse': MockWarehouse
+                'Warehouse': MockWarehouse,
+                'Raport': MockRaport
             };
             createController = function() {
-                $injector.get('$controller')("RaportDetailController", locals);
+                $injector.get('$controller')("WarehouseDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'cechiniApp:raportUpdate';
+                var eventType = 'cechiniApp:warehouseUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);

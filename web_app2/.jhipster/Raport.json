@@ -24,6 +24,12 @@
             "otherEntityName": "day",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "warehouse",
+            "otherEntityName": "warehouse",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
         }
     ],
     "fields": [

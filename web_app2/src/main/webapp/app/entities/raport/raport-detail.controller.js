@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('RaportDetailController', RaportDetailController);
 
-    RaportDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Raport', 'Person', 'Store'];
+    RaportDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Raport', 'Person', 'Store', 'Day', 'Warehouse'];
 
-    function RaportDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Raport, Person, Store) {
+    function RaportDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Raport, Person, Store, Day, Warehouse) {
         var vm = this;
 
         vm.raport = entity;

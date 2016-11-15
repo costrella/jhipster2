@@ -1,0 +1,25 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "raport",
+            "otherEntityName": "raport",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "warehouse"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20161114191945",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "warehouse",
+    "pagination": "pagination"
+}

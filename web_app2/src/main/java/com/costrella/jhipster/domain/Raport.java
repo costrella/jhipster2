@@ -88,6 +88,9 @@ public class Raport implements Serializable {
     @ManyToOne
     private Day day;
 
+    @ManyToOne
+    private Warehouse warehouse;
+
     public Long getId() {
         return id;
     }
@@ -354,6 +357,19 @@ public class Raport implements Serializable {
 
     public void setDay(Day day) {
         this.day = day;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public Raport warehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+        return this;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
     @Override
