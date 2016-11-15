@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('StoreDialogController', StoreDialogController);
 
-    StoreDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Store', 'Person', 'Raport', 'Day'];
+    StoreDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Store', 'Person', 'Raport', 'Day', 'Storegroup'];
 
-    function StoreDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Store, Person, Raport, Day) {
+    function StoreDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Store, Person, Raport, Day, Storegroup) {
         var vm = this;
 
         vm.store = entity;
@@ -18,6 +18,7 @@
         vm.people = Person.query();
         vm.raports = Raport.query();
         vm.days = Day.query();
+        vm.storegroups = Storegroup.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

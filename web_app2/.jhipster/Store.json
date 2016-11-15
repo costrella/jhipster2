@@ -20,6 +20,12 @@
             "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "store"
+        },
+        {
+            "relationshipName": "storegroup",
+            "otherEntityName": "storegroup",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
         }
     ],
     "fields": [

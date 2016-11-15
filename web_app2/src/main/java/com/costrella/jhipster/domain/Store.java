@@ -71,6 +71,9 @@ public class Store implements Serializable {
                inverseJoinColumns = @JoinColumn(name="days_id", referencedColumnName="ID"))
     private Set<Day> days = new HashSet<>();
 
+    @ManyToOne
+    private Storegroup storegroup;
+
     public Long getId() {
         return id;
     }
@@ -270,6 +273,19 @@ public class Store implements Serializable {
 
     public void setDays(Set<Day> days) {
         this.days = days;
+    }
+
+    public Storegroup getStoregroup() {
+        return storegroup;
+    }
+
+    public Store storegroup(Storegroup storegroup) {
+        this.storegroup = storegroup;
+        return this;
+    }
+
+    public void setStoregroup(Storegroup storegroup) {
+        this.storegroup = storegroup;
     }
 
     @Override

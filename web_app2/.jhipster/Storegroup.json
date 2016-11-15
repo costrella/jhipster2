@@ -1,0 +1,25 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "store",
+            "otherEntityName": "store",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "storegroup"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20161115171103",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "storegroup",
+    "pagination": "pagination"
+}

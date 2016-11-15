@@ -25,5 +25,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="day"/>
         
+        <addForeignKeyConstraint baseColumnNames="storegroup_id"
+                                 baseTableName="store"
+                                 constraintName="fk_store_storegroup_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storegroup"/>
+
     </changeSet>
 </databaseChangeLog>
