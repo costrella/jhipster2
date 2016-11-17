@@ -21,6 +21,8 @@
         vm.today = today;
         vm.previousDay = previousDay;
         vm.previousDay();
+        vm.stores = Store.query();
+        vm.store = null;
 
         var unsubscribe = $rootScope.$on('cechiniApp:personUpdate', function (event, result) {
             vm.person = result;
@@ -29,6 +31,13 @@
 
         vm.loadAll();
         vm.getTarget();
+
+        function getStoreId() {
+            if (vm.store) {
+                return vm.store.id;
+            }
+            return null;
+        }
 
         function loadAll() {
 
@@ -41,7 +50,8 @@
                 size: vm.itemsPerPage,
                 fromDate: fromDate,
                 toDate: toDate,
-                person: vm.person.id
+                person: vm.person.id,
+                storeId: getStoreId()
             }, onSuccess, onError);
 
             function onSuccess(data, headers) {

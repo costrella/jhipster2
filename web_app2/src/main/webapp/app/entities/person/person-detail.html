@@ -72,6 +72,11 @@
             <input type="date" class="input-sm form-control" name="end" ng-model="vm.toDate" ng-change="vm.loadAll()"
                    required/>
         </p>
+        <span class="input-group-addon">Sklep</span>
+        <select class="form-control" id="field_store" name="store" ng-model="vm.store" ng-change="vm.loadAll()" ng-options="store as store.name+', '+store.street+', '+store.city for store in vm.stores track by store.id" required>
+            <option value=""></option>
+        </select>
+
     </div>
 </div><br>
 <div class="table-responsive">
