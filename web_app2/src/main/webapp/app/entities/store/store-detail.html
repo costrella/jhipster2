@@ -22,6 +22,10 @@
                     <dd>
                         <a ui-sref="person-detail({id:vm.store.person.id})">{{vm.store.person.surname}}</a>
                     </dd>
+                    <dt><span>Grupa</span></dt>
+                    <dd>
+                        {{vm.store.storegroup.name}}
+                    </dd>
                     <dt><span>Wizyty w tym miesiącu</span></dt>
                     <dd>
                         <span>{{vm.month}} {{vm.store.visited}}</span>

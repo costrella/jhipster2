@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Store', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Warehouse', 'Store', 'Storegroup', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, Store, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, Warehouse, Store, Storegroup, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.loadPage = loadPage;
@@ -32,6 +32,10 @@
         vm.people = Person.query();
         vm.stores = Store.query();
         vm.ph = null;
+        vm.warehouses = Warehouse.query();
+        vm.warehouse = null;
+        vm.storegroups = Storegroup.query();
+        vm.storegroup = null;
         vm.page = 1;
 
         vm.loadAll();
@@ -50,6 +54,20 @@
             return -1;
         }
 
+        function getWarehouseId() {
+            if (vm.warehouse) {
+                return vm.warehouse.id;
+            }
+            return null;
+        }
+
+        function getStoregroupId() {
+            if (vm.storegroup) {
+                return vm.storegroup.id;
+            }
+            return null;
+        }
+
         function loadAll () {
             var dateFormat = 'yyyy-MM-dd';
             var fromDate = $filter('date')(vm.fromDate, dateFormat);
@@ -63,7 +81,9 @@
                     fromDate: fromDate,
                     toDate: toDate,
                     person: getPersonId(),
-                    storeId: getStoreId()
+                    storeId: getStoreId(),
+                    warehouseId: getWarehouseId(),
+                    storegroupId: getStoregroupId()
             }, onSuccess, onError);
 
             function sort() {
@@ -124,12 +144,6 @@
         function previousMonth () {
             var fromDate = new Date();
             var toDate = new Date();
-            // if (fromDate.getMonth() === 0) {
-            //     fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
-            // } else {
-            //     fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
-            // }
-            // fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate()-1);
             fromDate.setDate(fromDate.getDate()-1);
             vm.fromDate = fromDate;
             vm.toDate = toDate;
@@ -144,34 +158,6 @@
         function transition () {
             vm.loadAll();
         }
-
-        // function search (searchQuery, searchQueryPerson) {
-        //     if (!searchQueryPerson){
-        //         return vm.clear();
-        //     }
-        //     vm.links = null;
-        //     vm.page = 1;
-        //     vm.predicate = '_score';
-        //     vm.reverse = false;
-			// //vm.currentSearch = searchQuery;
-			// if (searchQueryPerson){
-        //         vm.currentSearch = 'store.person.id: ' + searchQueryPerson;
-        //     }
-        //
-        //     vm.transition();
-        // }
-
-        // function clear () {
-        //     vm.links = null;
-        //     vm.page = 1;
-        //     vm.predicate = 'id';
-        //     vm.reverse = true;
-        //     vm.currentSearch = null;
-        //     vm.transition();
-        // }
-
-
-
 
 		$scope.getImage = function(data){
 			return 'data:image/jpeg;base64,' + data;

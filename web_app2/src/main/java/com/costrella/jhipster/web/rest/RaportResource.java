@@ -133,19 +133,28 @@ public class RaportResource {
                                                            @RequestParam(value = "person", required = false) Long person,
                                                            @RequestParam(value = "storeId", required = false) Long storeId,
                                                            @RequestParam(value = "dayId", required = false) Long dayId,
-                                                           @RequestParam(value = "weekId", required = false) Long weekId
+                                                           @RequestParam(value = "weekId", required = false) Long weekId,
+                                                           @RequestParam(value = "storegroupId", required = false) Long storegroupId
     ) throws URISyntaxException {
         Page<Raport> page;
         if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null && weekId == null) {
             return null;
         } else if (storeId != null) {
-            if(fromDate == null && toDate == null){
+            if (fromDate == null && toDate == null) {
                 //warunek dla wyswietlania raportow w 'sklepie'
                 page = raportRepository.getStoresRaports(storeId, pageable);
-            }else if(person == -1){
-                page = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate, pageable);
-            }else{
-                page = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate, pageable);
+            } else if (person == -1) {
+                if (storegroupId == null) {
+                    page = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate, pageable);
+                } else {
+                    page = raportRepository.getRaportsByDateAndStoreAndStoreGroup(storeId, fromDate, toDate, storegroupId, pageable);
+                }
+            } else {
+                if (storegroupId == null) {
+                    page = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate, pageable);
+                } else {
+                    page = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroup(person, storeId, fromDate, toDate, storegroupId, pageable);
+                }
             }
         } else if (dayId != null) {
             page = raportRepository.getDayRaports(dayId, pageable);
@@ -153,13 +162,21 @@ public class RaportResource {
             page = raportRepository.getWeekRaports(weekId, pageable);
         } else {
             if (person == -1) {
-                page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+                if (storegroupId == null) {
+                    page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+                } else {
+                    page = raportRepository.getRaportsByDateAndStoreGroup(fromDate, toDate, storegroupId, pageable);
+                }
             } else {
-                if(fromDate == null && toDate == null){
+                if (fromDate == null && toDate == null) {
                     //przypadek dla raportow w "person"
                     page = raportRepository.getPersonRaports(person, pageable);
-                }else {
-                    page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+                } else {
+                    if (storegroupId == null) {
+                        page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreGroup(person, fromDate, toDate, storegroupId, pageable);
+                    }
                 }
             }
         }
@@ -191,19 +208,19 @@ public class RaportResource {
             raportsList = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate);
         } else if (person != -1 && storeId != null) {
             raportsList = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate);
-        }else {
+        } else {
             raportsList = null;
         }
         int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0;
         for (Raport r : raportsList) {
-            a += r.getz_a()!=null?r.getz_a():0;
-            b += r.getz_b()!=null?r.getz_b():0;
-            c += r.getz_c()!=null?r.getz_c():0;
-            d += r.getz_d()!=null?r.getz_d():0;
-            e += r.getz_e()!=null?r.getz_e():0;
-            f += r.getz_f()!=null?r.getz_f():0;
-            g += r.getz_g()!=null?r.getz_g():0;
-            h += r.getz_h()!=null?r.getz_h():0;
+            a += r.getz_a() != null ? r.getz_a() : 0;
+            b += r.getz_b() != null ? r.getz_b() : 0;
+            c += r.getz_c() != null ? r.getz_c() : 0;
+            d += r.getz_d() != null ? r.getz_d() : 0;
+            e += r.getz_e() != null ? r.getz_e() : 0;
+            f += r.getz_f() != null ? r.getz_f() : 0;
+            g += r.getz_g() != null ? r.getz_g() : 0;
+            h += r.getz_h() != null ? r.getz_h() : 0;
         }
 
         Map<String, Integer> myMap = new HashMap<>();
