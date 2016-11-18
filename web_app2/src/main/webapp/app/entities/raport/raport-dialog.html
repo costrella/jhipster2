@@ -173,6 +173,12 @@
                 <option value=""></option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="field_store">Hurtownia</label>
+            <select class="form-control" id="field_warehouse" name="warehouse" ng-model="vm.raport.warehouse" ng-options="warehouse as warehouse.name for warehouse in vm.warehouses track by warehouse.id" required>
+                <option value=""></option>
+            </select>
+        </div>
         <div ng-show="editForm.store.$invalid">
             <p class="help-block"
                 ng-show="editForm.store.$error.required">

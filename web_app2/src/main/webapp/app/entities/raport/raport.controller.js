@@ -34,7 +34,7 @@
         vm.ph = null;
         vm.warehouses = Warehouse.query();
         vm.warehouse = null;
-        vm.storegroups = Storegroup.query();
+        vm.storegroups = Storegroup.queryAll();
         vm.storegroup = null;
         vm.page = 1;
 
@@ -87,7 +87,7 @@
             }, onSuccess, onError);
 
             function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+                var result = [vm.predicate + ',' + (vm.reverse ? 'desc' : 'asc')];
                 if (vm.predicate !== 'id') {
                     result.push('id');
                 }

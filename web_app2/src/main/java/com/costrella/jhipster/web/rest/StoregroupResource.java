@@ -36,7 +36,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class StoregroupResource {
 
     private final Logger log = LoggerFactory.getLogger(StoregroupResource.class);
-        
+
     @Inject
     private StoregroupRepository storegroupRepository;
 
@@ -102,13 +102,29 @@ public class StoregroupResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Storegroup>> getAllStoregroups(Pageable pageable)
+    public ResponseEntity<List<Storegroup>> getAllStoregroups(Pageable pageable, @RequestParam(value = "all", required = false) boolean all)
         throws URISyntaxException {
         log.debug("REST request to get a page of Storegroups");
-        Page<Storegroup> page = storegroupRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/storegroups");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        if(!all) {
+            Page<Storegroup> page = storegroupRepository.findAll(pageable);
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/storegroups");
+            return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        }else{
+            List<Storegroup> stores = storegroupRepository.findAll();
+            return new ResponseEntity<List<Storegroup>>(stores, HttpStatus.OK);
+        }
     }
+
+//    @RequestMapping(value = "/storegroups",
+//        method = RequestMethod.GET,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+//    public ResponseEntity<List<Storegroup>> getAllStoregroupsWithoutPage(@RequestParam(value = "all", required = true) boolean all)
+//        throws URISyntaxException {
+//        log.debug("REST request to get a page of Storegroups");
+//        List<Storegroup> stores = storegroupRepository.findAll();
+//        return new ResponseEntity<List<Storegroup>>(stores, HttpStatus.OK);
+//    }
 
     /**
      * GET  /storegroups/:id : get the "id" storegroup.
@@ -151,7 +167,7 @@ public class StoregroupResource {
      * SEARCH  /_search/storegroups?query=:query : search for the storegroup corresponding
      * to the query.
      *
-     * @param query the query of the storegroup search 
+     * @param query the query of the storegroup search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
