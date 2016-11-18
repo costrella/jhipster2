@@ -51,6 +51,8 @@ public class Raport implements Serializable {
 
     private Integer z_h;
 
+    private Warehouse warehouse;
+
     private Day day;
 
     public Day getDay() {
@@ -60,6 +62,14 @@ public class Raport implements Serializable {
     public Raport day(Day day) {
         this.day = day;
         return this;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
     public void setDay(Day day) {

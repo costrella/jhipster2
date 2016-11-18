@@ -36,7 +36,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class WarehouseResource {
 
     private final Logger log = LoggerFactory.getLogger(WarehouseResource.class);
-        
+
     @Inject
     private WarehouseRepository warehouseRepository;
 
@@ -110,6 +110,16 @@ public class WarehouseResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/warehousesMobi",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Warehouse>> getAllWarehouses2()
+        throws URISyntaxException {
+        List<Warehouse> warehouses = warehouseRepository.findAll();
+        return new ResponseEntity<List<Warehouse>>(warehouses, HttpStatus.OK);
+    }
+
     /**
      * GET  /warehouses/:id : get the "id" warehouse.
      *
@@ -151,7 +161,7 @@ public class WarehouseResource {
      * SEARCH  /_search/warehouses?query=:query : search for the warehouse corresponding
      * to the query.
      *
-     * @param query the query of the warehouse search 
+     * @param query the query of the warehouse search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

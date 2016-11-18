@@ -4,6 +4,7 @@ import com.costrella.android.cechini.model.Day;
 import com.costrella.android.cechini.model.Person;
 import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.model.Warehouse;
 import com.costrella.android.cechini.model.Week;
 
 import java.util.List;
@@ -39,6 +40,9 @@ public interface CechiniAPI {
 
     @GET("people/{personId}")
     Call<Person> getPerson(@Path("personId") String personId);
+
+    @GET("warehousesMobi")
+    Call<List<Warehouse>> getWarehousesMobi();
 
     @POST("raports")
     Call<Raport> createRaport(@Body Raport raport);

@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.costrella.jhipster.domain.Raport;
 import com.costrella.jhipster.domain.Store;
 
+import com.costrella.jhipster.domain.Storegroup;
 import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.StoreRepository;
 import com.costrella.jhipster.repository.search.StoreSearchRepository;
@@ -109,18 +110,24 @@ public class StoreResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Store>> getAllStores(Pageable pageable, @RequestParam(value = "personId", required = false) Long personId)
+    public ResponseEntity<List<Store>> getAllStores(Pageable pageable, @RequestParam(value = "personId", required = false) Long personId,
+                                                    @RequestParam(value = "all", required = false) boolean all)
         throws URISyntaxException {
         log.debug("REST request to get a page of Stores");
-        Page<Store> page;
-        if(personId == null) {
-            page = storeRepository.findAll(pageable);
-        }else{
-            page = storeRepository.getPersonStores(personId, pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stores");
+        if(!all) {
+            Page<Store> page;
+            if (personId == null) {
+                page = storeRepository.findAll(pageable);
+            } else {
+                page = storeRepository.getPersonStores(personId, pageable);
+            }
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/stores");
 
-        return new ResponseEntity<>(checVisited(page.getContent()), headers, HttpStatus.OK);
+            return new ResponseEntity<>(checVisited(page.getContent()), headers, HttpStatus.OK);
+        }else{
+            List<Store> stores = storeRepository.findAll();
+            return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+        }
     }
 
     private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {

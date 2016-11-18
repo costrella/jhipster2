@@ -17,15 +17,19 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.costrella.android.cechini.Constants;
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Raport;
+import com.costrella.android.cechini.model.Warehouse;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.PersonService;
@@ -54,6 +58,7 @@ public class RaportActivity extends AppCompatActivity {
     ImageView imageView1;
     ImageView imageView2;
     ImageView imageView3;
+    Warehouse selectedWarehouse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +131,40 @@ public class RaportActivity extends AppCompatActivity {
                 mTakePicSOnClickListener3,
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
+
+        final Spinner warehouses = (Spinner) findViewById(R.id.spinner);
+        Call<List<Warehouse>> warehouseCall = CechiniService.getInstance().getCechiniAPI().getWarehousesMobi();
+
+        warehouseCall.enqueue(new Callback<List<Warehouse>>() {
+            @Override
+            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+                int code = response.code();
+                if(code == 200){
+                    final List<Warehouse> list = response.body();
+                    ArrayAdapter<Warehouse> dataAdapter = new ArrayAdapter<Warehouse>(RaportActivity.this,
+                            android.R.layout.simple_spinner_item, list);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    warehouses.setAdapter(dataAdapter);
+                    warehouses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            System.out.print("test");
+                            selectedWarehouse = list.get(i);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -304,6 +343,9 @@ public class RaportActivity extends AppCompatActivity {
     private void createRaport() {
         showProgress(true);
         Raport raport = new Raport();
+        if(selectedWarehouse != null){
+            raport.setWarehouse(selectedWarehouse);
+        }
         if (DayService.selectedDay != null)
             raport.setDay(DayService.selectedDay);
         if (bitmap1 != null) {

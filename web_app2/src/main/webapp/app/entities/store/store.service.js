@@ -11,6 +11,7 @@
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
+            'queryAll': { method: 'GET', isArray: true, params: {all: true}},
             'queryCount': { method: 'GET', isArray: false, params: {storeId: null}},
             'get': {
                 method: 'GET',
