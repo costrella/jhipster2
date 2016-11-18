@@ -47,7 +47,7 @@ public class RaportActivity extends AppCompatActivity {
     private static final int ACTION_TAKE_PHOTO_6 = 6;
     private static final int ACTION_TAKE_PHOTO_S = 2;
     private int PICK_IMAGE_REQUEST = 1;
-    private int scale = 6;
+    private int scale = 4;
     Bitmap bitmap1;
     Bitmap bitmap2;
     Bitmap bitmap3;
