@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.howtodoinjava.demo.poi.PostgresConnection;
 
-public class WarehouseAdd 
+public class StoregroupAdd 
 {
 	public static void main(String[] args) 
 	{
@@ -23,7 +23,7 @@ public class WarehouseAdd
 			Connection c = postgresConnection.conncet();
 			Statement stmt = c.createStatement();
 			
-			FileInputStream file = new FileInputStream(new File("C://costrella_repo_ssd/cechini/jhipster2/web_app2/excels/warehouses.xlsx"));
+			FileInputStream file = new FileInputStream(new File("C://costrella_repo_ssd/cechini/jhipster2/web_app2/excels/storegroup.xlsx"));
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 
@@ -35,7 +35,7 @@ public class WarehouseAdd
 				Row row = rowIterator.next();
 				Iterator<Cell> cellIterator = row.cellIterator();
 				
-				String sql = "INSERT INTO warehouse (id, name) "
+				String sql = "INSERT INTO storegroup (id, name) "
 			               + "VALUES ("+row.getCell(0)
 			               +", '"+row.getCell(1)
 			               + "');";
