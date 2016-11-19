@@ -10,11 +10,11 @@
         </dd>
         <dt><span>data od</span></dt>
         <dd>
-            <span>{{vm.week.dateBefore | date:'mediumDate'}}</span>
+            <span>{{vm.week.dateBefore | date:'yyyy-MM-dd'}}</span>
         </dd>
         <dt><span>data do</span></dt>
         <dd>
-            <span>{{vm.week.dateAfter | date:'mediumDate'}}</span>
+            <span>{{vm.week.dateAfter | date:'yyyy-MM-dd'}}</span>
         </dd>
         <dt><span>PH</span></dt>
         <dd>
@@ -51,7 +51,7 @@
         <tr ng-repeat="day in vm.days track by day.id">
             <td><a ui-sref="day-detail({id:day.id})">{{day.id}}</a></td>
             <td>{{day.name}}</td>
-            <td>{{day.date | date:'mediumDate'}}</td>
+            <td>{{day.date | date:'yyyy-MM-dd'}}</td>
             <td>
                 <a ui-sref="week-detail({id:day.week.id})">{{day.week.name}}</a>
             </td>

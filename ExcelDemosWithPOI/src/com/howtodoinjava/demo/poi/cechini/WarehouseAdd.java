@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.howtodoinjava.demo.poi.PostgresConnection;
 
-public class StoresPHAdd 
+public class WarehouseAdd 
 {
 	public static void main(String[] args) 
 	{
@@ -22,9 +22,8 @@ public class StoresPHAdd
 			PostgresConnection postgresConnection = new PostgresConnection();
 			Connection c = postgresConnection.conncet();
 			Statement stmt = c.createStatement();
-			String fileName = "arturTymosz";
-			String phId = "8";
-			FileInputStream file = new FileInputStream(new File("C://costrella_repo_ssd/cechini/jhipster2/web_app2/excels/"+fileName+".xlsx"));
+			
+			FileInputStream file = new FileInputStream(new File("C://costrella_repo_ssd/cechini/jhipster2/web_app2/excels/hurtownie.xlsx"));
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 
@@ -36,15 +35,10 @@ public class StoresPHAdd
 				Row row = rowIterator.next();
 				Iterator<Cell> cellIterator = row.cellIterator();
 				
-				String sql = "INSERT INTO store (name, city, street, description, storegroup_id, person_id) "
-			               + "VALUES ('"+row.getCell(1)
-			               +"','"+row.getCell(2)
-			               +"','"+row.getCell(3)
-			               +"','"+row.getCell(4)
-//			               +"','"+row.getCell(5)==""?null:row.getCell(5)
-			               +"',"+row.getCell(0)+", "
-			               + phId +");";
-				
+				String sql = "INSERT INTO warehouse (name) "
+			               + "VALUES ("
+			               +"'"+row.getCell(0)
+			               + "');";
 				
 				stmt.executeUpdate(sql);
 			}

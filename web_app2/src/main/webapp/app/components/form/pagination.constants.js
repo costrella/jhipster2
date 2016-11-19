@@ -4,6 +4,6 @@
     angular
         .module('cechiniApp')
         .constant('paginationConstants', {
-            'itemsPerPage': 2
+            'itemsPerPage': 20
         });
 })();
