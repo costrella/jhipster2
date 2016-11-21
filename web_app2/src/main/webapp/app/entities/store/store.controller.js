@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('StoreController', StoreController);
 
-    StoreController.$inject = ['$scope', '$state', 'DataUtils', 'Store', 'StoreSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    StoreController.$inject = ['$scope', '$state', 'DataUtils', 'Store', 'Storegroup', 'StoreSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function StoreController ($scope, $state, DataUtils, Store, StoreSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function StoreController ($scope, $state, DataUtils, Store, Storegroup, StoreSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.loadPage = loadPage;
@@ -24,6 +24,8 @@
         vm.byteSize = DataUtils.byteSize;
         vm.people = Person.query();
         vm.ph = null;
+		vm.storegroups = Storegroup.queryAll();
+		vm.storegroup = null;
         vm.page = 1;
 
         loadAll();
@@ -34,13 +36,21 @@
             }
             return null;
         }
+		
+		function getStoregroupId() {
+            if (vm.storegroup) {
+                return vm.storegroup.id;
+            }
+            return null;
+        }
 
         function loadAll () {
                 Store.query({
                     page: vm.page - 1,
                     size: vm.itemsPerPage,
                     sort: sort(),
-                    personId: getPersonId()
+                    personId: getPersonId(),
+					storegroupId: getStoregroupId()
                 }, onSuccess, onError);
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];

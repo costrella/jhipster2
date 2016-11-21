@@ -36,6 +36,9 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 AND raport.store.storegroup.id = ?3")
     Page<Raport> getRaportsByDateAndStoreGroup(LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 AND raport.store.storegroup.id = ?3")
+    List<Raport> getRaportsByDateAndStoreGroup(LocalDate from, LocalDate to, Long storegroupId);
+
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 ORDER BY raport.date DESC")
     List<Raport> getRaportsByDate(LocalDate from, LocalDate to);
 
@@ -45,11 +48,17 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
     Page<Raport> getRaportsByDateAndPersonAndStoreGroup(Long idPerson, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
+    List<Raport> getRaportsByDateAndPersonAndStoreGroup(Long idPerson, LocalDate from, LocalDate to, Long storegroupId);
+
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 ")
     Page<Raport> getRaportsByDateAndPersonAndStore(Long idPerson, Long storeId, LocalDate from, LocalDate to, Pageable pageable);
 
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
     Page<Raport> getRaportsByDateAndPersonAndStoreAndStoreGroup(Long idPerson, Long storeId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
+    List<Raport> getRaportsByDateAndPersonAndStoreAndStoreGroup(Long idPerson, Long storeId, LocalDate from, LocalDate to, Long storegroupId);
 
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 ")
     List<Raport> getRaportsByDateAndPersonAndStore(Long idPerson, Long storeId, LocalDate from, LocalDate to);
@@ -59,6 +68,9 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
 
     @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
     Page<Raport> getRaportsByDateAndStoreAndStoreGroup(Long storeId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
+    List<Raport> getRaportsByDateAndStoreAndStoreGroup(Long storeId, LocalDate from, LocalDate to, Long storegroupId);
 
     @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 ")
     List<Raport> getRaportsByDateAndStore(Long storeId, LocalDate from, LocalDate to);
@@ -81,6 +93,12 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.day.id = ?1 ORDER BY raport.date DESC")
     Page<Raport> getDayRaports(Long idDay, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.day.id = ?1 ORDER BY raport.date DESC")
+    List<Raport> getDayRaports(Long idDay);
+
     @Query("SELECT raport from Raport raport where raport.day.week.id = ?1 ORDER BY raport.date DESC")
     Page<Raport> getWeekRaports(Long idWeek, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.day.week.id = ?1 ORDER BY raport.date DESC")
+    List<Raport> getWeekRaports(Long idWeek);
 }

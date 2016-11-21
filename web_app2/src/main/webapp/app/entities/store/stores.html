@@ -21,6 +21,16 @@
                     </div>
                 </div>
             </div>
+			<div class="col-xs-8 no-padding-right">
+                <div class="row">
+                    <div class="col-md-5">
+                        <span class="input-group-addon">Grupa sklepu</span>
+                        <select class="form-control" id="field_storegroup" name="storegroup" ng-model="vm.storegroup" ng-change="vm.loadAll()" ng-options="storegroup as storegroup.name for storegroup in vm.storegroups track by storegroup.id" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br/>
@@ -34,7 +44,7 @@
                     <th jh-sort-by="city"><span>Miasto</span> <span class="glyphicon glyphicon-sort"></span></th>
 
                     <th jh-sort-by="street"><span>Ulica</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="number"><span>Numer</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="number"><span>Opis dodatkowy</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th><span>Grupa</span></th>
 

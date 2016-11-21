@@ -28,6 +28,12 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Query("SELECT store from Store store where store.person.id = ?1")
     Page<Store> getPersonStores(Long id, Pageable pageable);
 
+    @Query("SELECT store from Store store where store.person.id = ?1 AND store.storegroup.id = ?2")
+    Page<Store> getPersonAndStoregroupStores(Long id, Long sgId, Pageable pageable);
+
+    @Query("SELECT store from Store store where store.storegroup.id = ?1")
+    Page<Store> getStoregroupStores(Long sgId, Pageable pageable);
+
     @Query("SELECT raport from Raport raport where raport.store.id = ?1")
     List<Raport> getStoresRaport(Long id);
 
