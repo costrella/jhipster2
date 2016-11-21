@@ -65,9 +65,11 @@ public class ItemDetailFragment extends Fragment {
         if (store != null) {
             String storeDetails = "";
             storeDetails += getString(store.getCity()) + "\n";
-            storeDetails += getString(store.getStreet()) + " " + getString(store.getNumber()) + "\n\n";
+            storeDetails += getString(store.getStreet())  + "\n\n";
             storeDetails += getString(store.getDescription());
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(storeDetails);
+
+            String comment = getString(store.getComment());
+            ((TextView) rootView.findViewById(R.id.item_detail)).setText(storeDetails + "\n\n\n" + comment);
         }
 
         return rootView;

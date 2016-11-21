@@ -68,6 +68,8 @@ public class Store implements Serializable {
 
     private String description;
 
+    private String comment;
+
     public Store name(String name) {
         this.name = name;
         return this;
@@ -79,6 +81,14 @@ public class Store implements Serializable {
 
     public void setVisited(Boolean visited) {
         this.visited = visited;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getStreet() {
