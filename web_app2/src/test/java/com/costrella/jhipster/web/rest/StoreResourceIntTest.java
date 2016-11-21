@@ -61,6 +61,8 @@ public class StoreResourceIntTest {
     private static final byte[] UPDATED_PICTURE_02 = TestUtil.createByteArray(2, "1");
     private static final String DEFAULT_PICTURE_02_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_PICTURE_02_CONTENT_TYPE = "image/png";
+    private static final String DEFAULT_COMMENT = "AAAAA";
+    private static final String UPDATED_COMMENT = "BBBBB";
 
     @Inject
     private StoreRepository storeRepository;
@@ -110,7 +112,8 @@ public class StoreResourceIntTest {
                 .picture01(DEFAULT_PICTURE_01)
                 .picture01ContentType(DEFAULT_PICTURE_01_CONTENT_TYPE)
                 .picture02(DEFAULT_PICTURE_02)
-                .picture02ContentType(DEFAULT_PICTURE_02_CONTENT_TYPE);
+                .picture02ContentType(DEFAULT_PICTURE_02_CONTENT_TYPE)
+                .comment(DEFAULT_COMMENT);
         return store;
     }
 
@@ -146,6 +149,7 @@ public class StoreResourceIntTest {
         assertThat(testStore.getPicture01ContentType()).isEqualTo(DEFAULT_PICTURE_01_CONTENT_TYPE);
         assertThat(testStore.getPicture02()).isEqualTo(DEFAULT_PICTURE_02);
         assertThat(testStore.getPicture02ContentType()).isEqualTo(DEFAULT_PICTURE_02_CONTENT_TYPE);
+        assertThat(testStore.getComment()).isEqualTo(DEFAULT_COMMENT);
 
         // Validate the Store in ElasticSearch
         Store storeEs = storeSearchRepository.findOne(testStore.getId());
@@ -208,7 +212,8 @@ public class StoreResourceIntTest {
                 .andExpect(jsonPath("$.[*].picture01ContentType").value(hasItem(DEFAULT_PICTURE_01_CONTENT_TYPE)))
                 .andExpect(jsonPath("$.[*].picture01").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_01))))
                 .andExpect(jsonPath("$.[*].picture02ContentType").value(hasItem(DEFAULT_PICTURE_02_CONTENT_TYPE)))
-                .andExpect(jsonPath("$.[*].picture02").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_02))));
+                .andExpect(jsonPath("$.[*].picture02").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_02))))
+                .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 
     @Test
@@ -231,7 +236,8 @@ public class StoreResourceIntTest {
             .andExpect(jsonPath("$.picture01ContentType").value(DEFAULT_PICTURE_01_CONTENT_TYPE))
             .andExpect(jsonPath("$.picture01").value(Base64Utils.encodeToString(DEFAULT_PICTURE_01)))
             .andExpect(jsonPath("$.picture02ContentType").value(DEFAULT_PICTURE_02_CONTENT_TYPE))
-            .andExpect(jsonPath("$.picture02").value(Base64Utils.encodeToString(DEFAULT_PICTURE_02)));
+            .andExpect(jsonPath("$.picture02").value(Base64Utils.encodeToString(DEFAULT_PICTURE_02)))
+            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()));
     }
 
     @Test
@@ -262,7 +268,8 @@ public class StoreResourceIntTest {
                 .picture01(UPDATED_PICTURE_01)
                 .picture01ContentType(UPDATED_PICTURE_01_CONTENT_TYPE)
                 .picture02(UPDATED_PICTURE_02)
-                .picture02ContentType(UPDATED_PICTURE_02_CONTENT_TYPE);
+                .picture02ContentType(UPDATED_PICTURE_02_CONTENT_TYPE)
+                .comment(UPDATED_COMMENT);
 
         restStoreMockMvc.perform(put("/api/stores")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -283,6 +290,7 @@ public class StoreResourceIntTest {
         assertThat(testStore.getPicture01ContentType()).isEqualTo(UPDATED_PICTURE_01_CONTENT_TYPE);
         assertThat(testStore.getPicture02()).isEqualTo(UPDATED_PICTURE_02);
         assertThat(testStore.getPicture02ContentType()).isEqualTo(UPDATED_PICTURE_02_CONTENT_TYPE);
+        assertThat(testStore.getComment()).isEqualTo(UPDATED_COMMENT);
 
         // Validate the Store in ElasticSearch
         Store storeEs = storeSearchRepository.findOne(testStore.getId());
@@ -332,6 +340,7 @@ public class StoreResourceIntTest {
             .andExpect(jsonPath("$.[*].picture01ContentType").value(hasItem(DEFAULT_PICTURE_01_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].picture01").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_01))))
             .andExpect(jsonPath("$.[*].picture02ContentType").value(hasItem(DEFAULT_PICTURE_02_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].picture02").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_02))));
+            .andExpect(jsonPath("$.[*].picture02").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE_02))))
+            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 }

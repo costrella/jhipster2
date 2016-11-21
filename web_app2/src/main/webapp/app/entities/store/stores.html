@@ -20,8 +20,6 @@
                         </select>
                     </div>
                 </div>
-            </div>
-			<div class="col-xs-8 no-padding-right">
                 <div class="row">
                     <div class="col-md-5">
                         <span class="input-group-addon">Grupa sklepu</span>
@@ -46,6 +44,7 @@
                     <th jh-sort-by="street"><span>Ulica</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="number"><span>Opis dodatkowy</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="description"><span>Opis</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th>Komentarz</th>
                     <th><span>Grupa</span></th>
 
 					 <!--<th jh-sort-by="visited"><span>Odwiedzony w tym miesiącu</span> <span class="glyphicon glyphicon-sort"></span></th>-->
@@ -69,6 +68,7 @@
                     <td>{{store.street}}</td>
                     <td>{{store.number}}</td>
                     <td>{{store.description}}</td>
+					<td>{{store.comment}}</td>
                     <td>{{store.storegroup.name}}</td>
 					<!--<td>{{store.visited}}</td>-->
 

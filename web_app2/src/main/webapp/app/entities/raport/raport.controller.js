@@ -115,8 +115,10 @@
                 test: 123,
                 fromDate: fromDate,
                 toDate: toDate,
-                person: getPersonId(),
-                storeId: getStoreId()
+				person: getPersonId(),
+                storeId: getStoreId(),
+                warehouseId: getWarehouseId(),
+                storegroupId: getStoregroupId()
             }, onSuccess2, onError2);
 
             function onSuccess2(data, headers) {

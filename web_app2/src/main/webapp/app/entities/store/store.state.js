@@ -125,6 +125,7 @@
                                 picture01ContentType: null,
                                 picture02: null,
                                 picture02ContentType: null,
+                                comment: null,
                                 id: null
                             };
                         }

@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -132,9 +133,14 @@ public class StoreResource {
 
             return new ResponseEntity<>(checVisited(page.getContent()), headers, HttpStatus.OK);
         }else{
-            List<Store> stores = storeRepository.findAll();
+
+            List<Store> stores = storeRepository.findAll(orderByName());
             return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
         }
+    }
+
+    private Sort orderByName() {
+        return new Sort(Sort.Direction.ASC, "name");
     }
 
     private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {

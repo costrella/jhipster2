@@ -26,11 +26,95 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_description">Opis admina</label>
-            <input type="text" class="form-control" name="description" id="field_adminDesc"
-                   ng-model="vm.raport.adminDesc" />
+            <label class="control-label" for="field_date">Data</label>
+                <div class="input-group">
+                    <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.raport.date" is-open="vm.datePickerOpenStatus.date"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
         </div>
-        <div class="form-group" ngf-drop ngf-change="vm.setFoto1($file, vm.raport)" ngf-pattern="'image/*'">
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_a" for="field_z_a">2L NGAZ</label>
+            <input type="number" class="form-control" name="z_a" id="field_z_a"
+                    ng-model="vm.raport.z_a"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_b" for="field_z_b">2L GAZ</label>
+            <input type="number" class="form-control" name="z_b" id="field_z_b"
+                    ng-model="vm.raport.z_b"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_c" for="field_z_c">0,33L</label>
+            <input type="number" class="form-control" name="z_c" id="field_z_c"
+                    ng-model="vm.raport.z_c"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_d" for="field_z_d">CYT</label>
+            <input type="number" class="form-control" name="z_d" id="field_z_d"
+                    ng-model="vm.raport.z_d"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_f" for="field_z_f">2L NGAZ (BIAŁA)</label>
+            <input type="number" class="form-control" name="z_f" id="field_z_f"
+                   ng-model="vm.raport.z_f"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_g" for="field_z_g">0,75L SPORT</label>
+            <input type="number" class="form-control" name="z_g" id="field_z_g"
+                   ng-model="vm.raport.z_g"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_h" for="field_z_h">0,33L SZKŁO</label>
+            <input type="number" class="form-control" name="z_h" id="field_z_h"
+                   ng-model="vm.raport.z_h"
+            />
+        </div>
+		 <div class="form-group">
+            <label class="control-label" translate="cechiniApp.raport.z_e" for="field_z_e">Gratisy</label>
+            <input type="number" class="form-control" name="z_e" id="field_z_e"
+                    ng-model="vm.raport.z_e"
+                     />
+        </div>
+			
+        <div class="form-group">
+            <label for="field_person">PH</label>
+            <select class="form-control" id="field_person" name="person" ng-model="vm.raport.person" ng-options="person as person.surname for person in vm.people track by person.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div ng-show="editForm.person.$invalid">
+            <p class="help-block"
+                ng-show="editForm.person.$error.required">
+                This field is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="field_store">Sklep</label>
+            <select class="form-control" id="field_store" name="store" ng-model="vm.raport.store" ng-options="store as store.name for store in vm.stores track by store.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_store">Hurtownia</label>
+            <select class="form-control" id="field_warehouse" name="warehouse" ng-model="vm.raport.warehouse" ng-options="warehouse as warehouse.name for warehouse in vm.warehouses track by warehouse.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div ng-show="editForm.store.$invalid">
+            <p class="help-block"
+                ng-show="editForm.store.$error.required">
+                This field is required.
+            </p>
+        </div>
+		<div class="form-group" ngf-drop ngf-change="vm.setFoto1($file, vm.raport)" ngf-pattern="'image/*'">
             <label class="control-label" for="field_foto1">Foto 1</label>
             <div>
                 <img data-ng-src="{{'data:' + vm.raport.foto1ContentType + ';base64,' + vm.raport.foto1}}" style="max-height: 100px;" ng-if="vm.raport.foto1"/>
@@ -95,95 +179,6 @@
                      />
             <input type="hidden" class="form-control" name="foto3ContentType" id="field_foto3ContentType"
                     ng-model="vm.raport.foto3ContentType" />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_date">Data</label>
-                <div class="input-group">
-                    <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.raport.date" is-open="vm.datePickerOpenStatus.date"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_a" for="field_z_a">2L NGAZ</label>
-            <input type="number" class="form-control" name="z_a" id="field_z_a"
-                    ng-model="vm.raport.z_a"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_b" for="field_z_b">2L GAZ</label>
-            <input type="number" class="form-control" name="z_b" id="field_z_b"
-                    ng-model="vm.raport.z_b"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_c" for="field_z_c">0,33L</label>
-            <input type="number" class="form-control" name="z_c" id="field_z_c"
-                    ng-model="vm.raport.z_c"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_d" for="field_z_d">CYT</label>
-            <input type="number" class="form-control" name="z_d" id="field_z_d"
-                    ng-model="vm.raport.z_d"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_e" for="field_z_e">Gratisy</label>
-            <input type="number" class="form-control" name="z_e" id="field_z_e"
-                    ng-model="vm.raport.z_e"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_f" for="field_z_f">Gratisy</label>
-            <input type="number" class="form-control" name="z_f" id="field_z_f"
-                   ng-model="vm.raport.z_f"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_g" for="field_z_g">Gratisy</label>
-            <input type="number" class="form-control" name="z_g" id="field_z_g"
-                   ng-model="vm.raport.z_g"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="cechiniApp.raport.z_h" for="field_z_h">Gratisy</label>
-            <input type="number" class="form-control" name="z_h" id="field_z_h"
-                   ng-model="vm.raport.z_h"
-            />
-        </div>
-
-        <div class="form-group">
-            <label for="field_person">PH</label>
-            <select class="form-control" id="field_person" name="person" ng-model="vm.raport.person" ng-options="person as person.surname for person in vm.people track by person.id" required>
-                <option value=""></option>
-            </select>
-        </div>
-        <div ng-show="editForm.person.$invalid">
-            <p class="help-block"
-                ng-show="editForm.person.$error.required">
-                This field is required.
-            </p>
-        </div>
-        <div class="form-group">
-            <label for="field_store">Sklep</label>
-            <select class="form-control" id="field_store" name="store" ng-model="vm.raport.store" ng-options="store as store.name for store in vm.stores track by store.id" required>
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="field_store">Hurtownia</label>
-            <select class="form-control" id="field_warehouse" name="warehouse" ng-model="vm.raport.warehouse" ng-options="warehouse as warehouse.name for warehouse in vm.warehouses track by warehouse.id" required>
-                <option value=""></option>
-            </select>
-        </div>
-        <div ng-show="editForm.store.$invalid">
-            <p class="help-block"
-                ng-show="editForm.store.$error.required">
-                This field is required.
-            </p>
         </div>
     </div>
     <div class="modal-footer">

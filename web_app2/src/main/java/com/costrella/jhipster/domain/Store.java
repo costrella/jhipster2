@@ -58,6 +58,9 @@ public class Store implements Serializable {
     @Column(name = "picture_02_content_type")
     private String picture02ContentType;
 
+    @Column(name = "comment")
+    private String comment;
+
     @ManyToOne
     private Person person;
 
@@ -212,6 +215,19 @@ public class Store implements Serializable {
         this.picture02ContentType = picture02ContentType;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public Store comment(String comment) {
+        this.comment = comment;
+        return this;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -322,6 +338,7 @@ public class Store implements Serializable {
             ", picture01ContentType='" + picture01ContentType + "'" +
             ", picture02='" + picture02 + "'" +
             ", picture02ContentType='" + picture02ContentType + "'" +
+            ", comment='" + comment + "'" +
             '}';
     }
 }

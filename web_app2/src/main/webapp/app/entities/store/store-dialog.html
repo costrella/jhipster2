@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myStoreLabel">Create or edit a Store</h4>
+        <h4 class="modal-title" id="myStoreLabel">Dodaj lub edytuj Sklep</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -14,7 +14,7 @@
                     ng-model="vm.store.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_name">Name</label>
+            <label class="control-label" for="field_name">Nazwa</label>
             <input type="text" class="form-control" name="name" id="field_name"
                     ng-model="vm.store.name"
                     required />
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_city">City</label>
+            <label class="control-label" for="field_city">Miasto</label>
             <input type="text" class="form-control" name="city" id="field_city"
                     ng-model="vm.store.city"
                     required />
@@ -37,32 +37,47 @@
                 </p>
             </div>
         </div>
+       
         <div class="form-group">
-            <label class="control-label" for="field_visited">Visited</label>
-            <input type="checkbox" class="form-control" name="visited" id="field_visited"
-                    ng-model="vm.store.visited"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_street">Street</label>
+            <label class="control-label" for="field_street">Ulica</label>
             <input type="text" class="form-control" name="street" id="field_street"
                     ng-model="vm.store.street"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_number">Number</label>
+            <label class="control-label" for="field_number">Opis dodatkowy</label>
             <input type="text" class="form-control" name="number" id="field_number"
                     ng-model="vm.store.number"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_description">Description</label>
+            <label class="control-label" for="field_description">Opis</label>
             <input type="text" class="form-control" name="description" id="field_description"
                     ng-model="vm.store.description"
                      />
         </div>
+		 <div class="form-group">
+            <label class="control-label" for="field_comment">Komentarz</label>
+            <input type="text" class="form-control" name="comment" id="field_comment"
+                    ng-model="vm.store.comment"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label for="field_person">PH</label>
+            <select class="form-control" id="field_person" name="person" ng-model="vm.store.person" ng-options="person as person.surname for person in vm.people track by person.id">
+                <option value=""></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="field_storegroup">Grupa sklepu</label>
+            <select class="form-control" id="field_storegroup" name="storegroup" ng-model="vm.store.storegroup" ng-options="storegroup as storegroup.name for storegroup in vm.storegroups track by storegroup.id">
+                <option value=""></option>
+            </select>
+        </div>
         <div class="form-group" ngf-drop ngf-change="vm.setPicture01($file, vm.store)" ngf-pattern="'image/*'">
-            <label class="control-label" for="field_picture01">Picture 01</label>
+            <label class="control-label" for="field_picture01">Foto1</label>
             <div>
                 <img data-ng-src="{{'data:' + vm.store.picture01ContentType + ';base64,' + vm.store.picture01}}" style="max-height: 100px;" ng-if="vm.store.picture01"/>
                 <div ng-if="vm.store.picture01" class="help-block clearfix">
@@ -84,7 +99,7 @@
                     ng-model="vm.store.picture01ContentType" />
         </div>
         <div class="form-group" ngf-drop ngf-change="vm.setPicture02($file, vm.store)" ngf-pattern="'image/*'">
-            <label class="control-label" for="field_picture02">Picture 02</label>
+            <label class="control-label" for="field_picture02">Foto2</label>
             <div>
                 <img data-ng-src="{{'data:' + vm.store.picture02ContentType + ';base64,' + vm.store.picture02}}" style="max-height: 100px;" ng-if="vm.store.picture02"/>
                 <div ng-if="vm.store.picture02" class="help-block clearfix">
@@ -105,23 +120,7 @@
             <input type="hidden" class="form-control" name="picture02ContentType" id="field_picture02ContentType"
                     ng-model="vm.store.picture02ContentType" />
         </div>
-
-        <div class="form-group">
-            <label for="field_person">Person</label>
-            <select class="form-control" id="field_person" name="person" ng-model="vm.store.person" ng-options="person as person.surname for person in vm.people track by person.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="field_day">Day</label>
-            <select class="form-control" id="field_day" multiple name="day" ng-model="vm.store.days" ng-options="day as day.name for day in vm.days track by day.id"></select>
-        </div>
-        <div class="form-group">
-            <label for="field_storegroup">Grupa</label>
-            <select class="form-control" id="field_storegroup" name="storegroup" ng-model="vm.store.storegroup" ng-options="storegroup as storegroup.name for storegroup in vm.storegroups track by storegroup.id">
-                <option value=""></option>
-            </select>
-        </div>
+       
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

@@ -59,7 +59,7 @@
         }
 
         function openFile (type, data) {
-            $window.open('data:image/png;base64,' + data, '_blank', 'height=300,width=400');
+            $window.open('data:image/png;base64,' + data, '_blank', 'height=400,width=500');
         }
 
         function toBase64 (file, cb) {
