@@ -9,6 +9,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.costrella.android.cechini.activities.CalendarActivity">
 
+    <EditText
+        android:id="@+id/weekName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:hint="Nazwa trasówki"
+        android:inputType="textPersonName"
+        android:layout_above="@+id/calendarView"
+        android:layout_alignParentTop="true" />
+
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/calendarView"
@@ -16,6 +26,10 @@
         android:layout_height="wrap_content"
         app:mcv_showOtherDates="all"
         app:mcv_selectionColor="#00F"
-        />
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>
