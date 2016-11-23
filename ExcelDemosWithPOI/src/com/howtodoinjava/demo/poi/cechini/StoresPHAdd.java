@@ -22,9 +22,9 @@ public class StoresPHAdd
 			PostgresConnection postgresConnection = new PostgresConnection();
 			Connection c = postgresConnection.conncet();
 			Statement stmt = c.createStatement();
-			String fileName = "arturTymosz";
-			String phId = "8";
-			FileInputStream file = new FileInputStream(new File("C://costrella_repo_ssd/cechini/jhipster2/web_app2/excels/"+fileName+".xlsx"));
+			String fileName = "anna2.xlsx";
+			String phId = "2003";
+			FileInputStream file = new FileInputStream(new File("C://costrella_repo_ssd/cechini/jhipster2/web_app2/excels/nowe/"+fileName));
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 
@@ -40,7 +40,8 @@ public class StoresPHAdd
 			               + "VALUES ('"+row.getCell(1)
 			               +"','"+row.getCell(2)
 			               +"','"+row.getCell(3)
-			               +"','"+row.getCell(4)
+//			               +"','"+row.getCell(4)
+			               +"','"+row.getCell(4)+" "+row.getCell(5)+" "+row.getCell(6) + " " +row.getCell(7)
 //			               +"','"+row.getCell(5)==""?null:row.getCell(5)
 			               +"',"+row.getCell(0)+", "
 			               + phId +");";
