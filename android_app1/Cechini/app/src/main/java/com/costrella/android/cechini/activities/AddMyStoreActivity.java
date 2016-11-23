@@ -32,34 +32,44 @@ public class AddMyStoreActivity extends AppCompatActivity {
         addStoreSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Store store = new Store();
-                store.setPerson(PersonService.PERSON);
-                store.setName(storeName.getText().toString());
-                store.setCity(cityName.getText().toString());
-                store.setStreet(streetName.getText().toString());
-                store.setDescription(descName.getText().toString());
-                //storegroup do zadnej nie przypiszemy celowo
-                Call<Store> createStoreCall = CechiniService.getInstance().getCechiniAPI().createStore(store);
-                createStoreCall.enqueue(new Callback<Store>() {
-                    @Override
-                    public void onResponse(Call<Store> call, Response<Store> response) {
-                        int code = response.code();
-                        if(code == 201){
-                            Toast.makeText(getApplicationContext(), "Dodano sklep: "+response.body().getName(), Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), MyStoresActivity.class);
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+                if (!storeName.getText().toString().isEmpty() && !storeName.getText().toString().equals("")) {
+                    Store store = new Store();
+                    store.setPerson(PersonService.PERSON);
+                    store.setName(storeName.getText().toString());
+                    store.setCity(cityName.getText().toString());
+                    store.setStreet(streetName.getText().toString());
+                    store.setDescription(descName.getText().toString());
+                    //storegroup do zadnej nie przypiszemy celowo
+                    Call<Store> createStoreCall = CechiniService.getInstance().getCechiniAPI().createStore(store);
+                    createStoreCall.enqueue(new Callback<Store>() {
+                        @Override
+                        public void onResponse(Call<Store> call, Response<Store> response) {
+                            int code = response.code();
+                            if (code == 201) {
+                                Toast.makeText(getApplicationContext(), "Dodano sklep: " + response.body().getName(), Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), MyStoresActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Store> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Store> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }else{
+                    Toast.makeText(getApplicationContext(), "Nie wypełniłeś nazwy sklepu!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MyStoresActivity.class);
+        startActivity(intent);
     }
 }

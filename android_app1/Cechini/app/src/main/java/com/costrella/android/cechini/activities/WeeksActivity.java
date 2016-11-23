@@ -6,9 +6,11 @@ import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +80,6 @@ public class WeeksActivity extends ListActivity {
                 startActivity(intent);
             }
         });
-
 
 
     }
@@ -200,5 +201,26 @@ public class WeeksActivity extends ListActivity {
                 Log.e("s", "f");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Snackbar snackbar = Snackbar
+                .make(getCurrentFocus(), "Czy chcesz się wylogować?", Snackbar.LENGTH_LONG)
+                .setAction("TAK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        back();
+                    }
+                });
+        snackbar.setActionTextColor(Color.RED);
+        snackbar.show();
+
+
+
+    }
+
+    private void back(){
+        super.onBackPressed();
     }
 }

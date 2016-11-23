@@ -80,7 +80,7 @@ public class MyStoresActivity extends ListActivity {
             TextView textView = (TextView) convertView.findViewById(R.id.listText);
             // Populate the data into the template view using the data object
 
-            if(store.getVisited() == null){
+            if(store.getVisited() == null || !store.getVisited()){
                 textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
             }else{
                 textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
@@ -99,6 +99,7 @@ public class MyStoresActivity extends ListActivity {
                 List<Store> list = response.body();
                 StoreService.STORES_LIST.clear();
                 StoreService.STORES_LIST = list;
+                listValues.clear();
                 listValues.addAll(list);
                 setListAdapter(adapter);
                 showProgress(false);
@@ -132,6 +133,12 @@ public class MyStoresActivity extends ListActivity {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, WeeksActivity.class);
+        startActivity(intent);
     }
 
 }

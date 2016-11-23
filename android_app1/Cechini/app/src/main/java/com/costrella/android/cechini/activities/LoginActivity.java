@@ -221,14 +221,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         goToItemList(person);
 
                     } else {
-                        Toast.makeText(_this, "Did not work: " + String.valueOf(code), Toast.LENGTH_LONG).show();
+                        Toast.makeText(_this, "Poprawne dane ? Masz internet ?" + String.valueOf(code), Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Person> call, Throwable t) {
                     showProgress(false);
-                    Toast.makeText(_this, "cos poszlo nie tak", Toast.LENGTH_LONG).show();
+                    Toast.makeText(_this, "Poprawne dane ? Masz internet ?", Toast.LENGTH_LONG).show();
                 }
             });
         }

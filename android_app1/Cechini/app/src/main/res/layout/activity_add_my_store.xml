@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCDD2"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -14,9 +13,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="5dp"
         android:text="Dodawanie sklepu"
-        android:textColor="#ce3232"
-        android:textSize="40sp"
-        android:typeface="serif" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/storeName"
