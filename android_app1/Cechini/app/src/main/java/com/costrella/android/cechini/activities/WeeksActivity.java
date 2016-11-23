@@ -69,6 +69,16 @@ public class WeeksActivity extends ListActivity {
                 startActivity(intent);
             }
         });
+        FloatingActionButton addStoreFloatingActionButton = (FloatingActionButton) findViewById(R.id.addStoreFloatingActionButton);
+        addStoreFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), AddMyStoreActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     }

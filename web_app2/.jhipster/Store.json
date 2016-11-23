@@ -68,6 +68,10 @@
             "fieldName": "picture02",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "comment",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160831181410",

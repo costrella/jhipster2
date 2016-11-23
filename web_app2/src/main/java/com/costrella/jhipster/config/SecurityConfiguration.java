@@ -77,6 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/api/days")
             .antMatchers(HttpMethod.POST, "/api/updateDay")
             .antMatchers(HttpMethod.POST, "/api/days2")
+            .antMatchers(HttpMethod.POST, "/api/stores")
             .antMatchers(HttpMethod.POST, "/api/entitytest-2-s")
             .antMatchers(HttpMethod.GET, "/api/personStores/**")
             .antMatchers(HttpMethod.GET, "/api/personWeeks/**")

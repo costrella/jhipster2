@@ -51,7 +51,8 @@
         <activity android:name=".activities.WeeksActivity" />
         <activity android:name=".activities.StoresInDayActivity" />
         <activity android:name=".activities.DaysReviewActivity" />
-        <activity android:name=".activities.MyStoresActivity"></activity>
+        <activity android:name=".activities.MyStoresActivity" />
+        <activity android:name=".activities.AddMyStoreActivity"></activity>
     </application>
 
 </manifest>
