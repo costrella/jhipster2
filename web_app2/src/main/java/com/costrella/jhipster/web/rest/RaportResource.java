@@ -134,10 +134,12 @@ public class RaportResource {
                                                            @RequestParam(value = "storeId", required = false) Long storeId,
                                                            @RequestParam(value = "dayId", required = false) Long dayId,
                                                            @RequestParam(value = "weekId", required = false) Long weekId,
-                                                           @RequestParam(value = "storegroupId", required = false) Long storegroupId
+                                                           @RequestParam(value = "storegroupId", required = false) Long storegroupId,
+                                                           @RequestParam(value = "warehouseId", required = false) Long warehouseId
     ) throws URISyntaxException {
         Page<Raport> page;
-        if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null && weekId == null && storegroupId == null) {
+        if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null
+            && weekId == null && storegroupId == null && warehouseId == null) {
             return null;
         } else if (storeId != null) {
             if (fromDate == null && toDate == null) {
@@ -145,15 +147,31 @@ public class RaportResource {
                 page = raportRepository.getStoresRaports(storeId, pageable);
             } else if (person == -1) {
                 if (storegroupId == null) {
-                    page = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate, pageable);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate, pageable);
+                    }else {
+                        page = raportRepository.getRaportsByDateAndStoreAndWarehouse(warehouseId, storeId, fromDate, toDate, pageable);
+                    }
                 } else {
-                    page = raportRepository.getRaportsByDateAndStoreAndStoreGroup(storeId, fromDate, toDate, storegroupId, pageable);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndStoreAndStoreGroup(storeId, fromDate, toDate, storegroupId, pageable);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndStoreAndStoreGroupAndWarehouse(warehouseId, storeId, fromDate, toDate, storegroupId, pageable);
+                    }
                 }
             } else {
                 if (storegroupId == null) {
-                    page = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate, pageable);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate, pageable);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreAndWarehouse(warehouseId, person, storeId, fromDate, toDate, pageable);
+                    }
                 } else {
-                    page = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroup(person, storeId, fromDate, toDate, storegroupId, pageable);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroup(person, storeId, fromDate, toDate, storegroupId, pageable);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroupAndWarehouse(warehouseId, person, storeId, fromDate, toDate, storegroupId, pageable);
+                    }
                 }
             }
         } else if (dayId != null) {
@@ -163,9 +181,17 @@ public class RaportResource {
         } else {
             if (person == -1) {
                 if (storegroupId == null) {
-                    page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+                    if(warehouseId == null){
+                        page = raportRepository.getRaportsByDate(fromDate, toDate, pageable);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndWarehouse(warehouseId, fromDate, toDate, pageable);
+                    }
                 } else {
-                    page = raportRepository.getRaportsByDateAndStoreGroup(fromDate, toDate, storegroupId, pageable);
+                    if(warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndStoreGroup(fromDate, toDate, storegroupId, pageable);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndStoreGroupAndWarehouse(warehouseId, fromDate, toDate, storegroupId, pageable);
+                    }
                 }
             } else {
                 if (fromDate == null && toDate == null) {
@@ -173,9 +199,17 @@ public class RaportResource {
                     page = raportRepository.getPersonRaports(person, pageable);
                 } else {
                     if (storegroupId == null) {
-                        page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+                        if(warehouseId == null){
+                            page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate, pageable);
+                        }else{
+                            page = raportRepository.getRaportsByDateAndPersonAndWarehouse(warehouseId, person, fromDate, toDate, pageable);
+                        }
                     }else{
-                        page = raportRepository.getRaportsByDateAndPersonAndStoreGroup(person, fromDate, toDate, storegroupId, pageable);
+                        if(warehouseId == null){
+                            page = raportRepository.getRaportsByDateAndPersonAndStoreGroup(person, fromDate, toDate, storegroupId, pageable);
+                        }else{
+                            page = raportRepository.getRaportsByDateAndPersonAndStoreGroupAndWarehouse(warehouseId, person, fromDate, toDate, storegroupId, pageable);
+                        }
                     }
                 }
             }
@@ -197,60 +231,94 @@ public class RaportResource {
                                                                 @RequestParam(value = "storeId", required = false) Long storeId,
                                                                 @RequestParam(value = "dayId", required = false) Long dayId,
                                                                 @RequestParam(value = "weekId", required = false) Long weekId,
-                                                                @RequestParam(value = "storegroupId", required = false) Long storegroupId
+                                                                @RequestParam(value = "storegroupId", required = false) Long storegroupId,
+                                                                @RequestParam(value = "warehouseId", required = false) Long warehouseId
     ) throws URISyntaxException {
-        List<Raport> raportsList;
+        List<Raport> page;
 
 
         //DUBLUJEMY Z METODY POWYZEJ ! TYLKO ZWRACAMY LIST ! takze nie do konca jest to dublowanie ;)
         //mozna zamaist tak, zwracac rowniez mape
 
 
-        if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null && weekId == null && storegroupId == null) {
+        if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null
+            && weekId == null && storegroupId == null && warehouseId == null) {
             return null;
         } else if (storeId != null) {
             if (fromDate == null && toDate == null) {
                 //warunek dla wyswietlania raportow w 'sklepie'
-                raportsList = raportRepository.getStoresRaports(storeId);
+                page = raportRepository.getStoresRaports(storeId);
             } else if (person == -1) {
                 if (storegroupId == null) {
-                    raportsList = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndStore(storeId, fromDate, toDate);
+                    }else {
+                        page = raportRepository.getRaportsByDateAndStoreAndWarehouse(warehouseId, storeId, fromDate, toDate);
+                    }
                 } else {
-                    raportsList = raportRepository.getRaportsByDateAndStoreAndStoreGroup(storeId, fromDate, toDate, storegroupId);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndStoreAndStoreGroup(storeId, fromDate, toDate, storegroupId);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndStoreAndStoreGroupAndWarehouse(warehouseId, storeId, fromDate, toDate, storegroupId);
+                    }
                 }
             } else {
                 if (storegroupId == null) {
-                    raportsList = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndPersonAndStore(person, storeId, fromDate, toDate);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreAndWarehouse(warehouseId, person, storeId, fromDate, toDate);
+                    }
                 } else {
-                    raportsList = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroup(person, storeId, fromDate, toDate, storegroupId);
+                    if (warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroup(person, storeId, fromDate, toDate, storegroupId);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndPersonAndStoreAndStoreGroupAndWarehouse(warehouseId, person, storeId, fromDate, toDate, storegroupId);
+                    }
                 }
             }
         } else if (dayId != null) {
-            raportsList = raportRepository.getDayRaports(dayId);
+            page = raportRepository.getDayRaports(dayId);
         } else if (weekId != null) {
-            raportsList = raportRepository.getWeekRaports(weekId);
+            page = raportRepository.getWeekRaports(weekId);
         } else {
             if (person == -1) {
                 if (storegroupId == null) {
-                    raportsList = raportRepository.getRaportsByDate(fromDate, toDate);
+                    if(warehouseId == null){
+                        page = raportRepository.getRaportsByDate(fromDate, toDate);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndWarehouse(warehouseId, fromDate, toDate);
+                    }
                 } else {
-                    raportsList = raportRepository.getRaportsByDateAndStoreGroup(fromDate, toDate, storegroupId);
+                    if(warehouseId == null) {
+                        page = raportRepository.getRaportsByDateAndStoreGroup(fromDate, toDate, storegroupId);
+                    }else{
+                        page = raportRepository.getRaportsByDateAndStoreGroupAndWarehouse(warehouseId, fromDate, toDate, storegroupId);
+                    }
                 }
             } else {
                 if (fromDate == null && toDate == null) {
                     //przypadek dla raportow w "person"
-                    raportsList = raportRepository.getPersonRaports(person);
+                    page = raportRepository.getPersonRaports(person);
                 } else {
                     if (storegroupId == null) {
-                        raportsList = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate);
+                        if(warehouseId == null){
+                            page = raportRepository.getRaportsByDateAndPerson(person, fromDate, toDate);
+                        }else{
+                            page = raportRepository.getRaportsByDateAndPersonAndWarehouse(warehouseId, person, fromDate, toDate);
+                        }
                     }else{
-                        raportsList = raportRepository.getRaportsByDateAndPersonAndStoreGroup(person, fromDate, toDate, storegroupId);
+                        if(warehouseId == null){
+                            page = raportRepository.getRaportsByDateAndPersonAndStoreGroup(person, fromDate, toDate, storegroupId);
+                        }else{
+                            page = raportRepository.getRaportsByDateAndPersonAndStoreGroupAndWarehouse(warehouseId, person, fromDate, toDate, storegroupId);
+                        }
                     }
                 }
             }
         }
         int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0;
-        for (Raport r : raportsList) {
+        for (Raport r : page) {
             a += r.getz_a() != null ? r.getz_a() : 0;
             b += r.getz_b() != null ? r.getz_b() : 0;
             c += r.getz_c() != null ? r.getz_c() : 0;

@@ -36,10 +36,10 @@
                         <select class="form-control" id="field_store" name="store" ng-model="vm.store" ng-change="vm.loadAll()" ng-options="store as store.name+', '+store.city+', '+store.street for store in vm.stores track by store.id" required>
                             <option value=""></option>
                         </select>
-                        <!--<span class="input-group-addon">Hurtownia</span>-->
-                        <!--<select class="form-control" id="field_warehouse" name="warehouse" ng-model="vm.warehouse" ng-change="vm.loadAll()" ng-options="warehouse as warehouse.name for warehouse in vm.warehouses track by warehouse.id" required>-->
-                            <!--<option value=""></option>-->
-                        <!--</select>-->
+                        <span class="input-group-addon">Hurtownia</span>
+                        <select class="form-control" id="field_warehouse" name="warehouse" ng-model="vm.warehouse" ng-change="vm.loadAll()" ng-options="warehouse as warehouse.name for warehouse in vm.warehouses track by warehouse.id" required>
+                            <option value=""></option>
+                        </select>
                         <span class="input-group-addon">Grupa sklepu</span>
                         <select class="form-control" id="field_storegroup" name="storegroup" ng-model="vm.storegroup" ng-change="vm.loadAll()" ng-options="storegroup as storegroup.name for storegroup in vm.storegroups track by storegroup.id" required>
                             <option value=""></option>

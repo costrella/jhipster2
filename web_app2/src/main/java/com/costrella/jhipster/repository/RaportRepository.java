@@ -33,8 +33,20 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2")
     Page<Raport> getRaportsByDate(LocalDate from, LocalDate to, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.date BETWEEN ?2 AND ?3")
+    Page<Raport> getRaportsByDateAndWarehouse(Long warehouseId, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.date BETWEEN ?2 AND ?3")
+    List<Raport> getRaportsByDateAndWarehouse(Long warehouseId, LocalDate from, LocalDate to);
+
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 AND raport.store.storegroup.id = ?3")
     Page<Raport> getRaportsByDateAndStoreGroup(LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
+    Page<Raport> getRaportsByDateAndStoreGroupAndWarehouse(Long warehouseId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
+    List<Raport> getRaportsByDateAndStoreGroupAndWarehouse(Long warehouseId, LocalDate from, LocalDate to, Long storegroupId);
 
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2 AND raport.store.storegroup.id = ?3")
     List<Raport> getRaportsByDateAndStoreGroup(LocalDate from, LocalDate to, Long storegroupId);
@@ -45,8 +57,20 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 ")
     Page<Raport> getRaportsByDateAndPerson(Long idPerson, LocalDate from, LocalDate to, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.date BETWEEN ?3 AND ?4 ")
+    Page<Raport> getRaportsByDateAndPersonAndWarehouse(Long warehouseId, Long idPerson, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.date BETWEEN ?3 AND ?4 ")
+    List<Raport> getRaportsByDateAndPersonAndWarehouse(Long warehouseId, Long idPerson, LocalDate from, LocalDate to);
+
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
     Page<Raport> getRaportsByDateAndPersonAndStoreGroup(Long idPerson, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
+    Page<Raport> getRaportsByDateAndPersonAndStoreGroupAndWarehouse(Long warehouseId, Long idPerson, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
+    List<Raport> getRaportsByDateAndPersonAndStoreGroupAndWarehouse(Long warehouseId, Long idPerson, LocalDate from, LocalDate to, Long storegroupId);
 
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
     List<Raport> getRaportsByDateAndPersonAndStoreGroup(Long idPerson, LocalDate from, LocalDate to, Long storegroupId);
@@ -54,8 +78,20 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 ")
     Page<Raport> getRaportsByDateAndPersonAndStore(Long idPerson, Long storeId, LocalDate from, LocalDate to, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.store.id =?3 AND raport.date BETWEEN ?4 AND ?5 ")
+    Page<Raport> getRaportsByDateAndPersonAndStoreAndWarehouse(Long warehouseId, Long idPerson, Long storeId, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.store.id =?3 AND raport.date BETWEEN ?4 AND ?5 ")
+    List<Raport> getRaportsByDateAndPersonAndStoreAndWarehouse(Long warehouseId, Long idPerson, Long storeId, LocalDate from, LocalDate to);
+
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
     Page<Raport> getRaportsByDateAndPersonAndStoreAndStoreGroup(Long idPerson, Long storeId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.store.id =?3 AND raport.date BETWEEN ?4 AND ?5 AND raport.store.storegroup.id = ?6")
+    Page<Raport> getRaportsByDateAndPersonAndStoreAndStoreGroupAndWarehouse(Long warehouseId, Long idPerson, Long storeId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.person.id = ?2 AND raport.store.id =?3 AND raport.date BETWEEN ?4 AND ?5 AND raport.store.storegroup.id = ?6")
+    List<Raport> getRaportsByDateAndPersonAndStoreAndStoreGroupAndWarehouse(Long warehouseId, Long idPerson, Long storeId, LocalDate from, LocalDate to, Long storegroupId);
 
     @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
     List<Raport> getRaportsByDateAndPersonAndStoreAndStoreGroup(Long idPerson, Long storeId, LocalDate from, LocalDate to, Long storegroupId);
@@ -66,8 +102,20 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
     @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 ")
     Page<Raport> getRaportsByDateAndStore(Long storeId, LocalDate from, LocalDate to, Pageable pageable);
 
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.store.id = ?2 AND raport.date BETWEEN ?3 AND ?4 ")
+    Page<Raport> getRaportsByDateAndStoreAndWarehouse(Long warehouseId, Long storeId, LocalDate from, LocalDate to, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.store.id = ?2 AND raport.date BETWEEN ?3 AND ?4 ")
+    List<Raport> getRaportsByDateAndStoreAndWarehouse(Long warehouseId, Long storeId, LocalDate from, LocalDate to);
+
     @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
     Page<Raport> getRaportsByDateAndStoreAndStoreGroup(Long storeId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
+    Page<Raport> getRaportsByDateAndStoreAndStoreGroupAndWarehouse(Long warehouseId, Long storeId, LocalDate from, LocalDate to, Long storegroupId, Pageable pageable);
+
+    @Query("SELECT raport from Raport raport where raport.warehouse.id = ?1 AND raport.store.id =?2 AND raport.date BETWEEN ?3 AND ?4 AND raport.store.storegroup.id = ?5")
+    List<Raport> getRaportsByDateAndStoreAndStoreGroupAndWarehouse(Long warehouseId, Long storeId, LocalDate from, LocalDate to, Long storegroupId);
 
     @Query("SELECT raport from Raport raport where raport.store.id =?1 AND raport.date BETWEEN ?2 AND ?3 AND raport.store.storegroup.id = ?4")
     List<Raport> getRaportsByDateAndStoreAndStoreGroup(Long storeId, LocalDate from, LocalDate to, Long storegroupId);
