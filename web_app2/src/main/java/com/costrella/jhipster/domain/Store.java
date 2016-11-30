@@ -46,16 +46,20 @@ public class Store implements Serializable {
 
     @Lob
     @Column(name = "picture_01")
+    @JsonIgnore
     private byte[] picture01;
 
     @Column(name = "picture_01_content_type")
+    @JsonIgnore
     private String picture01ContentType;
 
     @Lob
     @Column(name = "picture_02")
+    @JsonIgnore
     private byte[] picture02;
 
     @Column(name = "picture_02_content_type")
+    @JsonIgnore
     private String picture02ContentType;
 
     @Column(name = "comment")
