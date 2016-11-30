@@ -27,13 +27,65 @@
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="opis :" />
+
+        <TextView
+            android:id="@+id/lastRaport_opis"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="komentarz :" />
+
+        <TextView
+            android:id="@+id/lastRaport_komentarz"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lastRaport_text"
+            android:text="Ostatni raport"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Komentarz:" />
+            android:text="Uwagi: " />
 
         <TextView
             android:id="@+id/lastRaportTxt3"
@@ -50,9 +102,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ostatni raport"
-            android:textSize="20dp" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="2L NGAZ " />
 
+        <TextView
+            android:id="@+id/lastRaport_z_a"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -62,10 +121,118 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="2L NGAZ" />
+            android:text="2L GAZ " />
 
         <TextView
-            android:id="@+id/lastRaportTxt4"
+            android:id="@+id/lastRaport_z_b"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0,33L " />
+
+        <TextView
+            android:id="@+id/lastRaport_z_c"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="CYT" />
+
+        <TextView
+            android:id="@+id/lastRaport_z_d"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="2L NGAZ (BIAŁA) " />
+
+        <TextView
+            android:id="@+id/lastRaport_z_f"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0,75L SPORT " />
+
+        <TextView
+            android:id="@+id/lastRaport_z_g"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0,33L SZKŁO " />
+
+        <TextView
+            android:id="@+id/lastRaport_z_h"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Gratisy " />
+
+        <TextView
+            android:id="@+id/lastRaport_z_e"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
