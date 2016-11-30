@@ -1,5 +1,6 @@
 package com.costrella.jhipster.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -86,6 +87,7 @@ public class Raport implements Serializable {
     private Store store;
 
     @ManyToOne
+    @JsonIgnore
     private Day day;
 
     @ManyToOne

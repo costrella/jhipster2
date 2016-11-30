@@ -40,27 +40,34 @@ public class Person implements Serializable {
     @NotNull
     @Size(min = 4)
     @Column(name = "pass", nullable = false)
+    @JsonIgnore
     private String pass;
 
     @Column(name = "target_01")
     private Integer target01;
 
     @Column(name = "target_02")
+    @JsonIgnore
     private Integer target02;
 
     @Column(name = "target_03")
+    @JsonIgnore
     private Integer target03;
 
     @Column(name = "target_04")
+    @JsonIgnore
     private Integer target04;
 
     @Column(name = "target_05")
+    @JsonIgnore
     private Integer target05;
 
     @Column(name = "target_06")
+    @JsonIgnore
     private Integer target06;
 
     @Column(name = "target_07")
+    @JsonIgnore
     private Integer target07;
 
     @Column(name = "description")

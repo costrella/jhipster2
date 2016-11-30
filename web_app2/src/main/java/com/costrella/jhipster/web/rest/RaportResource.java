@@ -226,7 +226,7 @@ public class RaportResource {
         params = {"test"}
     )
     @Timed
-    public ResponseEntity<Map<String, Integer>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+    public ResponseEntity<Map<String, Long>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
                                                                 @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
                                                                 @RequestParam(value = "person", required = false) Long person,
                                                                 @RequestParam(value = "storeId", required = false) Long storeId,
@@ -235,11 +235,11 @@ public class RaportResource {
                                                                 @RequestParam(value = "storegroupId", required = false) Long storegroupId,
                                                                 @RequestParam(value = "warehouseId", required = false) Long warehouseId
     ) throws URISyntaxException {
-        List<Raport> page;
-
 
         //DUBLUJEMY Z METODY POWYZEJ ! TYLKO ZWRACAMY LIST ! takze nie do konca jest to dublowanie ;)
         //mozna zamaist tak, zwracac rowniez mape
+        Map<String, Long> page = null;
+//        map = raportRepository.getRaportsByDate(fromDate, toDate);
 
 
         if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null
@@ -300,7 +300,7 @@ public class RaportResource {
             } else {
                 if (fromDate == null && toDate == null) {
                     //przypadek dla raportow w "person"
-                    page = raportRepository.getPersonRaports(person);
+                    page = raportRepository.getPersonRaportsMap(person);
                 } else {
                     if (storegroupId == null) {
                         if(warehouseId == null){
@@ -318,27 +318,18 @@ public class RaportResource {
                 }
             }
         }
-        int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0;
-        for (Raport r : page) {
-            a += r.getz_a() != null ? r.getz_a() : 0;
-            b += r.getz_b() != null ? r.getz_b() : 0;
-            c += r.getz_c() != null ? r.getz_c() : 0;
-            d += r.getz_d() != null ? r.getz_d() : 0;
-            e += r.getz_e() != null ? r.getz_e() : 0;
-            f += r.getz_f() != null ? r.getz_f() : 0;
-            g += r.getz_g() != null ? r.getz_g() : 0;
-            h += r.getz_h() != null ? r.getz_h() : 0;
-        }
 
-        Map<String, Integer> myMap = new HashMap<>();
-        myMap.put("a", a);
-        myMap.put("b", b);
-        myMap.put("c", c);
-        myMap.put("d", d);
-        myMap.put("e", e);
-        myMap.put("f", f);
-        myMap.put("g", g);
-        myMap.put("h", h);
+
+
+        Map<String, Long> myMap = new HashMap<>();
+        myMap.put("a", page.get("z_a"));
+        myMap.put("b", page.get("z_b"));
+        myMap.put("c", page.get("z_c"));
+        myMap.put("d", page.get("z_d"));
+        myMap.put("e", page.get("z_e"));
+        myMap.put("f", page.get("z_f"));
+        myMap.put("g", page.get("z_g"));
+        myMap.put("h", page.get("z_h"));
 
         return Optional.ofNullable(myMap)
             .map(result -> new ResponseEntity<>(
