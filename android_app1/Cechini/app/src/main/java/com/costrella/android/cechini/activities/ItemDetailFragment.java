@@ -10,8 +10,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.PersonService;
 import com.costrella.android.cechini.services.StoreService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -59,9 +66,26 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.item_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
+        Call<Raport> lastRaport = CechiniService.getInstance().getCechiniAPI().getLastPersonStoreRaportMobi(PersonService.PERSON.getId(), store.getId());
+        lastRaport.enqueue(new Callback<Raport>() {
+            @Override
+            public void onResponse(Call<Raport> call, Response<Raport> response) {
+                int code = response.code();
+                if(code == 200){
+                    Raport raport = response.body();
+                    ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setText(getString(raport.getDescription()));
+                    ((TextView) rootView.findViewById(R.id.lastRaportTxt4)).setText(String.valueOf(raport.getZ_a()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Raport> call, Throwable t) {
+
+            }
+        });
+
         if (store != null) {
             String storeDetails = "";
             storeDetails += getString(store.getCity()) + "\n";
@@ -69,7 +93,7 @@ public class ItemDetailFragment extends Fragment {
             storeDetails += getString(store.getDescription());
 
             String comment = getString(store.getComment());
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(storeDetails + "\n\n\n" + comment);
+            ((TextView) rootView.findViewById(R.id.lastRaportTxt1)).setText(storeDetails + "\n\n\n" + comment);
         }
 
         return rootView;

@@ -9,12 +9,16 @@ import org.springframework.data.jpa.repository.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Spring Data JPA repository for the Raport entity.
  */
 @SuppressWarnings("unused")
 public interface RaportRepository extends JpaRepository<Raport, Long> {
+    @Query("select sum(raport.z_a) from Raport raport where raport.person.id = ?1")
+    Map<String, Integer> getZ_atest(Long idPerson);
+
     @Query("select sum(raport.z_a) from Raport raport where raport.person.id = ?1")
     int getZ_a(Long idPerson);
 
@@ -29,6 +33,9 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
 
     @Query("select sum(r.z_e) from Raport r where r.person.id = ?1")
     int getZ_e(Long idPerson);
+
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id = ?2 ORDER BY raport.date DESC")
+    Page<Raport> getLastRaportByPersonAndStore(Long personId, Long storeId, Pageable pageable);
 
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2")
     Page<Raport> getRaportsByDate(LocalDate from, LocalDate to, Pageable pageable);

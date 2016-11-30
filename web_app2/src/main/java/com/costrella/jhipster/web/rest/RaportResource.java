@@ -10,6 +10,7 @@ import com.costrella.jhipster.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -386,6 +387,25 @@ public class RaportResource {
     public ResponseEntity<Raport> getRaport(@PathVariable Long id) {
         log.debug("REST request to get Raport : {}", id);
         Raport raport = raportRepository.findOne(id);
+        return Optional.ofNullable(raport)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/lastPersonStoreRaportMobi/{personId}/{storeId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Raport> getLastPersonStoreRaportMobi(@PathVariable Long personId, @PathVariable Long storeId) {
+        Pageable first = new PageRequest(0, 1);
+        Page<Raport> raportPage = raportRepository.getLastRaportByPersonAndStore(personId, storeId, first);
+        Raport raport = null;
+        if(raportPage.getContent() != null){
+            raport = raportPage.getContent().get(0);
+        }
+
         return Optional.ofNullable(raport)
             .map(result -> new ResponseEntity<>(
                 result,
