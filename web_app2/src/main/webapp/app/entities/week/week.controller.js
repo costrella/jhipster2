@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('WeekController', WeekController);
 
-    WeekController.$inject = ['$filter', '$scope', '$state', 'Week', 'Person', 'WeekSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    WeekController.$inject = ['$filter', '$scope', '$cookies', '$state', 'Week', 'Person', 'WeekSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function WeekController ($filter, $scope, $state, Week, Person, WeekSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function WeekController ($filter, $scope, $cookies, $state, Week, Person, WeekSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.loadPage = loadPage;
@@ -27,12 +27,13 @@
         vm.previousMonth = previousMonth;
         vm.previousMonth();
         vm.people = Person.query();
-        vm.ph = null;
+        vm.ph = $cookies.getObject('week_ph');
         vm.page = 1;
 
         loadAll();
 
         function getPersonId() {
+			$cookies.putObject('week_ph', vm.ph);
             if (vm.ph) {
                 return vm.ph.id;
             }
@@ -43,6 +44,9 @@
             var dateFormat = 'yyyy-MM-dd';
             var fromDate = $filter('date')(vm.fromDate, dateFormat);
             var toDate = $filter('date')(vm.toDate, dateFormat);
+			
+			$cookies.put('week_fromDate', vm.fromDate);
+			$cookies.put('week_toDate', vm.toDate);
 
                 Week.query({
                     page: vm.page - 1,
@@ -84,8 +88,20 @@
             var fromDate = new Date();
             var toDate = new Date();
             toDate.setMonth(toDate.getMonth()+1);
-            vm.fromDate = fromDate;
-            vm.toDate = toDate;
+            //vm.fromDate = fromDate;
+            //vm.toDate = toDate;
+			
+			if($cookies.get('week_fromDate')){
+				vm.fromDate = new Date($cookies.get('week_fromDate'));
+			}else{
+				vm.fromDate = fromDate;
+			}
+			
+			if($cookies.get('week_toDate')){
+				vm.toDate = new Date($cookies.get('week_toDate'));
+			}else{
+				vm.toDate = toDate;
+			}
         }
 
         function transition () {

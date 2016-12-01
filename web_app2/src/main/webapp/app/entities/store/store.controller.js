@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('StoreController', StoreController);
 
-    StoreController.$inject = ['$scope', '$state', 'DataUtils', 'Store', 'Storegroup', 'StoreSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    StoreController.$inject = ['$scope', '$state', '$cookies', 'DataUtils', 'Store', 'Storegroup', 'StoreSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function StoreController ($scope, $state, DataUtils, Store, Storegroup, StoreSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function StoreController ($scope, $state, $cookies, DataUtils, Store, Storegroup, StoreSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.loadPage = loadPage;
@@ -23,14 +23,15 @@
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
         vm.people = Person.query();
-        vm.ph = null;
-		vm.storegroups = Storegroup.queryAll();
-		vm.storegroup = null;
+        vm.storegroups = Storegroup.queryAll();
+		vm.ph = $cookies.getObject('store_ph');
+		vm.storegroup = $cookies.getObject('store_storegroup');
         vm.page = 1;
 
         loadAll();
 
         function getPersonId() {
+			$cookies.putObject('store_ph', vm.ph);
             if (vm.ph) {
                 return vm.ph.id;
             }
@@ -38,6 +39,7 @@
         }
 		
 		function getStoregroupId() {
+			$cookies.putObject('store_storegroup', vm.storegroup);
             if (vm.storegroup) {
                 return vm.storegroup.id;
             }
