@@ -27,7 +27,7 @@
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
         vm.fromDate = null;
-        vm.toDate = null;
+        
         vm.today = today;
         vm.previousMonth = previousMonth;
         vm.previousMonth();
@@ -41,6 +41,10 @@
 		vm.store = $cookies.getObject('store');
 		vm.warehouse = $cookies.getObject('warehouse');
 		vm.storegroup = $cookies.getObject('storegroup');
+		
+		
+		
+		vm.toDate1 =  new Date($cookies.get('toDate1'));
 
         vm.loadAll();
 		
@@ -80,6 +84,8 @@
             var dateFormat = 'yyyy-MM-dd';
             var fromDate = $filter('date')(vm.fromDate, dateFormat);
             var toDate = $filter('date')(vm.toDate, dateFormat);
+			$cookies.put('fromDate', vm.fromDate);
+			$cookies.put('toDate', vm.toDate);
 
 
             Raport.query({
@@ -117,8 +123,7 @@
             var dateFormat = 'yyyy-MM-dd';
             var fromDate = $filter('date')(vm.fromDate, dateFormat);
             var toDate = $filter('date')(vm.toDate, dateFormat);
-
-
+		
             Raport.queryCount({
                 test: 123,
                 fromDate: fromDate,
@@ -147,16 +152,31 @@
         // Date picker configuration
         function today () {
             // Today + 1 day - needed if the current day must be included
-            var today = new Date();
-            vm.toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+			
+            //var today = new Date();
+            //vm.toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+			//vm.toDate = new Date($cookies.get('toDate'));
+			
         }
 
         function previousMonth () {
             var fromDate = new Date();
             var toDate = new Date();
             fromDate.setDate(fromDate.getDate()-1);
-            vm.fromDate = fromDate;
-            vm.toDate = toDate;
+            //vm.fromDate = fromDate;
+            //vm.toDate = toDate;
+			
+			if($cookies.get('fromDate')){
+				vm.fromDate = new Date($cookies.get('fromDate'));
+			}else{
+				vm.fromDate = fromDate;
+			}
+			
+			if($cookies.get('toDate')){
+				vm.toDate = new Date($cookies.get('toDate'));
+			}else{
+				vm.toDate = toDate;
+			}
         }
 
 
