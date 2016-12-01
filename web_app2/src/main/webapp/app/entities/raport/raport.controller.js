@@ -5,11 +5,13 @@
         .module('cechiniApp')
         .controller('RaportController', RaportController);
 
-    RaportController.$inject = ['$filter', '$scope', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Warehouse', 'Store', 'Storegroup', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    RaportController.$inject = ['$filter', '$scope', '$cookies', '$state', 'DataUtils', 'Raport', 'RaportSearch', 'Person', 'Warehouse', 'Store', 'Storegroup', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function RaportController ($filter ,$scope, $state, DataUtils, Raport, RaportSearch, Person, Warehouse, Store, Storegroup, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function RaportController ($filter , $scope, $cookies, $state, DataUtils, Raport, RaportSearch, Person, Warehouse, Store, Storegroup, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
 
+	
+		
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -31,16 +33,19 @@
         vm.previousMonth();
         vm.people = Person.query();
         vm.stores = Store.queryAll();
-        vm.ph = null;
         vm.warehouses = Warehouse.query();
-        vm.warehouse = null;
         vm.storegroups = Storegroup.queryAll();
-        vm.storegroup = null;
+        
         vm.page = 1;
+		vm.ph = $cookies.getObject('ph');
+		vm.store = $cookies.getObject('store');
+		vm.warehouse = $cookies.getObject('warehouse');
+		vm.storegroup = $cookies.getObject('storegroup');
 
         vm.loadAll();
-
+		
         function getStoreId() {
+			$cookies.putObject('store', vm.store);
             if (vm.store) {
                 return vm.store.id;
             }
@@ -48,6 +53,7 @@
         }
 
         function getPersonId() {
+			$cookies.putObject('ph', vm.ph);
             if (vm.ph) {
                 return vm.ph.id;
             }
@@ -55,6 +61,7 @@
         }
 
         function getWarehouseId() {
+			$cookies.putObject('warehouse', vm.warehouse);
             if (vm.warehouse) {
                 return vm.warehouse.id;
             }
@@ -62,6 +69,7 @@
         }
 
         function getStoregroupId() {
+			$cookies.putObject('storegroup', vm.storegroup);
             if (vm.storegroup) {
                 return vm.storegroup.id;
             }
