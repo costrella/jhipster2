@@ -22,7 +22,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Query("select store from Store store left join fetch store.days where store.id =:id")
     Store findOneWithEagerRelationships(@Param("id") Long id);
 
-    @Query("SELECT store from Store store where store.person.id = ?1")
+    @Query("SELECT store from Store store where store.person.id = ?1 ORDER BY store.name ASC")
     List<Store> getPersonStores(Long id);
 
     @Query("SELECT store from Store store where store.person.id = ?1")

@@ -40,7 +40,6 @@ public class Person implements Serializable {
     @NotNull
     @Size(min = 4)
     @Column(name = "pass", nullable = false)
-    @JsonIgnore
     private String pass;
 
     @Column(name = "target_01")

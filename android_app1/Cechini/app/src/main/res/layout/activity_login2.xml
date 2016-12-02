@@ -42,7 +42,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="misiek.mk" />
+                    android:text="" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +61,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="asdasd1" />
+                    android:text="" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -74,6 +74,17 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="v1.4"
+                android:id="@+id/textView6"
+                android:layout_gravity="right" />
+
         </LinearLayout>
+
     </ScrollView>
+
+
 </LinearLayout>

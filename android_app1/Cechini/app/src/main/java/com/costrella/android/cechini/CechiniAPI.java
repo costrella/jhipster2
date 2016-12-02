@@ -42,6 +42,9 @@ public interface CechiniAPI {
     @GET("weekDays/{weekId}")
     Call<List<Day>> getWeekDays(@Path("weekId") Long weekId);
 
+    @GET("lastPersonStoreRaportMobi/{personId}/{storeId}")
+    Call<Raport> getLastPersonStoreRaportMobi(@Path("personId") Long personId, @Path("storeId") Long storeId);
+
     @GET("people/{personId}")
     Call<Person> getPerson(@Path("personId") String personId);
 
