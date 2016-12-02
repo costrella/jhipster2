@@ -2,9 +2,9 @@
 
 describe('Controller Tests', function() {
 
-    describe('Store Management Detail Controller', function() {
+    describe('Address Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPreviousState, MockStore, MockPerson, MockRaport, MockDay, MockStoregroup, MockAddress;
+        var MockEntity, MockPreviousState, MockAddress, MockStore;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,12 +12,8 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockPreviousState = jasmine.createSpy('MockPreviousState');
-            MockStore = jasmine.createSpy('MockStore');
-            MockPerson = jasmine.createSpy('MockPerson');
-            MockRaport = jasmine.createSpy('MockRaport');
-            MockDay = jasmine.createSpy('MockDay');
-            MockStoregroup = jasmine.createSpy('MockStoregroup');
             MockAddress = jasmine.createSpy('MockAddress');
+            MockStore = jasmine.createSpy('MockStore');
             
 
             var locals = {
@@ -25,22 +21,18 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity,
                 'previousState': MockPreviousState,
-                'Store': MockStore,
-                'Person': MockPerson,
-                'Raport': MockRaport,
-                'Day': MockDay,
-                'Storegroup': MockStoregroup,
-                'Address': MockAddress
+                'Address': MockAddress,
+                'Store': MockStore
             };
             createController = function() {
-                $injector.get('$controller')("StoreDetailController", locals);
+                $injector.get('$controller')("AddressDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'cechiniApp:storeUpdate';
+                var eventType = 'cechiniApp:addressUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);

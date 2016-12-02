@@ -40,8 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class StoreResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
-    private static final String DEFAULT_CITY = "AAAAA";
-    private static final String UPDATED_CITY = "BBBBB";
 
     private static final Boolean DEFAULT_VISITED = false;
     private static final Boolean UPDATED_VISITED = true;
@@ -104,7 +102,6 @@ public class StoreResourceIntTest {
         Store store = new Store();
         store = new Store()
                 .name(DEFAULT_NAME)
-                .city(DEFAULT_CITY)
                 .visited(DEFAULT_VISITED)
                 .street(DEFAULT_STREET)
                 .number(DEFAULT_NUMBER)
@@ -140,7 +137,6 @@ public class StoreResourceIntTest {
         assertThat(stores).hasSize(databaseSizeBeforeCreate + 1);
         Store testStore = stores.get(stores.size() - 1);
         assertThat(testStore.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testStore.getCity()).isEqualTo(DEFAULT_CITY);
         assertThat(testStore.isVisited()).isEqualTo(DEFAULT_VISITED);
         assertThat(testStore.getStreet()).isEqualTo(DEFAULT_STREET);
         assertThat(testStore.getNumber()).isEqualTo(DEFAULT_NUMBER);
@@ -176,24 +172,6 @@ public class StoreResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCityIsRequired() throws Exception {
-        int databaseSizeBeforeTest = storeRepository.findAll().size();
-        // set the field null
-        store.setCity(null);
-
-        // Create the Store, which fails.
-
-        restStoreMockMvc.perform(post("/api/stores")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(store)))
-                .andExpect(status().isBadRequest());
-
-        List<Store> stores = storeRepository.findAll();
-        assertThat(stores).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllStores() throws Exception {
         // Initialize the database
         storeRepository.saveAndFlush(store);
@@ -204,7 +182,6 @@ public class StoreResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(store.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-                .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
                 .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())))
                 .andExpect(jsonPath("$.[*].street").value(hasItem(DEFAULT_STREET.toString())))
                 .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
@@ -228,7 +205,6 @@ public class StoreResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(store.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
             .andExpect(jsonPath("$.visited").value(DEFAULT_VISITED.booleanValue()))
             .andExpect(jsonPath("$.street").value(DEFAULT_STREET.toString()))
             .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.toString()))
@@ -260,7 +236,6 @@ public class StoreResourceIntTest {
         Store updatedStore = storeRepository.findOne(store.getId());
         updatedStore
                 .name(UPDATED_NAME)
-                .city(UPDATED_CITY)
                 .visited(UPDATED_VISITED)
                 .street(UPDATED_STREET)
                 .number(UPDATED_NUMBER)
@@ -281,7 +256,6 @@ public class StoreResourceIntTest {
         assertThat(stores).hasSize(databaseSizeBeforeUpdate);
         Store testStore = stores.get(stores.size() - 1);
         assertThat(testStore.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testStore.getCity()).isEqualTo(UPDATED_CITY);
         assertThat(testStore.isVisited()).isEqualTo(UPDATED_VISITED);
         assertThat(testStore.getStreet()).isEqualTo(UPDATED_STREET);
         assertThat(testStore.getNumber()).isEqualTo(UPDATED_NUMBER);
@@ -332,7 +306,6 @@ public class StoreResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(store.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
             .andExpect(jsonPath("$.[*].visited").value(hasItem(DEFAULT_VISITED.booleanValue())))
             .andExpect(jsonPath("$.[*].street").value(hasItem(DEFAULT_STREET.toString())))
             .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))

@@ -28,10 +28,6 @@ public class Store implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "city", nullable = false)
-    private String city;
-
     @Column(name = "visited")
     private Boolean visited;
 
@@ -46,20 +42,16 @@ public class Store implements Serializable {
 
     @Lob
     @Column(name = "picture_01")
-    @JsonIgnore
     private byte[] picture01;
 
     @Column(name = "picture_01_content_type")
-    @JsonIgnore
     private String picture01ContentType;
 
     @Lob
     @Column(name = "picture_02")
-    @JsonIgnore
     private byte[] picture02;
 
     @Column(name = "picture_02_content_type")
-    @JsonIgnore
     private String picture02ContentType;
 
     @Column(name = "comment")
@@ -81,6 +73,9 @@ public class Store implements Serializable {
     @ManyToOne
     private Storegroup storegroup;
 
+    @ManyToOne
+    private Address address;
+
     public Long getId() {
         return id;
     }
@@ -100,19 +95,6 @@ public class Store implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public Store city(String city) {
-        this.city = city;
-        return this;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public Boolean isVisited() {
@@ -308,6 +290,19 @@ public class Store implements Serializable {
         this.storegroup = storegroup;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public Store address(Address address) {
+        this.address = address;
+        return this;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -333,7 +328,6 @@ public class Store implements Serializable {
         return "Store{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", city='" + city + "'" +
             ", visited='" + visited + "'" +
             ", street='" + street + "'" +
             ", number='" + number + "'" +

@@ -31,5 +31,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="storegroup"/>
 
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="store"
+                                 constraintName="fk_store_address_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+
     </changeSet>
 </databaseChangeLog>

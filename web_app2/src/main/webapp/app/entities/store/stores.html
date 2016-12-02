@@ -28,6 +28,14 @@
                         </select>
                     </div>
                 </div>
+				<div class="row">
+                    <div class="col-md-5">
+                        <span class="input-group-addon">Miasto</span>
+                        <select class="form-control" id="field_address" name="address" ng-model="vm.address" ng-change="vm.loadAll()" ng-options="address as address.city for address in vm.addresses track by address.id" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -63,7 +71,7 @@
 					<div ng-if="store.visited">
 						{{store.name}}
 					</div></td>
-                    <td>{{store.city}}</td>
+                    <td>{{store.address.city}}</td>
 
                     <td>{{store.street}}</td>
                     <td>{{store.number}}</td>

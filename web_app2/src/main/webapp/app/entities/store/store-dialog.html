@@ -26,16 +26,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_city">Miasto</label>
-            <input type="text" class="form-control" name="city" id="field_city"
-                    ng-model="vm.store.city"
-                    required />
-            <div ng-show="editForm.city.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.city.$error.required">
-                    This field is required.
-                </p>
-            </div>
+            <label for="field_storegroup">Miasto</label>
+            <select class="form-control" id="field_storegroup" name="address" ng-model="vm.store.address" ng-options="address as address.city for address in vm.addresses track by address.city">
+                <option value=""></option>
+            </select>
         </div>
        
         <div class="form-group">

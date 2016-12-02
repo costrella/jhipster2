@@ -3,13 +3,13 @@
 
     angular
         .module('cechiniApp')
-        .controller('StoreController', StoreController);
+        .controller('AddressController', AddressController);
 
-    StoreController.$inject = ['$scope', '$state', '$cookies', 'DataUtils', 'Store', 'Storegroup', 'Address', 'StoreSearch', 'Person', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    AddressController.$inject = ['$scope', '$state', 'Address', 'AddressSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function StoreController ($scope, $state, $cookies, DataUtils, Store, Storegroup, Address, StoreSearch, Person, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function AddressController ($scope, $state, Address, AddressSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
-
+        
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -20,51 +20,24 @@
         vm.loadAll = loadAll;
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
-        vm.openFile = DataUtils.openFile;
-        vm.byteSize = DataUtils.byteSize;
-        vm.people = Person.query();
-        vm.storegroups = Storegroup.queryAll();
-		vm.addresses = Address.queryAll();
-		vm.ph = $cookies.getObject('store_ph');
-		vm.storegroup = $cookies.getObject('store_storegroup');
-		vm.address = $cookies.getObject('store_address');
-        vm.page = 1;
 
         loadAll();
 
-        function getPersonId() {
-			$cookies.putObject('store_ph', vm.ph);
-            if (vm.ph) {
-                return vm.ph.id;
-            }
-            return null;
-        }
-		
-		function getStoregroupId() {
-			$cookies.putObject('store_storegroup', vm.storegroup);
-            if (vm.storegroup) {
-                return vm.storegroup.id;
-            }
-            return null;
-        }
-		
-		function getAddressId() {
-			$cookies.putObject('store_address', vm.address);
-            if (vm.address) {
-                return vm.address.id;
-            }
-            return null;
-        }
-
         function loadAll () {
-                Store.query({
-                    page: vm.page - 1,
+            if (pagingParams.search) {
+                AddressSearch.query({
+                    query: pagingParams.search,
+                    page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-                    sort: sort(),
-                    personId: getPersonId(),
-					storegroupId: getStoregroupId(),
-					addressId: getAddressId()
+                    sort: sort()
                 }, onSuccess, onError);
+            } else {
+                Address.query({
+                    page: pagingParams.page - 1,
+                    size: vm.itemsPerPage,
+                    sort: sort()
+                }, onSuccess, onError);
+            }
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {
@@ -76,7 +49,8 @@
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
-                vm.stores = data;
+                vm.addresses = data;
+                vm.page = pagingParams.page;
             }
             function onError(error) {
                 AlertService.error(error.data.message);
@@ -85,11 +59,15 @@
 
         function loadPage (page) {
             vm.page = page;
-            vm.loadAll()
+            vm.transition();
         }
 
         function transition () {
-            vm.loadAll();
+            $state.transitionTo($state.$current, {
+                page: vm.page,
+                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+                search: vm.currentSearch
+            });
         }
 
         function search (searchQuery) {

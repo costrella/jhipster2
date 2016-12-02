@@ -12,6 +12,7 @@
     <include file="classpath:config/liquibase/changelog/20161001103700_added_entity_Week.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161114191945_added_entity_Warehouse.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161115171103_added_entity_Storegroup.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161202214311_added_entity_Address.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20161001103951_added_entity_constraints_Day.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160831181602_added_entity_constraints_Raport.xml" relativeToChangelogFile="false"/>

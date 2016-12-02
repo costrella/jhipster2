@@ -25,10 +25,6 @@
                 <constraints nullable="false" />
             </column>
             
-            <column name="city" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            
             <column name="visited" type="bit">
                 <constraints nullable="true" />
             </column>
@@ -68,6 +64,10 @@
             </column>
 
             <column name="storegroup_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="address_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -9,17 +9,17 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('store', {
+        .state('address', {
             parent: 'entity',
-            url: '/store?page&sort&search',
+            url: '/address?page&sort&search',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Stores'
+                pageTitle: 'Addresses'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/store/stores.html',
-                    controller: 'StoreController',
+                    templateUrl: 'app/entities/address/addresses.html',
+                    controller: 'AddressController',
                     controllerAs: 'vm'
                 }
             },
@@ -43,30 +43,30 @@
                         ascending: PaginationUtil.parseAscending($stateParams.sort),
                         search: $stateParams.search
                     };
-                }]
+                }],
             }
         })
-        .state('store-detail', {
+        .state('address-detail', {
             parent: 'entity',
-            url: '/store/{id}',
+            url: '/address/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Store'
+                pageTitle: 'Address'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/store/store-detail.html',
-                    controller: 'StoreDetailController',
+                    templateUrl: 'app/entities/address/address-detail.html',
+                    controller: 'AddressDetailController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
-                entity: ['$stateParams', 'Store', function($stateParams, Store) {
-                    return Store.get({id : $stateParams.id}).$promise;
+                entity: ['$stateParams', 'Address', function($stateParams, Address) {
+                    return Address.get({id : $stateParams.id}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
-                        name: $state.current.name || 'store',
+                        name: $state.current.name || 'address',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };
@@ -74,22 +74,22 @@
                 }]
             }
         })
-        .state('store-detail.edit', {
-            parent: 'store-detail',
+        .state('address-detail.edit', {
+            parent: 'address-detail',
             url: '/detail/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/store/store-dialog.html',
-                    controller: 'StoreDialogController',
+                    templateUrl: 'app/entities/address/address-dialog.html',
+                    controller: 'AddressDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Store', function(Store) {
-                            return Store.get({id : $stateParams.id}).$promise;
+                        entity: ['Address', function(Address) {
+                            return Address.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -99,87 +99,78 @@
                 });
             }]
         })
-        .state('store.new', {
-            parent: 'store',
+        .state('address.new', {
+            parent: 'address',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/store/store-dialog.html',
-                    controller: 'StoreDialogController',
+                    templateUrl: 'app/entities/address/address-dialog.html',
+                    controller: 'AddressDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
                         entity: function () {
                             return {
-                                name: null,
-                                visited: null,
-                                street: null,
-                                number: null,
-                                description: null,
-                                picture01: null,
-                                picture01ContentType: null,
-                                picture02: null,
-                                picture02ContentType: null,
-                                comment: null,
+                                city: null,
                                 id: null
                             };
                         }
                     }
                 }).result.then(function() {
-                    $state.go('store', null, { reload: 'store' });
+                    $state.go('address', null, { reload: 'address' });
                 }, function() {
-                    $state.go('store');
+                    $state.go('address');
                 });
             }]
         })
-        .state('store.edit', {
-            parent: 'store',
+        .state('address.edit', {
+            parent: 'address',
             url: '/{id}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/store/store-dialog.html',
-                    controller: 'StoreDialogController',
+                    templateUrl: 'app/entities/address/address-dialog.html',
+                    controller: 'AddressDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Store', function(Store) {
-                            return Store.get({id : $stateParams.id}).$promise;
+                        entity: ['Address', function(Address) {
+                            return Address.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('store', null, { reload: 'store' });
+                    $state.go('address', null, { reload: 'address' });
                 }, function() {
                     $state.go('^');
                 });
             }]
         })
-        .state('store.delete', {
-            parent: 'store',
+        .state('address.delete', {
+            parent: 'address',
             url: '/{id}/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/store/store-delete-dialog.html',
-                    controller: 'StoreDeleteController',
+                    templateUrl: 'app/entities/address/address-delete-dialog.html',
+                    controller: 'AddressDeleteController',
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['Store', function(Store) {
-                            return Store.get({id : $stateParams.id}).$promise;
+                        entity: ['Address', function(Address) {
+                            return Address.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('store', null, { reload: 'store' });
+                    $state.go('address', null, { reload: 'address' });
                 }, function() {
                     $state.go('^');
                 });

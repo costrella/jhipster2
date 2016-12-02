@@ -113,19 +113,28 @@ public class StoreResource {
     @Timed
     public ResponseEntity<List<Store>> getAllStores(Pageable pageable, @RequestParam(value = "personId", required = false) Long personId,
                                                     @RequestParam(value = "storegroupId", required = false) Long storegroupId,
+                                                    @RequestParam(value = "addressId", required = false) Long addressId,
                                                     @RequestParam(value = "all", required = false) boolean all)
         throws URISyntaxException {
         log.debug("REST request to get a page of Stores");
         if(!all) {
             Page<Store> page;
-            if (personId == null && storegroupId == null) {
+            if (personId == null && storegroupId == null && addressId == null) {
                 page = storeRepository.findAll(pageable);
-            } else if(personId != null && storegroupId == null) {
+            } else if(personId != null && storegroupId == null && addressId == null) {
                 page = storeRepository.getPersonStores(personId, pageable);
-            } else if(personId != null && storegroupId != null) {
+            } else if(personId != null && storegroupId != null && addressId == null) {
                 page = storeRepository.getPersonAndStoregroupStores(personId, storegroupId, pageable);
-            } else if(personId == null && storegroupId != null) {
+            } else if(personId == null && storegroupId != null && addressId == null) {
                 page = storeRepository.getStoregroupStores(storegroupId, pageable);
+            } else if(personId != null && storegroupId == null && addressId != null) {
+                page = storeRepository.getPersonAndAddressStores(personId, addressId, pageable);
+            } else if(personId != null && storegroupId != null && addressId != null) {
+                page = storeRepository.getPersonAndStoregroupAndAddressStores(personId, storegroupId, addressId, pageable);
+            } else if(personId == null && storegroupId != null && addressId != null) {
+                page = storeRepository.getStoregroupAndAddressStores(storegroupId, addressId, pageable);
+            }else if(personId == null && storegroupId == null && addressId != null) {
+                page = storeRepository.getAddressStores(addressId, pageable);
             }else{
                 page = null;
             }
