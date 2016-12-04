@@ -40,9 +40,9 @@ public class Store implements Serializable {
 
     private String name;
 
-    private String city;
-
     private Person person;
+
+    private Address address;
 
     private Set<Raport> raports = new HashSet<>();
 
@@ -73,6 +73,14 @@ public class Store implements Serializable {
     public Store name(String name) {
         this.name = name;
         return this;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Boolean getVisited() {
@@ -119,18 +127,6 @@ public class Store implements Serializable {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public Store city(String city) {
-        this.city = city;
-        return this;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public Person getPerson() {
         return person;
@@ -200,7 +196,6 @@ public class Store implements Serializable {
         return "Store{" +
                 "id=" + id +
                 ", name='" + name + "'" +
-                ", city='" + city + "'" +
                 '}';
     }
 }

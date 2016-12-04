@@ -26,18 +26,17 @@
             "otherEntityName": "storegroup",
             "relationshipType": "many-to-one",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "address",
+            "otherEntityName": "address",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "city"
         }
     ],
     "fields": [
         {
             "fieldName": "name",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "city",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"

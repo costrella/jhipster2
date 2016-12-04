@@ -85,15 +85,15 @@ public class ItemDetailFragment extends Fragment {
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_h)).setText(String.valueOf(raport.getZ_h()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_e)).setText(String.valueOf(raport.getZ_e()));
                 }else{
-                    ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_a)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_b)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_c)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_d)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_f)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_g)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_h)).setVisibility(View.GONE);
-                    ((TextView) rootView.findViewById(R.id.lastRaport_z_e)).setVisibility(View.GONE);
+                    ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_a)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_b)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_c)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_d)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_f)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_g)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_h)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.lastRaport_z_e)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaport_text)).setText("Brak ostatniego raportu");
 
                 }
@@ -107,7 +107,7 @@ public class ItemDetailFragment extends Fragment {
 
         if (store != null) {
             String storeDetails = "";
-            storeDetails += getString(store.getCity()) + ", ";
+            storeDetails += getString(store.getAddress() != null ? store.getAddress().getCity() : "") + ", ";
             storeDetails += getString(store.getStreet());
 
             ((TextView) rootView.findViewById(R.id.lastRaportTxt1)).setText(storeDetails);

@@ -85,8 +85,13 @@ public class MyStoresActivity extends ListActivity {
             }else{
                 textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
             }
-
-            textView.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
+            String txt = "";
+            txt += store.getName()+", ";
+            if(store.getAddress() != null){
+                txt += store.getAddress().getCity() + ", ";
+            }
+            txt += store.getStreet();
+            textView.setText(txt);
             return convertView;
         }
     }

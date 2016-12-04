@@ -139,7 +139,13 @@ public class ItemListActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).getName());
-            holder.mContentView.setText(mValues.get(position).getCity());
+            String txt = "";
+            txt += mValues.get(position).getName()+", ";
+            if(mValues.get(position).getAddress() != null){
+                txt += mValues.get(position).getAddress().getCity() + ", ";
+            }
+            txt += mValues.get(position).getStreet();
+            holder.mContentView.setText(txt);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override

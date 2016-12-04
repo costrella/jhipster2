@@ -30,16 +30,16 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:hint="Ulica"
+        android:hint="Adres"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/cityName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:hint="Miasto"
-        android:inputType="text" />
+    <!--<EditText-->
+        <!--android:id="@+id/cityName"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:backgroundTint="@color/colorPrimaryDark"-->
+        <!--android:hint="Miasto"-->
+        <!--android:inputType="text" />-->
 
     <EditText
         android:id="@+id/descName"

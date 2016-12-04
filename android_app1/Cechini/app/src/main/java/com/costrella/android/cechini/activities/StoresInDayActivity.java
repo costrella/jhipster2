@@ -93,7 +93,13 @@ public class StoresInDayActivity extends ListActivity {
             // Lookup view for data population
             TextView textView = (TextView) convertView.findViewById(R.id.listText);
             // Populate the data into the template view using the data object
-            textView.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
+            String txt = "";
+            txt += store.getName()+", ";
+            if(store.getAddress() != null){
+                txt += store.getAddress().getCity() + ", ";
+            }
+            txt += store.getStreet();
+            textView.setText(txt);
 //            tvHome.setText(day.hometown);
             // Return the completed view to render on screen
             return convertView;

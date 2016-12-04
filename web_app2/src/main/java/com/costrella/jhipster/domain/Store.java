@@ -41,17 +41,21 @@ public class Store implements Serializable {
     private String description;
 
     @Lob
+    @JsonIgnore
     @Column(name = "picture_01")
     private byte[] picture01;
 
     @Column(name = "picture_01_content_type")
+    @JsonIgnore
     private String picture01ContentType;
 
     @Lob
+    @JsonIgnore
     @Column(name = "picture_02")
     private byte[] picture02;
 
     @Column(name = "picture_02_content_type")
+    @JsonIgnore
     private String picture02ContentType;
 
     @Column(name = "comment")
@@ -65,6 +69,7 @@ public class Store implements Serializable {
     private Set<Raport> raports = new HashSet<>();
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "store_day",
                joinColumns = @JoinColumn(name="stores_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="days_id", referencedColumnName="ID"))

@@ -25,7 +25,7 @@ public class AddMyStoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_my_store);
         final EditText storeName = (EditText) this.findViewById(R.id.storeName);
-        final EditText cityName = (EditText) this.findViewById(R.id.cityName);
+//        final EditText cityName = (EditText) this.findViewById(R.id.cityName);
         final EditText streetName = (EditText) this.findViewById(R.id.streetName);
         final EditText descName = (EditText) this.findViewById(R.id.descName);
         Button addStoreSubmit = (Button) this.findViewById(R.id.addStoreSubmit);
@@ -36,7 +36,7 @@ public class AddMyStoreActivity extends AppCompatActivity {
                     Store store = new Store();
                     store.setPerson(PersonService.PERSON);
                     store.setName(storeName.getText().toString());
-                    store.setCity(cityName.getText().toString());
+//                    store.setCity(cityName.getText().toString());
                     store.setStreet(streetName.getText().toString());
                     store.setDescription(descName.getText().toString());
                     //storegroup do zadnej nie przypiszemy celowo

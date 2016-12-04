@@ -114,7 +114,13 @@ public class StoresActivity extends ListActivity {
                 }
             });
             checkBox.setChecked(listCheckedValues.contains(store));
-            checkBox.setText(store.getName() + ", " + store.getCity() + ", " + store.getStreet());
+            String txt = "";
+            txt += store.getName()+", ";
+            if(store.getAddress() != null){
+                txt += store.getAddress().getCity() + ", ";
+            }
+            txt += store.getStreet();
+            checkBox.setText(txt);
 //            if (day.getStores() != null) {
 //                if (day.getStores().contains(store)) {
 //                    checkBox.setChecked(true);
