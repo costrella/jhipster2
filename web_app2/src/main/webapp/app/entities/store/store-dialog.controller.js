@@ -19,7 +19,7 @@
         vm.raports = Raport.query();
         vm.days = Day.query();
         vm.storegroups = Storegroup.query();
-        vm.addresses = Address.query();
+        vm.addresses = Address.queryAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
