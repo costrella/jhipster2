@@ -11,7 +11,7 @@
 
     <groupId>com.costrella.jhipster</groupId>
     <artifactId>cechini</artifactId>
-    <version>1.2</version>
+    <version>1.5</version>
     <packaging>war</packaging>
     <name>Cechini</name>
 

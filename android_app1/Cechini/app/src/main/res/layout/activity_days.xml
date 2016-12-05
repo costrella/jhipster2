@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/storesMainText"
         android:id="@android:id/empty"
-        android:text="There is no data"
+        android:text="Brak danych"
         android:textStyle="bold" />
 
 </RelativeLayout>
