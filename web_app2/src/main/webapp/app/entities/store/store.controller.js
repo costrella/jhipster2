@@ -29,6 +29,7 @@
 		vm.storegroup = $cookies.getObject('store_storegroup');
 		vm.address = $cookies.getObject('store_address');
         vm.page = 1;
+		vm.store_id = $cookies.get('store_id');
 
         loadAll();
 

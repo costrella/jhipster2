@@ -42,6 +42,8 @@
 		vm.warehouse = $cookies.getObject('warehouse');
 		vm.storegroup = $cookies.getObject('storegroup');
 		
+		vm.raport_id = $cookies.get('raport_id');
+		
 		
 		
 		vm.toDate1 =  new Date($cookies.get('toDate1'));

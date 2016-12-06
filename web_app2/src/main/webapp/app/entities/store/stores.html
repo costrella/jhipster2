@@ -61,7 +61,15 @@
             </thead>
             <tbody>
                 <tr ng-repeat="store in vm.stores track by store.id">
-                    <td><a ui-sref="store-detail({id:store.id})">{{store.id}}</a></td>
+                    <td><a ui-sref="store-detail({id:store.id})">
+					<div ng-if="store.id == vm.store_id">
+						<font color="red">&hearts;</font>{{store.id}}
+					</div>	
+					<div ng-if="store.id != vm.store_id">
+						{{store.id}}
+					</div>	
+					
+					</a></td>
 					 <td>
                         <a ui-sref="person-detail({id:store.person.id})">{{store.person.surname}}</a>
                     </td>

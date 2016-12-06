@@ -78,7 +78,15 @@
             </thead>
             <tbody>
                 <tr ng-repeat="raport in vm.raports track by raport.id">
-                    <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
+                    <td><a ui-sref="raport-detail({id:raport.id})">
+						<div ng-if="raport.id == vm.raport_id">
+						<font color="red">&hearts;</font>{{raport.id}}
+					</div>	
+					<div ng-if="raport.id != vm.raport_id">
+						{{raport.id}}
+					</div>	
+						
+					</a></td>
                     <td>
                         <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
                     </td>

@@ -5,9 +5,9 @@
         .module('cechiniApp')
         .controller('StoreDetailController', StoreDetailController);
 
-    StoreDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'DataUtils', 'Store', 'Person', 'Raport', 'Day', 'ParseLinks', 'paginationConstants'];
+    StoreDetailController.$inject = ['$scope', '$rootScope', '$cookies', '$stateParams', 'previousState', 'entity', 'DataUtils', 'Store', 'Person', 'Raport', 'Day', 'ParseLinks', 'paginationConstants'];
 
-    function StoreDetailController($scope, $rootScope, $stateParams, previousState, entity, DataUtils, Store, Person, Raport, Day, ParseLinks, paginationConstants) {
+    function StoreDetailController($scope, $rootScope, $cookies, $stateParams, previousState, entity, DataUtils, Store, Person, Raport, Day, ParseLinks, paginationConstants) {
         var vm = this;
 
         vm.store = entity;
@@ -27,6 +27,7 @@
         vm.loadAll();
         vm.visitCount();
 
+		$cookies.put('store_id', vm.store.id);
 
         function loadAll() {
 
