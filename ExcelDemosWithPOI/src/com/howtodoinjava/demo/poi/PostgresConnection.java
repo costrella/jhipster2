@@ -12,12 +12,12 @@ public class PostgresConnection {
 		try {
 			Class.forName("org.postgresql.Driver");
 //			c = DriverManager.getConnection(
-//					"jdbc:postgresql://localhost:5432/jhipster", "postgres",
+//					"jdbc:postgresql://localhost:5432/jhipster_address", "postgres",
 //					"postgres");
 			
 			
 			c = DriverManager.getConnection(
-					"jdbc:postgresql://137.v.tld.pl:5432/pg137_c1_2", "pg137_c1_2",
+					"jdbc:postgresql://137.v.tld.pl:5432/pg137_c1_5a", "pg137_c1_5a",
 					"Aasdasd1!");
 			
 			
