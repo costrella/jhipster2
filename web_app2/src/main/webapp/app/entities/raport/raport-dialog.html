@@ -98,7 +98,7 @@
         </div>
         <div class="form-group">
             <label for="field_store">Sklep</label>
-            <select class="form-control" id="field_store" name="store" ng-model="vm.raport.store" ng-options="store as store.name for store in vm.stores track by store.id" required>
+            <select class="form-control" id="field_store" name="store" ng-model="vm.raport.store" ng-options="store as store.name+', '+store.address.city+', '+store.street for store in vm.stores track by store.id" required>
                 <option value=""></option>
             </select>
         </div>

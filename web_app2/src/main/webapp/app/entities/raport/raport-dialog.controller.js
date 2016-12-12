@@ -18,9 +18,9 @@
         vm.openFile = DataUtils.openFile;
         vm.save = save;
         vm.people = Person.query();
-        vm.stores = Store.query();
+        vm.stores = Store.queryAll();
         vm.days = Day.query();
-        vm.warehouses = Warehouse.query();
+        vm.warehouses = Warehouse.queryAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

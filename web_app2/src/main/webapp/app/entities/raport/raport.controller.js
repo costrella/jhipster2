@@ -33,7 +33,7 @@
         vm.previousMonth();
         vm.people = Person.query();
         vm.stores = Store.queryAll();
-        vm.warehouses = Warehouse.query();
+        vm.warehouses = Warehouse.queryAll();
         vm.storegroups = Storegroup.queryAll();
         
         vm.page = 1;

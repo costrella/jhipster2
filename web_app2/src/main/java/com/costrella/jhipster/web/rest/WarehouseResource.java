@@ -102,12 +102,17 @@ public class WarehouseResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Warehouse>> getAllWarehouses(Pageable pageable)
+    public ResponseEntity<List<Warehouse>> getAllWarehouses(Pageable pageable, @RequestParam(value = "all", required = false) boolean all)
         throws URISyntaxException {
         log.debug("REST request to get a page of Warehouses");
-        Page<Warehouse> page = warehouseRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/warehouses");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        if(!all) {
+            Page<Warehouse> page = warehouseRepository.findAll(pageable);
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/warehouses");
+            return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        }else{
+            List<Warehouse> stores = warehouseRepository.findAll();
+            return new ResponseEntity<List<Warehouse>>(stores, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/warehousesMobi",
