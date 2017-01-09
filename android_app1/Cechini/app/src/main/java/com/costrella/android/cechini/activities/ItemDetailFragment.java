@@ -39,6 +39,8 @@ public class ItemDetailFragment extends Fragment {
      */
     private Store store;
 
+    View rootView;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -64,17 +66,13 @@ public class ItemDetailFragment extends Fragment {
 //        }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
-
+    private void refresh() {
         Call<Raport> lastRaport = CechiniService.getInstance().getCechiniAPI().getLastPersonStoreRaportMobi(PersonService.PERSON.getId(), store.getId());
         lastRaport.enqueue(new Callback<Raport>() {
             @Override
             public void onResponse(Call<Raport> call, Response<Raport> response) {
                 int code = response.code();
-                if(code == 200){
+                if (code == 200) {
                     Raport raport = response.body();
                     ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setText(getString(raport.getDescription()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_a)).setText(String.valueOf(raport.getZ_a()));
@@ -85,7 +83,7 @@ public class ItemDetailFragment extends Fragment {
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_g)).setText(String.valueOf(raport.getZ_g()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_h)).setText(String.valueOf(raport.getZ_h()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_e)).setText(String.valueOf(raport.getZ_e()));
-                }else{
+                } else {
                     ((LinearLayout) rootView.findViewById(R.id.l1)).setVisibility(View.INVISIBLE);
                     ((LinearLayout) rootView.findViewById(R.id.l2)).setVisibility(View.INVISIBLE);
                     ((LinearLayout) rootView.findViewById(R.id.l3)).setVisibility(View.INVISIBLE);
@@ -126,8 +124,20 @@ public class ItemDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.lastRaport_komentarz)).setText(comment);
 
         }
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.item_detail, container, false);
+        refresh();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
     }
 
     private String getString(String string) {
