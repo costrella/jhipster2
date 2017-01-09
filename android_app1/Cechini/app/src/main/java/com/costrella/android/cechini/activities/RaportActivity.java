@@ -1,5 +1,6 @@
 package com.costrella.android.cechini.activities;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -15,6 +16,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,6 +62,7 @@ public class RaportActivity extends AppCompatActivity {
     ImageView imageView2;
     ImageView imageView3;
     Warehouse selectedWarehouse;
+    ImageButton picSBtn1, picSBtn2, picSBtn3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,21 +115,21 @@ public class RaportActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton picSBtn1 = (ImageButton) findViewById(R.id.btnImg1a);
+        picSBtn1 = (ImageButton) findViewById(R.id.btnImg1a);
         setBtnListenerOrDisable(
                 picSBtn1,
                 mTakePicSOnClickListener1,
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
 
-        ImageButton picSBtn2 = (ImageButton) findViewById(R.id.btnImg2a);
+        picSBtn2 = (ImageButton) findViewById(R.id.btnImg2a);
         setBtnListenerOrDisable(
                 picSBtn2,
                 mTakePicSOnClickListener2,
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
 
-        ImageButton picSBtn3 = (ImageButton) findViewById(R.id.btnImg3a);
+        picSBtn3 = (ImageButton) findViewById(R.id.btnImg3a);
         setBtnListenerOrDisable(
                 picSBtn3,
                 mTakePicSOnClickListener3,
@@ -166,6 +170,13 @@ public class RaportActivity extends AppCompatActivity {
             }
         });
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            picSBtn1.setEnabled(false);
+            picSBtn2.setEnabled(false);
+            picSBtn3.setEnabled(false);
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+        }
+
     }
 
     Uri imageUri;
@@ -178,6 +189,18 @@ public class RaportActivity extends AppCompatActivity {
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                picSBtn1.setEnabled(true);
+                picSBtn2.setEnabled(true);
+                picSBtn3.setEnabled(true);
+            }
+        }
     }
 
     private void goToMediaStore(int value) {

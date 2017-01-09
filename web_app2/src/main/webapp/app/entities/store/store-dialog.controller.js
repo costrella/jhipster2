@@ -18,7 +18,7 @@
         vm.people = Person.query();
         vm.raports = Raport.query();
         vm.days = Day.query();
-        vm.storegroups = Storegroup.query();
+        vm.storegroups = Storegroup.queryAll();
         vm.addresses = Address.queryAll();
 
         $timeout(function (){
