@@ -27,12 +27,14 @@ import android.widget.Toast;
 
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Person;
+import com.costrella.android.cechini.model.User;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.PersonService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,10 +71,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
+
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -99,6 +106,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        realm = Realm.getInstance(getApplicationContext());
+        User userRealm = realm.where(User.class).findFirst();
+        if(userRealm != null){
+            mEmailView.setText(userRealm.getLogin());
+            mPasswordView.setText(userRealm.getPass());
+        }
+
     }
 
     private void populateAutoComplete() {
@@ -163,8 +178,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -218,6 +233,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     if (code == 201) {
                         person = response.body();
                         PersonService.PERSON = person;
+
+                        realm.beginTransaction();
+                        final User user = realm.createObject(User.class);
+                        user.setLogin(email);
+                        user.setPass(password);
+                        realm.commitTransaction();
+                        // Persist unmanaged objects
+
                         goToItemList(person);
 
                     } else {

@@ -205,17 +205,20 @@ public class WeeksActivity extends ListActivity {
 
     @Override
     public void onBackPressed() {
-        Snackbar snackbar = Snackbar
-                .make(getCurrentFocus(), "Czy chcesz się wylogować?", Snackbar.LENGTH_LONG)
-                .setAction("TAK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        back();
-                    }
-                });
-        snackbar.setActionTextColor(Color.RED);
-        snackbar.show();
-
+        if(getCurrentFocus() != null) {
+            Snackbar snackbar = Snackbar
+                    .make(getCurrentFocus(), "Czy chcesz się wylogować?", Snackbar.LENGTH_LONG)
+                    .setAction("TAK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            back();
+                        }
+                    });
+            snackbar.setActionTextColor(Color.RED);
+            snackbar.show();
+        }else{
+            super.onBackPressed();
+        }
 
 
     }
