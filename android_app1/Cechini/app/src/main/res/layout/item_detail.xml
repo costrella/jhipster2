@@ -16,7 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="dane sklepu :" />
+            android:text="dane sklepu: "
+            android:textColor="@color/colorAccent"
+            android:focusable="false" />
 
         <TextView
             android:id="@+id/lastRaportTxt1"
@@ -34,14 +36,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="opis :" />
+            android:textColor="@color/colorAccent"
+            android:text="opis: " />
 
         <TextView
             android:id="@+id/lastRaport_opis"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:inputType="textPersonName" />
+            android:inputType="textMultiLine" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -52,14 +55,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="komentarz :" />
+            android:textColor="@color/colorAccent"
+            android:text="komentarz: " />
 
         <TextView
             android:id="@+id/lastRaport_komentarz"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:inputType="textPersonName" />
+            android:inputType="textMultiLine" />
     </LinearLayout>
 
 
@@ -78,6 +82,7 @@
 
 
     <LinearLayout
+        android:id="@+id/l1"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -90,12 +95,14 @@
         <TextView
             android:id="@+id/lastRaportTxt3"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+            android:inputType="textMultiLine"
             android:textColor="@color/colorAccent"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:inputType="textPersonName" />
+            />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l2"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -114,6 +121,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l3"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -132,6 +140,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l4"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -150,6 +159,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l5"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -157,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="CYT" />
+            android:text="CYT " />
 
         <TextView
             android:id="@+id/lastRaport_z_d"
@@ -168,6 +178,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l6"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -186,6 +197,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l7"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -204,6 +216,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l8"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">
@@ -222,6 +235,7 @@
             android:inputType="textPersonName" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/l9"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_margin="10dp"
         android:layout_height="wrap_content">

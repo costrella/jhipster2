@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
@@ -85,6 +86,15 @@ public class ItemDetailFragment extends Fragment {
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_h)).setText(String.valueOf(raport.getZ_h()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_e)).setText(String.valueOf(raport.getZ_e()));
                 }else{
+                    ((LinearLayout) rootView.findViewById(R.id.l1)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l2)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l3)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l4)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l5)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l6)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l7)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l8)).setVisibility(View.INVISIBLE);
+                    ((LinearLayout) rootView.findViewById(R.id.l9)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_a)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_b)).setVisibility(View.INVISIBLE);
