@@ -40,6 +40,7 @@ import com.costrella.android.cechini.services.StoreService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -144,7 +145,12 @@ public class RaportActivity extends AppCompatActivity {
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 int code = response.code();
                 if(code == 200){
-                    final List<Warehouse> list = response.body();
+                    final List<Warehouse> list = new ArrayList<Warehouse>();
+                    Warehouse empty = new Warehouse();
+                    empty.setName("");
+                    empty.setId(99999L);
+                    list.add(empty);
+                    list.addAll(response.body());
                     ArrayAdapter<Warehouse> dataAdapter = new ArrayAdapter<Warehouse>(RaportActivity.this,
                             android.R.layout.simple_spinner_item, list);
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -152,7 +158,6 @@ public class RaportActivity extends AppCompatActivity {
                     warehouses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            System.out.print("test");
                             selectedWarehouse = list.get(i);
                         }
 
@@ -363,58 +368,68 @@ public class RaportActivity extends AppCompatActivity {
         }
     }
 
+    private boolean valid(){
+        if(selectedWarehouse.getId().equals(99999L)){
+            Toast.makeText(getApplicationContext(), "Wybierz hutrownie !", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     private void createRaport() {
-        showProgress(true);
-        Raport raport = new Raport();
-        if(selectedWarehouse != null){
-            raport.setWarehouse(selectedWarehouse);
-        }
-        if (DayService.selectedDay != null)
-            raport.setDay(DayService.selectedDay);
-        if (bitmap1 != null) {
-            raport.setFoto1(getImage(bitmap1));
-        }
-        if (bitmap2 != null) {
-            raport.setFoto2(getImage(bitmap2));
-        }
-        if (bitmap3 != null) {
-            raport.setFoto3(getImage(bitmap3));
-        }
+        if(valid()) {
+            showProgress(true);
+            Raport raport = new Raport();
+            if (selectedWarehouse != null) {
+                raport.setWarehouse(selectedWarehouse);
+            }
+            if (DayService.selectedDay != null)
+                raport.setDay(DayService.selectedDay);
+            if (bitmap1 != null) {
+                raport.setFoto1(getImage(bitmap1));
+            }
+            if (bitmap2 != null) {
+                raport.setFoto2(getImage(bitmap2));
+            }
+            if (bitmap3 != null) {
+                raport.setFoto3(getImage(bitmap3));
+            }
 
-        raport.setDescription(editText.getText().toString());
+            raport.setDescription(editText.getText().toString());
 
-        raport.setPerson(PersonService.PERSON);
-        raport.setStore(StoreService.STORE);
-        raport.setZ_a(getInt(z_a));
-        raport.setZ_b(getInt(z_b));
-        raport.setZ_c(getInt(z_c));
-        raport.setZ_d(getInt(z_d));
-        raport.setZ_e(getInt(z_e));
-        raport.setZ_f(getInt(z_f));
-        raport.setZ_g(getInt(z_g));
-        raport.setZ_h(getInt(z_h));
+            raport.setPerson(PersonService.PERSON);
+            raport.setStore(StoreService.STORE);
+            raport.setZ_a(getInt(z_a));
+            raport.setZ_b(getInt(z_b));
+            raport.setZ_c(getInt(z_c));
+            raport.setZ_d(getInt(z_d));
+            raport.setZ_e(getInt(z_e));
+            raport.setZ_f(getInt(z_f));
+            raport.setZ_g(getInt(z_g));
+            raport.setZ_h(getInt(z_h));
 
-        Call<Raport> callRaport = CechiniService.getInstance().getCechiniAPI().createRaport(raport);
-        callRaport.enqueue(new Callback<Raport>() {
-            @Override
-            public void onResponse(Call<Raport> call, Response<Raport> response) {
-                int code = response.code();
-                showProgress(false);
-                if (code == 201) {
-                    Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+            Call<Raport> callRaport = CechiniService.getInstance().getCechiniAPI().createRaport(raport);
+            callRaport.enqueue(new Callback<Raport>() {
+                @Override
+                public void onResponse(Call<Raport> call, Response<Raport> response) {
+                    int code = response.code();
+                    showProgress(false);
+                    if (code == 201) {
+                        Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+                    }
+                    finish();
                 }
-                finish();
-            }
 
-            @Override
-            public void onFailure(Call<Raport> call, Throwable t) {
-                showProgress(false);
-                Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
+                @Override
+                public void onFailure(Call<Raport> call, Throwable t) {
+                    showProgress(false);
+                    Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
