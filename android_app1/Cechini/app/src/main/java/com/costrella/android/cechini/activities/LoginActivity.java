@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login2);
 
 
-
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         realm = Realm.getInstance(getApplicationContext());
         User userRealm = realm.where(User.class).findFirst();
-        if(userRealm != null){
+        if (userRealm != null) {
             mEmailView.setText(userRealm.getLogin());
             mPasswordView.setText(userRealm.getPass());
         }
@@ -219,8 +218,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //FIXME FOR TESTS
 
 
-
-
             final LoginActivity _this = this;
 
             cechiniService = CechiniService.getInstance();
@@ -234,12 +231,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         person = response.body();
                         PersonService.PERSON = person;
 
+                        User user;
+                        user = realm.where(User.class).findFirst();
                         realm.beginTransaction();
-                        final User user = realm.createObject(User.class);
-                        user.setLogin(email);
-                        user.setPass(password);
+                        if (user == null) {
+                            user = realm.createObject(User.class);
+                            user.setLogin(email);
+                            user.setPass(password);
+                        }else{
+                            user.setLogin(email);
+                            user.setPass(password);
+                        }
                         realm.commitTransaction();
-                        // Persist unmanaged objects
 
                         goToItemList(person);
 
@@ -257,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void goToItemList(Person person){
+    private void goToItemList(Person person) {
         Intent intent = new Intent(this, WeeksActivity.class);
         Long id = person.getId();
         intent.putExtra("STRING_I_NEED", id);
