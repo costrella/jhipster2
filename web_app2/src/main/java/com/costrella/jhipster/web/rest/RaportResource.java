@@ -87,10 +87,7 @@ public class RaportResource {
     public ResponseEntity<List<Raport>> createRaports(@RequestBody List<Raport> raports) throws URISyntaxException {
 
         for (Raport raport : raports) {
-            Raport result = raportRepository.save(raport);
-            ResponseEntity.created(new URI("/api/raportsList/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert("raportsList", result.getId().toString()))
-                .body(result);
+            createRaport(raport);
         }
 
         return ResponseEntity.created(new URI("/api/raportsList/" + ""))

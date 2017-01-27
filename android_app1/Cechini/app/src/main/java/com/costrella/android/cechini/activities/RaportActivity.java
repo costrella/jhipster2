@@ -74,6 +74,11 @@ public class RaportActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     Realm realm;
     private boolean internetAccess = true;
+    Spinner warehousesSpinner = null;
+    RealmConfiguration config = new RealmConfiguration
+            .Builder()
+            .deleteRealmIfMigrationNeeded()
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +153,7 @@ public class RaportActivity extends AppCompatActivity {
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
 
-        final Spinner warehouses = (Spinner) findViewById(R.id.spinner);
+        warehousesSpinner = (Spinner) findViewById(R.id.spinner);
         Call<List<Warehouse>> warehouseCall = CechiniService.getInstance().getCechiniAPI().getWarehousesMobi();
 
         warehouseCall.enqueue(new Callback<List<Warehouse>>() {
@@ -156,34 +161,26 @@ public class RaportActivity extends AppCompatActivity {
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 int code = response.code();
                 if(code == 200){
-                    final List<Warehouse> list = new ArrayList<Warehouse>();
-                    Warehouse empty = new Warehouse();
-                    empty.setName("");
-                    empty.setId(99999L);
-                    list.add(empty);
-                    list.addAll(response.body());
-                    ArrayAdapter<Warehouse> dataAdapter = new ArrayAdapter<Warehouse>(RaportActivity.this,
-                            android.R.layout.simple_spinner_item, list);
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    warehouses.setAdapter(dataAdapter);
-                    warehouses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectedWarehouse = list.get(i);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    });
+                    List<Warehouse> warehouses = response.body();
+                    addToListActivity(warehouses);
+                    realm = Realm.getInstance(config);
+                    realm.beginTransaction();
+                    realm.delete(Warehouse.class);
+                    realm.commitTransaction();
+                    realm.beginTransaction();
+                    realm.copyToRealm(warehouses);
+                    realm.commitTransaction();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Warehouse>> call, Throwable t) {
                 Log.e("costrella:"," Nie ma internetu");
-                
+                realm = Realm.getInstance(config);
+                realm.beginTransaction();
+                List<Warehouse> warehouseList = realm.where(Warehouse.class).findAll();
+                addToListActivity(warehouseList);
+                realm.cancelTransaction();
 
             }
         });
@@ -199,6 +196,31 @@ public class RaportActivity extends AppCompatActivity {
 
     Uri imageUri;
     ContentValues values;
+
+
+    private void addToListActivity(List<Warehouse> warehouses){
+        final List<Warehouse> list = new ArrayList<Warehouse>();
+        Warehouse empty = new Warehouse();
+        empty.setName("");
+        empty.setId(99999L);
+        list.add(empty);
+        list.addAll(warehouses);
+        ArrayAdapter<Warehouse> dataAdapter = new ArrayAdapter<Warehouse>(RaportActivity.this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        warehousesSpinner.setAdapter(dataAdapter);
+        warehousesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedWarehouse = list.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
 
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -407,10 +429,6 @@ public class RaportActivity extends AppCompatActivity {
         if(valid()) {
             showProgress(true);
             Realm.init(getApplicationContext());
-            RealmConfiguration config = new RealmConfiguration
-                    .Builder()
-                    .deleteRealmIfMigrationNeeded()
-                    .build();
             realm = Realm.getInstance(config);
             realm.beginTransaction();
             Raport raport = getObject();
