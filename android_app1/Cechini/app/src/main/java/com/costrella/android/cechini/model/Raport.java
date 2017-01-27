@@ -6,12 +6,20 @@ package com.costrella.android.cechini.model;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
 
 /**
  * A Raport.
  */
-public class Raport implements Serializable {
+public class Raport extends RealmObject implements Serializable  {
+
+    private Long personIdRealm;
+
+    private Long storeIdRealm;
+
+    private Long warehousIdRealm;
 
     private static final long serialVersionUID = 1L;
 
@@ -53,6 +61,7 @@ public class Raport implements Serializable {
 
     private Warehouse warehouse;
 
+    @Ignore
     private Day day;
 
     public Day getDay() {
@@ -265,6 +274,29 @@ public class Raport implements Serializable {
         this.store = store;
     }
 
+    public Long getPersonIdRealm() {
+        return personIdRealm;
+    }
+
+    public void setPersonIdRealm(Long personIdRealm) {
+        this.personIdRealm = personIdRealm;
+    }
+
+    public Long getStoreIdRealm() {
+        return storeIdRealm;
+    }
+
+    public void setStoreIdRealm(Long storeIdRealm) {
+        this.storeIdRealm = storeIdRealm;
+    }
+
+    public Long getWarehousIdRealm() {
+        return warehousIdRealm;
+    }
+
+    public void setWarehousIdRealm(Long warehousIdRealm) {
+        this.warehousIdRealm = warehousIdRealm;
+    }
 
     @Override
     public String toString() {

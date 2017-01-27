@@ -20,16 +20,16 @@ spring:
     jackson:
         serialization.indent_output: true
     datasource:
-#        type: com.zaxxer.hikari.HikariDataSource
-#        url: jdbc:postgresql://localhost:5432/jhipster_address
-#        name:
-#        username: postgres
-#        password: postgres
-                type: com.zaxxer.hikari.HikariDataSource
-                url: jdbc:postgresql://137.p.tld.pl:5432/pg137_c1_5a
-                name:
-                username: pg137_c1_5a
-                password: Aasdasd1!
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://localhost:5432/jhipster_address
+        name:
+        username: postgres
+        password: postgres
+#                type: com.zaxxer.hikari.HikariDataSource
+#                url: jdbc:postgresql://137.p.tld.pl:5432/pg137_c1_5a
+#                name:
+#                username: pg137_c1_5a
+#                password: Aasdasd1!
     jpa:
         database-platform: com.costrella.jhipster.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL

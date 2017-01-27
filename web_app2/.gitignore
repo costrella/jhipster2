@@ -135,3 +135,8 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+Procfile
+
+/src/main/webapp/.idea/workspace.xml
+src/main/webapp/.idea/workspace.xml

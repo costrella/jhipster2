@@ -80,6 +80,24 @@ public class RaportResource {
             .body(result);
     }
 
+    @RequestMapping(value = "/raportsList",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Raport>> createRaports(@RequestBody List<Raport> raports) throws URISyntaxException {
+
+        for (Raport raport : raports) {
+            Raport result = raportRepository.save(raport);
+            ResponseEntity.created(new URI("/api/raportsList/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert("raportsList", result.getId().toString()))
+                .body(result);
+        }
+
+        return ResponseEntity.created(new URI("/api/raportsList/" + ""))
+            .headers(HeaderUtil.createEntityCreationAlert("raportsList", ""))
+            .body(raports);
+    }
+
     /**
      * PUT  /raports : Updates an existing raport.
      *

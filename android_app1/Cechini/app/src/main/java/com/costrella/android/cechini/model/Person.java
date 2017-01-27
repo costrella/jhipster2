@@ -8,10 +8,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * A Person.
  */
-public class Person implements Serializable {
+public class Person extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,8 +28,10 @@ public class Person implements Serializable {
 
     private String pass;
 
+    @Ignore
     private Set<Store> stores = new HashSet<>();
 
+    @Ignore
     private Set<Raport> raports = new HashSet<>();
 
     public Long getId() {

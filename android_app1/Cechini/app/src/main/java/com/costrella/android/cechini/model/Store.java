@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * A Store.
 
@@ -23,7 +26,7 @@ import java.util.Objects;
 /**
  * A Store.
  */
-public class Store implements Serializable {
+public class Store extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
@@ -40,12 +43,16 @@ public class Store implements Serializable {
 
     private String name;
 
+    @Ignore
     private Person person;
 
+    @Ignore
     private Address address;
 
+    @Ignore
     private Set<Raport> raports = new HashSet<>();
 
+    @Ignore
     private Set<Day> days = new HashSet<>();
 
     public Long getId() {
@@ -60,6 +67,7 @@ public class Store implements Serializable {
         return name;
     }
 
+    @Ignore
     private Boolean visited = false;
 
     private String street;

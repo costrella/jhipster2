@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,7 +107,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        realm = Realm.getInstance(getApplicationContext());
+        Realm.init(getApplicationContext());
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(config);
         User userRealm = realm.where(User.class).findFirst();
         if (userRealm != null) {
             mEmailView.setText(userRealm.getLogin());

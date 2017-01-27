@@ -25,6 +25,8 @@ import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
+import com.costrella.android.cechini.services.NetworkService;
+import com.costrella.android.cechini.services.OffLineService;
 import com.costrella.android.cechini.services.PersonService;
 import com.costrella.android.cechini.services.StoreService;
 
@@ -41,6 +43,9 @@ public class WeeksActivity extends ListActivity {
     private TextView text;
     private ArrayList<Week> listValues;
     WeekAdapter adapter;
+    OffLineService offLineService;
+    FloatingActionButton queueButton;
+    int sizeNotSendRaports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,27 @@ public class WeeksActivity extends ListActivity {
         showProgress(true);
 
         refresh();
+
+        queueButton = (FloatingActionButton) findViewById(R.id.queueButton);
+
+        offLine();
+        final WeeksActivity _this = this;
+        queueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar snackbar = Snackbar
+                        .make(getListView(), "Masz " + sizeNotSendRaports + " niewysłanych raportów", Snackbar.LENGTH_LONG)
+                        .setAction("WYŚLIJ TERAZ", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                offLineService.sendRaportsOnline(_this);
+                            }
+                        });
+                snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
+                snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.weeksAddWeek);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +108,22 @@ public class WeeksActivity extends ListActivity {
         });
 
 
+    }
+
+    public void offLine() {
+        if (NetworkService.getInstance().isNetworkAvailable(this)) {
+            offLineService = new OffLineService();
+            offLineService.init(getApplicationContext());
+            sizeNotSendRaports = 0;
+            sizeNotSendRaports = offLineService.getNumberOfNotSendRaports();
+            if (sizeNotSendRaports != 0) {
+                queueButton.setVisibility(View.VISIBLE);
+            } else {
+                queueButton.setVisibility(View.GONE);
+            }
+        }else{
+            queueButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -205,7 +247,7 @@ public class WeeksActivity extends ListActivity {
 
     @Override
     public void onBackPressed() {
-        if(getCurrentFocus() != null) {
+        if (getCurrentFocus() != null) {
             Snackbar snackbar = Snackbar
                     .make(getCurrentFocus(), "Czy chcesz się wylogować?", Snackbar.LENGTH_LONG)
                     .setAction("TAK", new View.OnClickListener() {
@@ -216,14 +258,14 @@ public class WeeksActivity extends ListActivity {
                     });
             snackbar.setActionTextColor(Color.RED);
             snackbar.show();
-        }else{
+        } else {
             super.onBackPressed();
         }
 
 
     }
 
-    private void back(){
+    private void back() {
         super.onBackPressed();
     }
 }

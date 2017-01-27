@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * A Warehouse.
  */
-public class Warehouse implements Serializable {
+public class Warehouse extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,6 +18,7 @@ public class Warehouse implements Serializable {
 
     private String name;
 
+    @Ignore
     private Set<Raport> raports = new HashSet<>();
 
     public Long getId() {

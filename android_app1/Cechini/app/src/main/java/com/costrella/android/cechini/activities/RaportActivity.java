@@ -12,13 +12,16 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +39,7 @@ import com.costrella.android.cechini.model.Raport;
 import com.costrella.android.cechini.model.Warehouse;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
+import com.costrella.android.cechini.services.NetworkService;
 import com.costrella.android.cechini.services.PersonService;
 import com.costrella.android.cechini.services.StoreService;
 
@@ -43,6 +48,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,12 +71,16 @@ public class RaportActivity extends AppCompatActivity {
     ImageView imageView3;
     Warehouse selectedWarehouse;
     ImageButton picSBtn1, picSBtn2, picSBtn3;
+    RelativeLayout relativeLayout;
+    Realm realm;
+    private boolean internetAccess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_raport);
 
+        relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutRaport);
         imageView1 = (ImageView) findViewById(R.id.imageView1);
         imageView2 = (ImageView) findViewById(R.id.imageView2);
         imageView3 = (ImageView) findViewById(R.id.imageView3);
@@ -171,6 +182,8 @@ public class RaportActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+                Log.e("costrella:"," Nie ma internetu");
+                
 
             }
         });
@@ -369,6 +382,10 @@ public class RaportActivity extends AppCompatActivity {
     }
 
     private boolean valid(){
+        if(selectedWarehouse.getId() == null){
+            Toast.makeText(getApplicationContext(), "Wybierz hutrownie ! / brak internetu", Toast.LENGTH_LONG).show();
+            return false;
+        }
         if(selectedWarehouse.getId().equals(99999L)){
             Toast.makeText(getApplicationContext(), "Wybierz hutrownie !", Toast.LENGTH_LONG).show();
             return false;
@@ -376,12 +393,29 @@ public class RaportActivity extends AppCompatActivity {
         return true;
     }
 
+    private Raport getObject(){
+        if(NetworkService.getInstance().isNetworkAvailable(this)){
+            internetAccess = true;
+            return new Raport();
+        }else {
+            internetAccess = false;
+            return realm.createObject(Raport.class);
+        }
+    }
+
     private void createRaport() {
         if(valid()) {
             showProgress(true);
-            Raport raport = new Raport();
+            Realm.init(getApplicationContext());
+            RealmConfiguration config = new RealmConfiguration
+                    .Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            realm = Realm.getInstance(config);
+            realm.beginTransaction();
+            Raport raport = getObject();
             if (selectedWarehouse != null) {
-                raport.setWarehouse(selectedWarehouse);
+                raport.setWarehouse(internetAccess ? selectedWarehouse : realm.copyToRealm(selectedWarehouse));
             }
             if (DayService.selectedDay != null)
                 raport.setDay(DayService.selectedDay);
@@ -397,8 +431,8 @@ public class RaportActivity extends AppCompatActivity {
 
             raport.setDescription(editText.getText().toString());
 
-            raport.setPerson(PersonService.PERSON);
-            raport.setStore(StoreService.STORE);
+            raport.setPerson(internetAccess ? PersonService.PERSON : realm.copyToRealm(PersonService.PERSON));
+            raport.setStore(internetAccess ? StoreService.STORE : realm.copyToRealm(StoreService.STORE));
             raport.setZ_a(getInt(z_a));
             raport.setZ_b(getInt(z_b));
             raport.setZ_c(getInt(z_c));
@@ -407,28 +441,50 @@ public class RaportActivity extends AppCompatActivity {
             raport.setZ_f(getInt(z_f));
             raport.setZ_g(getInt(z_g));
             raport.setZ_h(getInt(z_h));
+            raport.setWarehousIdRealm(selectedWarehouse.getId());
+            raport.setPersonIdRealm(PersonService.PERSON.getId());
+            raport.setStoreIdRealm(StoreService.STORE.getId());
 
-            Call<Raport> callRaport = CechiniService.getInstance().getCechiniAPI().createRaport(raport);
-            callRaport.enqueue(new Callback<Raport>() {
-                @Override
-                public void onResponse(Call<Raport> call, Response<Raport> response) {
-                    int code = response.code();
-                    showProgress(false);
-                    if (code == 201) {
-                        Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+            if (internetAccess) {
+
+                Call<Raport> callRaport = CechiniService.getInstance().getCechiniAPI().createRaport(raport);
+                callRaport.enqueue(new Callback<Raport>() {
+                    @Override
+                    public void onResponse(Call<Raport> call, Response<Raport> response) {
+                        int code = response.code();
+                        showProgress(false);
+                        if (code == 201) {
+                            Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+                        }
+                        realm.cancelTransaction();
+                        finish();
                     }
-                    finish();
-                }
 
-                @Override
-                public void onFailure(Call<Raport> call, Throwable t) {
-                    showProgress(false);
-                    Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onFailure(Call<Raport> call, Throwable t) {
+                        realm.cancelTransaction();
+                        showProgress(false);
+                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
 
-                }
-            });
+                    }
+                });
+            } else {
+
+                Snackbar snackbar = Snackbar
+                        .make(relativeLayout, "Brak internetu", Snackbar.LENGTH_LONG)
+                        .setAction("DODAJ DO KOLEJKI", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                realm.commitTransaction();
+                                Log.e("aa", "vvv");
+                            }
+                        });
+                snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
+                snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
+            }
         }
     }
 
@@ -464,4 +520,5 @@ public class RaportActivity extends AppCompatActivity {
             scroolView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
 }

@@ -19,11 +19,14 @@ import retrofit2.http.Path;
  * Created by mike on 2016-09-15.
  */
 public interface CechiniAPI {
-    String ENDPOINT = "http://195.149.224.137:8080/cechini/api/";
-//    String ENDPOINT = "http://192.168.0.12:8080/api/";
+//    String ENDPOINT = "http://195.149.224.137:8080/cechini/api/";
+    String ENDPOINT = "http://192.168.0.12:8080/api/";
 
     @GET("stores/{storeId}")
     Call<Store> getStore(@Path("storeId") String storeId);
+
+    @GET("warehouses/{warehouseId}")
+    Call<Warehouse> getWarehouse(@Path("warehouseId") Long warehouseId);
 
     @POST("stores")
     Call<Store> createStore(@Body Store store);
@@ -50,6 +53,9 @@ public interface CechiniAPI {
 
     @GET("warehousesMobi")
     Call<List<Warehouse>> getWarehousesMobi();
+
+    @POST("raportsList")
+    Call<List<Raport>> createRaportsList(@Body List<Raport> raports);
 
     @POST("raports")
     Call<Raport> createRaport(@Body Raport raport);
