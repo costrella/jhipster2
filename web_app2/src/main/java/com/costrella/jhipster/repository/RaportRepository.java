@@ -127,7 +127,7 @@ public interface RaportRepository extends JpaRepository<Raport, Long> {
         "from Raport raport where raport.person.id = ?1 ORDER BY raport.date DESC")
     List<Raport>  getPersonRaports(Long idPerson);
 
-    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id = ?2 ORDER BY raport.date DESC")
+    @Query("SELECT raport from Raport raport where raport.person.id = ?1 AND raport.store.id = ?2 ORDER BY raport.id DESC")
     Page<Raport> getLastRaportByPersonAndStore(Long personId, Long storeId, Pageable pageable);
 
     @Query("SELECT raport from Raport raport where raport.date BETWEEN ?1 AND ?2")
