@@ -496,7 +496,8 @@ public class RaportActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 realm.commitTransaction();
-                                Log.e("aa", "vvv");
+                                finish();
+                                Toast.makeText(getApplicationContext(), "Dodano do kolejki, jak będziesz miał internet będziesz mógł wysłać raport", Toast.LENGTH_LONG).show();
                             }
                         });
                 snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
