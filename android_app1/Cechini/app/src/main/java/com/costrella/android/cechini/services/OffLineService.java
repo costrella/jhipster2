@@ -61,7 +61,7 @@ public class OffLineService {
 
             @Override
             public void onFailure(Call<List<Raport>> call, Throwable t) {
-                Toast.makeText(context, "Nie wysłano raportów z kolejki ! [oF]", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Nie wysłano raportów z kolejki ! Poczekaj na dobry zasięg ! [oF]", Toast.LENGTH_LONG).show();
                 realm.cancelTransaction();
             }
         });

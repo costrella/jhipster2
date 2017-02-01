@@ -474,7 +474,7 @@ public class RaportActivity extends AppCompatActivity {
                         if (code == 201) {
                             Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG + code, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Niepowodzenie wysłania raportu [oR] " + code, Toast.LENGTH_LONG).show();
                         }
                         realm.cancelTransaction();
                         finish();
@@ -482,29 +482,32 @@ public class RaportActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Raport> call, Throwable t) {
-                        realm.cancelTransaction();
                         showProgress(false);
-                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
+                        showSnackBarToAddToQueue();
+//                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
 
                     }
                 });
             } else {
-
-                Snackbar snackbar = Snackbar
-                        .make(relativeLayout, "Brak internetu", Snackbar.LENGTH_LONG)
-                        .setAction("DODAJ DO KOLEJKI", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                realm.commitTransaction();
-                                finish();
-                                Toast.makeText(getApplicationContext(), "Dodano do kolejki, jak będziesz miał internet będziesz mógł wysłać raport", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
-                snackbar.setActionTextColor(Color.RED);
-                snackbar.show();
+                showSnackBarToAddToQueue();
             }
         }
+    }
+
+    private void showSnackBarToAddToQueue(){
+        Snackbar snackbar = Snackbar
+                .make(relativeLayout, "Problem z internetem", Snackbar.LENGTH_LONG)
+                .setAction("DODAJ DO KOLEJKI", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        realm.commitTransaction();
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Dodano do kolejki, jak będziesz miał internet będziesz mógł wysłać raport", Toast.LENGTH_LONG).show();
+                    }
+                });
+        snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
+        snackbar.setActionTextColor(Color.RED);
+        snackbar.show();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
