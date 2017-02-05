@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="mike (generated)" id="1486307001106-1">
+        <dropSequence sequenceName="address_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-2">
+        <dropSequence sequenceName="day_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-3">
+        <dropSequence sequenceName="jhi_persistent_audit_event_event_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-4">
+        <dropSequence sequenceName="jhi_user_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-5">
+        <dropSequence sequenceName="person_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-6">
+        <dropSequence sequenceName="raport_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-7">
+        <dropSequence sequenceName="store_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-8">
+        <dropSequence sequenceName="storegroup_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-9">
+        <dropSequence sequenceName="warehouse_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-10">
+        <dropSequence sequenceName="week_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-11">
+        <dropDefaultValue columnDataType="timestamp" columnName="last_modified_date" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-12">
+        <dropNotNullConstraint columnDataType="bigint" columnName="person_id" tableName="raport"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486307001106-13">
+        <dropNotNullConstraint columnDataType="bigint" columnName="store_id" tableName="raport"/>
+    </changeSet>
+</databaseChangeLog>
