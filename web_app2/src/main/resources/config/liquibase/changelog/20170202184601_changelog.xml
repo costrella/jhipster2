@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="mike (generated)" id="1486061168411-1">
+        <createTable tableName="person_user">
+            <column name="people_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="users_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-2">
+        <addPrimaryKey columnNames="people_id, users_id" tableName="person_user"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-3">
+        <addForeignKeyConstraint baseColumnNames="people_id" baseTableName="person_user" constraintName="FK_hwa4i941i1kn6dn043usyf7sy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-4">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="person_user" constraintName="FK_mm89aiwgmek8hhey0oj1m73da" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-5">
+        <dropSequence sequenceName="address_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-6">
+        <dropSequence sequenceName="day_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-7">
+        <dropSequence sequenceName="jhi_persistent_audit_event_event_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-8">
+        <dropSequence sequenceName="jhi_user_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-9">
+        <dropSequence sequenceName="person_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-10">
+        <dropSequence sequenceName="raport_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-11">
+        <dropSequence sequenceName="store_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-12">
+        <dropSequence sequenceName="storegroup_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-13">
+        <dropSequence sequenceName="warehouse_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-14">
+        <dropSequence sequenceName="week_id_seq"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-15">
+        <dropDefaultValue columnDataType="timestamp" columnName="last_modified_date" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-16">
+        <dropNotNullConstraint columnDataType="bigint" columnName="person_id" tableName="raport"/>
+    </changeSet>
+    <changeSet author="mike (generated)" id="1486061168411-17">
+        <dropNotNullConstraint columnDataType="bigint" columnName="store_id" tableName="raport"/>
+    </changeSet>
+</databaseChangeLog>

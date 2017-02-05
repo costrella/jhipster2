@@ -84,6 +84,12 @@ public class Person implements Serializable {
     @JsonIgnore
     private Set<Week> weeks = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "person_user",
+               joinColumns = @JoinColumn(name="people_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="ID"))
+    private Set<User> users = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -321,6 +327,29 @@ public class Person implements Serializable {
 
     public void setWeeks(Set<Week> weeks) {
         this.weeks = weeks;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Person users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Person addUser(User user) {
+        users.add(user);
+        return this;
+    }
+
+    public Person removeUser(User user) {
+        users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

@@ -18,6 +18,13 @@
             "otherEntityName": "week",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "person"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "fields": [
