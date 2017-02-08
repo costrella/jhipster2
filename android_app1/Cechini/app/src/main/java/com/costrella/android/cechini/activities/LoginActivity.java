@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.costrella.android.cechini.R;
@@ -106,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        TextView version = (TextView) findViewById(R.id.version);
 
         Realm.init(getApplicationContext());
         RealmConfiguration config = new RealmConfiguration
@@ -118,6 +120,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setText(userRealm.getLogin());
             mPasswordView.setText(userRealm.getPass());
         }
+
+        try {
+            String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            version.setText("v.: " + versionName);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

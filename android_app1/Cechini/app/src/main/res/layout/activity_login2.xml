@@ -78,8 +78,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="v2.01"
-                android:id="@+id/textView6"
+                android:text=""
+                android:id="@+id/version"
                 android:layout_gravity="right" />
 
         </LinearLayout>

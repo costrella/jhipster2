@@ -13,6 +13,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ public class RaportActivity extends AppCompatActivity {
     ImageView imageView2;
     ImageView imageView3;
     Warehouse selectedWarehouse;
-    ImageButton picSBtn1, picSBtn2, picSBtn3;
+    ImageButton picSBtn1, picSBtn2, picSBtn3, rotateLeft1, rotateRight1, rotateLeft2, rotateRight2, rotateLeft3, rotateRight3;
     RelativeLayout relativeLayout;
     Realm realm;
     private boolean internetAccess = true;
@@ -79,6 +80,25 @@ public class RaportActivity extends AppCompatActivity {
             .Builder()
             .deleteRealmIfMigrationNeeded()
             .build();
+    float f_rotateLeft1 = 0;
+    float f_rotateRight1 = 0;
+    float f_rotateLeft2 = 0;
+    float f_rotateRight2 = 0;
+    float f_rotateLeft3 = 0;
+    float f_rotateRight3 = 0;
+
+    private Bitmap rotate(float angle, Bitmap bitmap, ImageView imageView){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+
+        Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+                matrix, true);
+        bitmap = rotated;
+
+        imageView.setImageBitmap(rotated);
+
+        return bitmap;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +172,56 @@ public class RaportActivity extends AppCompatActivity {
                 mTakePicSOnClickListener3,
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
+
+        rotateLeft1 = (ImageButton) findViewById(R.id.btnRotateLeft1);
+        rotateRight1 = (ImageButton) findViewById(R.id.btnRotateRight1);
+        rotateLeft2 = (ImageButton) findViewById(R.id.btnRotateLeft2);
+        rotateRight2 = (ImageButton) findViewById(R.id.btnRotateRight2);
+        rotateLeft3 = (ImageButton) findViewById(R.id.btnRotateLeft3);
+        rotateRight3 = (ImageButton) findViewById(R.id.btnRotateRight3);
+        rotateLeft1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                f_rotateLeft1 -=  90;
+                bitmap1 = rotate(f_rotateLeft1 , bitmap1, imageView1);
+            }
+        });
+        rotateRight1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                f_rotateRight1 += 90;
+                bitmap1 = rotate(f_rotateRight1, bitmap1, imageView1);
+            }
+        });
+        rotateLeft2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                f_rotateLeft2 -=  90;
+                bitmap2 = rotate(-f_rotateLeft2, bitmap2, imageView2);
+            }
+        });
+        rotateRight2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                f_rotateRight2 += 90;
+                bitmap2 = rotate(f_rotateRight2, bitmap2, imageView2);
+            }
+        });
+        rotateLeft3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                f_rotateLeft3 -=  90;
+                bitmap3 = rotate(-f_rotateLeft3, bitmap3, imageView3);
+            }
+        });
+        rotateRight3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                f_rotateRight2 += 90;
+                bitmap3 = rotate(f_rotateRight2, bitmap3, imageView3);
+            }
+        });
+
 
         warehousesSpinner = (Spinner) findViewById(R.id.spinner);
         Call<List<Warehouse>> warehouseCall = CechiniService.getInstance().getCechiniAPI().getWarehousesMobi();
