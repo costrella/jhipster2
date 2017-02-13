@@ -26,10 +26,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -213,43 +211,64 @@ public class PersonResource {
         params = {"personId"}
     )
     @Timed
-    public ResponseEntity<Map<String, Double>> getTargets(@RequestParam(value = "personId", required = true) Long personId
+    public ResponseEntity<Map<String, Long>> getTargets(@RequestParam(value = "personId", required = true) Long personId
     ) throws URISyntaxException {
+        Map<String, Long> page = null;
         LocalDate today = LocalDate.now();
         Person person = personRepository.findOne(personId);
         int targetMain = person.getTarget01();
-        double targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0, targetSum06 = 0, targetSum07 = 0, targetSum08 = 0;
-        List<Raport> raports = raportRepository.getPersonRaports(personId);
-        for (Raport r : raports) {
-            if (checkMonthAndYear(r.getDate(), today.getMonth(), today.getYear())) {
-                targetSum01 += r.getz_a(); //2l ngaz
-                targetSum02 += r.getz_b(); //2l gaz
-                targetSum03 += ((double)r.getz_c() / 2); //0,33l
-                targetSum04 += ((double)r.getz_d() / 2); // 0,33l cyt
-                targetSum05 += r.getz_e(); // gratisy
-                targetSum06 += r.getz_f(); // 2l ngaz biala
-                targetSum07 += ((double)r.getz_g() / 2); // 0,75; sport
-                targetSum08 += ((double)r.getz_h() / 2); //0,33l szklo
-            }
-        }
 
-        double sumAll = (double)targetSum01 + (double)targetSum02 + (double)targetSum03 + (double)targetSum04
+        Calendar c = Calendar.getInstance();   // this takes current date
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        Date firstMonth = c.getTime(); //pierwszy'
+        LocalDate firstMonthLD = firstMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+
+        c = Calendar.getInstance();
+        int lastDate = c.getActualMaximum(Calendar.DATE);
+        c.set(Calendar.DATE, lastDate);
+
+        Date lastMonth = c.getTime(); //ostatni
+        LocalDate lastMonthLD = lastMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        page = personRepository.getTargetsAtMonth(personId, firstMonthLD, lastMonthLD);
+
+        long targetSum01 = 0, targetSum02 = 0, targetSum03 = 0, targetSum04 = 0, targetSum05 = 0, targetSum06 = 0, targetSum07 = 0, targetSum08 = 0;
+        targetSum01 =  page.get("z_a");
+        targetSum02 =  page.get("z_b");
+        targetSum03 =  page.get("z_c");
+        targetSum04 =  page.get("z_d");
+        targetSum05 =  page.get("z_e");
+        targetSum06 =  page.get("z_f");
+        targetSum07 =  page.get("z_g");
+        targetSum08 =  page.get("z_h");
+
+        long sumAll = (long)targetSum01 + (long)targetSum02 + (long)targetSum03 + (long)targetSum04
 //            + (double)targetSum05 BEZ GRATISOW
-            + (double)targetSum06 + (double)targetSum07 + (double)targetSum08;
-        double sumAllPercent = getPercent(targetMain, sumAll);
+            + (long)targetSum06 + (long)targetSum07 + (long)targetSum08;
+        long sumAllPercent = getPercent(targetMain, sumAll);
 
-        Map<String, Double> myMap = new HashMap<>();
-        myMap.put("targetMain", (double) targetMain);
+        Map<String, Long> myMap = new HashMap<>();
+        myMap.put("targetMain", (long)targetMain);
         myMap.put("sumAll", sumAll);
         myMap.put("sumAllPercent", sumAllPercent);
-        myMap.put("target01", (double) targetSum01);
-        myMap.put("target02", (double) targetSum02);
-        myMap.put("target03", (double) targetSum03);
-        myMap.put("target04", (double) targetSum04);
-        myMap.put("target05", (double) targetSum05);
-        myMap.put("target06", (double) targetSum06);
-        myMap.put("target07", (double) targetSum07);
-        myMap.put("target08", (double) targetSum08);
+
+
+        targetSum03 = targetSum03 / 2;
+        targetSum04 = targetSum03 / 2;
+        targetSum07 = targetSum03 / 2;
+        targetSum08 = targetSum03 / 2;
+        myMap.put("target01", targetSum01);
+        myMap.put("target02", targetSum02);
+        myMap.put("target03", targetSum03);
+        myMap.put("target04", targetSum04);
+        myMap.put("target05", targetSum05);
+        myMap.put("target06", targetSum06);
+        myMap.put("target07", targetSum07);
+        myMap.put("target08", targetSum08);
+
+
+//sprzedano <b>{{vm.sumAll}}</b> z {{vm.targetMain}} ({{vm.sumAllPercent}}%)
 
         return Optional.ofNullable(myMap)
             .map(result -> new ResponseEntity<>(
@@ -266,6 +285,20 @@ public class PersonResource {
 
     private double getPercent(double targetD, double targetSumD){
         double percent = 0;
+
+        if(targetD != 0 && targetSumD != 0){
+            percent = (targetSumD / targetD) * 100;
+
+            //zaokraglenie do 2 miejsc po przecinku
+            percent *= 100; // pi = pi * 100;
+            percent = Math.round(percent);
+            percent /= 100; // pi = pi / 100;
+        }
+        return percent;
+    }
+
+    private long getPercent(long targetD, long targetSumD){
+        long percent = 0;
 
         if(targetD != 0 && targetSumD != 0){
             percent = (targetSumD / targetD) * 100;
