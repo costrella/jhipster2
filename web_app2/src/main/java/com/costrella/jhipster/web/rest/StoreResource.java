@@ -27,6 +27,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
@@ -152,13 +153,13 @@ public class StoreResource {
         return new Sort(Sort.Direction.ASC, "name");
     }
 
-    private boolean checkMonthAndYear(LocalDate raportDate, Month month, int year) {
+    private boolean checkMonthAndYear(LocalDateTime raportDate, Month month, int year) {
         if(raportDate == null) return false;
         return raportDate.getYear() == year && raportDate.getMonth().equals(month);
     }
 
     private List<Store> checVisited(List<Store> stores) {
-        LocalDate today = LocalDate.now();
+        LocalDateTime today = LocalDateTime.now();
         Month month = today.getMonth();
         int year = today.getYear();
 

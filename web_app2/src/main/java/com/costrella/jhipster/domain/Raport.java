@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -49,7 +50,7 @@ public class Raport implements Serializable {
     private String foto3ContentType;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(name = "z_a")
     private Integer z_a;
@@ -192,16 +193,16 @@ public class Raport implements Serializable {
         this.foto3ContentType = foto3ContentType;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public Raport date(LocalDate date) {
+    public Raport date(LocalDateTime date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

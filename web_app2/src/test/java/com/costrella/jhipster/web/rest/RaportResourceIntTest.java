@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -60,8 +61,8 @@ public class RaportResourceIntTest {
     private static final String DEFAULT_FOTO_3_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_FOTO_3_CONTENT_TYPE = "image/png";
 
-    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_DATE = null;
+    private static final LocalDateTime UPDATED_DATE = LocalDateTime.now(ZoneId.systemDefault());
 
     private static final Integer DEFAULT_Z_A = 1;
     private static final Integer UPDATED_Z_A = 2;

@@ -28,6 +28,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
@@ -71,10 +72,10 @@ public class RaportResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("raport", "idexists", "A new raport cannot already have an ID")).body(null);
         }
         //ALBO TWORZYMY RAPORT Z TRASOWKI, ALBO NIE Z TRASOWKI
-        raport.setDate(LocalDate.now());
+        raport.setDate(LocalDateTime.now());
         if (raport.getDay() != null) {
             if (raport.getDay().getDate() != null) {
-                LocalDate tmp = Instant.ofEpochMilli(raport.getDay().getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDateTime tmp = Instant.ofEpochMilli(raport.getDay().getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 raport.setDate(tmp);
             }
         }
@@ -149,8 +150,8 @@ public class RaportResource {
     )
     @Timed
     public ResponseEntity<List<Raport>> getRaportsFiltered(Pageable pageable,
-                                                           @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-                                                           @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+                                                           @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate,
+                                                           @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate,
                                                            @RequestParam(value = "person", required = false) Long person,
                                                            @RequestParam(value = "storeId", required = false) Long storeId,
                                                            @RequestParam(value = "dayId", required = false) Long dayId,
@@ -247,8 +248,8 @@ public class RaportResource {
         params = {"test"}
     )
     @Timed
-    public ResponseEntity<Map<String, Long>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-                                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+    public ResponseEntity<Map<String, Long>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate,
+                                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate,
                                                                 @RequestParam(value = "person", required = false) Long person,
                                                                 @RequestParam(value = "storeId", required = false) Long storeId,
                                                                 @RequestParam(value = "dayId", required = false) Long dayId,
