@@ -80,7 +80,8 @@
             function onSuccess(data, headers) {
                 vm.targetMain = data.targetMain;
                 vm.sumAll = data.sumAll;
-                vm.sumAllPercent = data.sumAllPercent;
+                vm.sumAllPercent = vm.sumAll / vm.targetMain * 100;
+				vm.sumAllPercent = Math.round(vm.sumAllPercent * 100) / 100;
                 vm.target01 = data.target01;
                 vm.target02 = data.target02;
                 vm.target03 = data.target03;
