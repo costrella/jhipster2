@@ -26,14 +26,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Null;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
 
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
@@ -150,8 +144,8 @@ public class RaportResource {
     )
     @Timed
     public ResponseEntity<List<Raport>> getRaportsFiltered(Pageable pageable,
-                                                           @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate,
-                                                           @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate,
+                                                           @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate1,
+                                                           @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate1,
                                                            @RequestParam(value = "person", required = false) Long person,
                                                            @RequestParam(value = "storeId", required = false) Long storeId,
                                                            @RequestParam(value = "dayId", required = false) Long dayId,
@@ -160,6 +154,10 @@ public class RaportResource {
                                                            @RequestParam(value = "warehouseId", required = false) Long warehouseId
     ) throws URISyntaxException {
         User user = userService.getUserWithAuthorities();
+
+        LocalDateTime fromDate = LocalDateTime.of(fromDate1, LocalTime.MIN);
+        LocalDateTime toDate = LocalDateTime.of(toDate1, LocalTime.MIN);
+
         Page<Raport> page;
         if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null
             && weekId == null && storegroupId == null && warehouseId == null) {
@@ -248,8 +246,8 @@ public class RaportResource {
         params = {"test"}
     )
     @Timed
-    public ResponseEntity<Map<String, Long>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime fromDate,
-                                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime toDate,
+    public ResponseEntity<Map<String, Long>> getRaportsCount(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate1,
+                                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate1,
                                                                 @RequestParam(value = "person", required = false) Long person,
                                                                 @RequestParam(value = "storeId", required = false) Long storeId,
                                                                 @RequestParam(value = "dayId", required = false) Long dayId,
@@ -258,6 +256,10 @@ public class RaportResource {
                                                                 @RequestParam(value = "warehouseId", required = false) Long warehouseId
     ) throws URISyntaxException {
         User user = userService.getUserWithAuthorities();
+
+        LocalDateTime fromDate = LocalDateTime.of(fromDate1, LocalTime.MIN);
+        LocalDateTime toDate = LocalDateTime.of(toDate1, LocalTime.MIN);
+
 
         //DUBLUJEMY Z METODY POWYZEJ ! TYLKO ZWRACAMY LIST ! takze nie do konca jest to dublowanie ;)
         //mozna zamaist tak, zwracac rowniez mape
