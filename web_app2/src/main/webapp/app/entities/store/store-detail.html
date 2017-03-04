@@ -109,7 +109,7 @@
             <td><a ui-sref="raport-detail({id:raport.id})">{{raport.id}}</a></td>
             <td>{{raport.description}}</td>
 
-            <td>{{raport.date | date:'yyyy-MM-dd'}}</td>
+            <td>{{raport.date | date:'yyyy-MM-dd HH:mm'}}</td>
             <td>
                 <a ui-sref="person-detail({id:raport.person.id})">{{raport.person.surname}}</a>
             </td>

@@ -155,8 +155,14 @@ public class RaportResource {
     ) throws URISyntaxException {
         User user = userService.getUserWithAuthorities();
 
-        LocalDateTime fromDate = LocalDateTime.of(fromDate1, LocalTime.MIN);
-        LocalDateTime toDate = LocalDateTime.of(toDate1, LocalTime.MIN);
+        LocalDateTime fromDate = null;
+        LocalDateTime toDate = null;
+        if(fromDate1 != null){
+            fromDate = LocalDateTime.of(fromDate1, LocalTime.MIN);
+        }
+        if(toDate1 != null){
+            toDate = LocalDateTime.of(toDate1, LocalTime.MIN);
+        }
 
         Page<Raport> page;
         if (storeId == null && fromDate == null && toDate == null && person == null && dayId == null

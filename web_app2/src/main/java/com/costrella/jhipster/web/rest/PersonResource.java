@@ -24,9 +24,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -221,7 +219,7 @@ public class PersonResource {
         Calendar c = Calendar.getInstance();   // this takes current date
         c.set(Calendar.DAY_OF_MONTH, 1);
         Date firstMonth = c.getTime(); //pierwszy'
-        LocalDate firstMonthLD = firstMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate firstMonthLD1 = firstMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 
         c = Calendar.getInstance();
@@ -229,7 +227,10 @@ public class PersonResource {
         c.set(Calendar.DATE, lastDate);
 
         Date lastMonth = c.getTime(); //ostatni
-        LocalDate lastMonthLD = lastMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate lastMonthLD1 = lastMonth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDateTime firstMonthLD = LocalDateTime.of(firstMonthLD1, LocalTime.MIN);
+        LocalDateTime lastMonthLD = LocalDateTime.of(lastMonthLD1, LocalTime.MIN);
 
         page = personRepository.getTargetsAtMonth(personId, firstMonthLD, lastMonthLD);
 
