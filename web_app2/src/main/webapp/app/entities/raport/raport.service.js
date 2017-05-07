@@ -29,7 +29,7 @@
             'update': {
                 method: 'PUT',
                 transformRequest: function (data) {
-                    data.date = DateUtils.convertLocalDateToServer(data.date);
+                    //data.date = DateUtils.convertLocalDateToServer(data.date);
                     return angular.toJson(data);
                 }
             },
