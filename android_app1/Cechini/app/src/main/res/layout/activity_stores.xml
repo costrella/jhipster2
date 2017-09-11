@@ -38,10 +38,22 @@
         android:textStyle="bold" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/store_synchro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@android:id/list"
+        android:layout_alignRight="@android:id/list"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_rotate_left_black_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/updateDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:visibility="gone"
         android:src="@android:drawable/ic_menu_save"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@android:id/list"

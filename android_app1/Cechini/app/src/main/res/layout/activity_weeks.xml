@@ -37,16 +37,6 @@
         android:text="brak trasówek"
         android:textStyle="bold" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/store_synchro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/queueButton"
-        android:layout_alignEnd="@android:id/list"
-        android:layout_alignRight="@android:id/list"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_rotate_left_black_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/queueButton"

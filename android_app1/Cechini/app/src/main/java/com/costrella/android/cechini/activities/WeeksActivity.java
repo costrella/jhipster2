@@ -108,19 +108,6 @@ public class WeeksActivity extends ListActivity {
                 startActivity(intent);
             }
         });
-        FloatingActionButton store_synchro = (FloatingActionButton) findViewById(R.id.store_synchro);
-        store_synchro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                realm.beginTransaction();
-                realm.delete(Store.class);
-                realm.commitTransaction();
-                refresh();
-
-            }
-        });
-
-
 
     }
 
@@ -222,43 +209,11 @@ public class WeeksActivity extends ListActivity {
         Realm.init(getApplicationContext());
         realm = Realm.getInstance(config);
         realm.beginTransaction();
-        getStores();
         getWeeksFromRest();
         realm.cancelTransaction();
 
     }
 
-    private void getStores() {
-        List<Store> personStores = realm.where(Store.class).findAll();
-        if (personStores != null && !personStores.isEmpty()) {
-            StoreService.STORES_LIST = personStores;
-        } else {
-            showProgress(true);
-            //pobieramy z resta jesli w bazie nie ma stores - przy wylogowaniu usunac stores z bazy !
-            Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
-            call.enqueue(new Callback<List<Store>>() {
-                @Override
-                public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
-                    final int code = response.code();
-                    if (code == 200) {
-                        List<Store> list = response.body();
-                        realm.beginTransaction();
-                        realm.insertOrUpdate(list);
-                        realm.commitTransaction();
-                        StoreService.STORES_LIST = list;
-                    }
-                    showProgress(false);
-
-                }
-
-                @Override
-                public void onFailure(Call<List<Store>> call, Throwable t) {
-                    showProgress(false);
-                    Log.e("s", "f");
-                }
-            });
-        }
-    }
 
     private void getWeeksFromRest() {
         Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
