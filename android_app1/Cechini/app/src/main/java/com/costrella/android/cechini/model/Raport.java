@@ -13,7 +13,9 @@ import io.realm.annotations.Ignore;
 /**
  * A Raport.
  */
-public class Raport extends RealmObject implements Serializable  {
+public class Raport extends RealmObject implements Serializable {
+
+    private String date;
 
     private Long personIdRealm;
 
@@ -71,6 +73,17 @@ public class Raport extends RealmObject implements Serializable  {
     public Raport day(Day day) {
         this.day = day;
         return this;
+    }
+
+    public String getDate() {
+        if (date != null) {
+            if (date.contains("T")) {
+                return date.replace("T", " ");
+            }else{
+                return date;
+            }
+        }
+        return "brak daty";
     }
 
     public Warehouse getWarehouse() {
@@ -302,6 +315,7 @@ public class Raport extends RealmObject implements Serializable  {
     public String toString() {
         return "Raport{" +
                 "id=" + id +
+                "date=" + date +
                 ", description='" + description + "'" +
                 ", foto1='" + foto1 + "'" +
                 ", foto1ContentType='" + foto1ContentType + "'" +

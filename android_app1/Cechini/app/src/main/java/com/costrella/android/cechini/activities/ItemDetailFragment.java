@@ -75,6 +75,7 @@ public class ItemDetailFragment extends Fragment {
                 if (code == 200) {
                     Raport raport = response.body();
                     ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setText(getString(raport.getDescription()));
+                    ((TextView) rootView.findViewById(R.id.raport_date)).setText(String.valueOf(raport.getDate()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_a)).setText(String.valueOf(raport.getZ_a()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_b)).setText(String.valueOf(raport.getZ_b()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_c)).setText(String.valueOf(raport.getZ_c()));
@@ -84,6 +85,7 @@ public class ItemDetailFragment extends Fragment {
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_h)).setText(String.valueOf(raport.getZ_h()));
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_e)).setText(String.valueOf(raport.getZ_e()));
                 } else {
+                    ((LinearLayout) rootView.findViewById(R.id.l0)).setVisibility(View.INVISIBLE);
                     ((LinearLayout) rootView.findViewById(R.id.l1)).setVisibility(View.INVISIBLE);
                     ((LinearLayout) rootView.findViewById(R.id.l2)).setVisibility(View.INVISIBLE);
                     ((LinearLayout) rootView.findViewById(R.id.l3)).setVisibility(View.INVISIBLE);
@@ -94,6 +96,7 @@ public class ItemDetailFragment extends Fragment {
                     ((LinearLayout) rootView.findViewById(R.id.l8)).setVisibility(View.INVISIBLE);
                     ((LinearLayout) rootView.findViewById(R.id.l9)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaportTxt3)).setVisibility(View.INVISIBLE);
+                    ((TextView) rootView.findViewById(R.id.raport_date)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_a)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_b)).setVisibility(View.INVISIBLE);
                     ((TextView) rootView.findViewById(R.id.lastRaport_z_c)).setVisibility(View.INVISIBLE);

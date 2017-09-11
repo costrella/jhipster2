@@ -67,8 +67,7 @@ public class Store extends RealmObject implements Serializable {
         return name;
     }
 
-    @Ignore
-    private Boolean visited = false;
+    private boolean visited;
 
     private String street;
 
@@ -91,11 +90,11 @@ public class Store extends RealmObject implements Serializable {
         this.address = address;
     }
 
-    public Boolean getVisited() {
+    public boolean getVisited() {
         return visited;
     }
 
-    public void setVisited(Boolean visited) {
+    public void setVisited(boolean visited) {
         this.visited = visited;
     }
 

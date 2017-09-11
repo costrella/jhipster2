@@ -33,10 +33,13 @@ import com.costrella.android.cechini.services.StoreService;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//Main activity
 public class WeeksActivity extends ListActivity {
 
     private View mProgressView;
@@ -46,6 +49,7 @@ public class WeeksActivity extends ListActivity {
     OffLineService offLineService;
     FloatingActionButton queueButton;
     int sizeNotSendRaports;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,6 @@ public class WeeksActivity extends ListActivity {
         mProgressView = findViewById(R.id.weeks_progress);
         listValues = new ArrayList<>();
         adapter = new WeekAdapter(this, listValues);
-
-        showProgress(true);
 
         refresh();
 
@@ -106,6 +108,18 @@ public class WeeksActivity extends ListActivity {
                 startActivity(intent);
             }
         });
+        FloatingActionButton store_synchro = (FloatingActionButton) findViewById(R.id.store_synchro);
+        store_synchro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                realm.beginTransaction();
+                realm.delete(Store.class);
+                realm.commitTransaction();
+                refresh();
+
+            }
+        });
+
 
 
     }
@@ -121,7 +135,7 @@ public class WeeksActivity extends ListActivity {
             } else {
                 queueButton.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             queueButton.setVisibility(View.GONE);
         }
     }
@@ -129,8 +143,6 @@ public class WeeksActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refresh();
-
     }
 
     // when an item of the list is clicked
@@ -203,44 +215,72 @@ public class WeeksActivity extends ListActivity {
     }
 
     private void refresh() {
-        showProgress(true);
-        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
-        call.enqueue(new Callback<List<Store>>() {
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.init(getApplicationContext());
+        realm = Realm.getInstance(config);
+        realm.beginTransaction();
+        getStores();
+        getWeeksFromRest();
+        realm.cancelTransaction();
+
+    }
+
+    private void getStores() {
+        List<Store> personStores = realm.where(Store.class).findAll();
+        if (personStores != null && !personStores.isEmpty()) {
+            StoreService.STORES_LIST = personStores;
+        } else {
+            showProgress(true);
+            //pobieramy z resta jesli w bazie nie ma stores - przy wylogowaniu usunac stores z bazy !
+            Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+            call.enqueue(new Callback<List<Store>>() {
+                @Override
+                public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                    final int code = response.code();
+                    if (code == 200) {
+                        List<Store> list = response.body();
+                        realm.beginTransaction();
+                        realm.insertOrUpdate(list);
+                        realm.commitTransaction();
+                        StoreService.STORES_LIST = list;
+                    }
+                    showProgress(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Store>> call, Throwable t) {
+                    showProgress(false);
+                    Log.e("s", "f");
+                }
+            });
+        }
+    }
+
+    private void getWeeksFromRest() {
+        Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
+        callPersonWeeks.enqueue(new Callback<List<Week>>() {
             @Override
-            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
-                List<Store> list = response.body();
-                StoreService.STORES_LIST.clear();
-                StoreService.STORES_LIST = list;
+            public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
 
-                Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());
-                callPersonWeeks.enqueue(new Callback<List<Week>>() {
-                    @Override
-                    public void onResponse(Call<List<Week>> call, Response<List<Week>> response) {
+                final int code = response.code();
+                if (code == 200) {
+                    List<Week> weeks = response.body();
+                    listValues.clear();
+                    listValues.addAll(weeks);
 
-                        final int code = response.code();
-                        if (code == 200) {
-                            List<Week> weeks = response.body();
-                            listValues.clear();
-                            listValues.addAll(weeks);
+                    text = (TextView) findViewById(R.id.weeksMainText);
+                    setListAdapter(adapter);
 
-                            text = (TextView) findViewById(R.id.weeksMainText);
-                            setListAdapter(adapter);
-
-                            showProgress(false);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Week>> call, Throwable t) {
-
-                    }
-                });
-
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Store>> call, Throwable t) {
-                Log.e("s", "f");
+            public void onFailure(Call<List<Week>> call, Throwable t) {
+
             }
         });
     }

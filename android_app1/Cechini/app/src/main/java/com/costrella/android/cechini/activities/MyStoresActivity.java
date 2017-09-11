@@ -34,6 +34,8 @@ public class MyStoresActivity extends ListActivity {
     private ArrayList<Store> listValues;
     private StoreAdapter adapter;
     private View mProgressView;
+    private int index;
+    private int top;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +50,18 @@ public class MyStoresActivity extends ListActivity {
         updateDay.setVisibility(View.INVISIBLE);
         TextView title = (TextView) findViewById(R.id.storesMainText);
         title.setText("Moje sklepy");
+        refresh();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        refresh();
+        setSelection(index);
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+    protected void onListItemClick(ListView mList, View v, int position, long id) {
+        index = mList.getFirstVisiblePosition();
         Store selectedItem = (Store) getListView().getItemAtPosition(position);
         StoreService.STORE = selectedItem;
         Intent intent = new Intent(this, ItemDetailActivity.class);
@@ -80,7 +84,7 @@ public class MyStoresActivity extends ListActivity {
             TextView textView = (TextView) convertView.findViewById(R.id.listText);
             // Populate the data into the template view using the data object
 
-            if(store.getVisited() == null || !store.getVisited()){
+            if(!store.getVisited()){
                 textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
             }else{
                 textView.setTextColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
@@ -97,24 +101,30 @@ public class MyStoresActivity extends ListActivity {
     }
 
     private void refresh(){
-        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
-        call.enqueue(new Callback<List<Store>>() {
-            @Override
-            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
-                List<Store> list = response.body();
-                StoreService.STORES_LIST.clear();
-                StoreService.STORES_LIST = list;
-                listValues.clear();
-                listValues.addAll(list);
-                setListAdapter(adapter);
-                showProgress(false);
-            }
+        //nie pobieramy juz z resta
+        listValues.clear();
+        listValues.addAll(StoreService.STORES_LIST );
+        setListAdapter(adapter);
+        showProgress(false);
 
-            @Override
-            public void onFailure(Call<List<Store>> call, Throwable t) {
-
-            }
-        });
+//        Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
+//        call.enqueue(new Callback<List<Store>>() {
+//            @Override
+//            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+//                List<Store> list = response.body();
+//                StoreService.STORES_LIST.clear();
+//                StoreService.STORES_LIST = list;
+//                listValues.clear();
+//                listValues.addAll(list);
+//                setListAdapter(adapter);
+//                showProgress(false);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Store>> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)

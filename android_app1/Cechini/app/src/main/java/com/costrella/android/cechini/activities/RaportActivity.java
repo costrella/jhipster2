@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.costrella.android.cechini.Constants;
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.model.Raport;
+import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Warehouse;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
@@ -543,6 +544,15 @@ public class RaportActivity extends AppCompatActivity {
                         showProgress(false);
                         if (code == 201) {
                             Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
+                            Store store = realm.where(Store.class).equalTo("id", StoreService.STORE.getId()).findFirst();
+                            if(store != null) {
+                                store.setVisited(true);
+                                realm.insertOrUpdate(store);
+                                realm.commitTransaction();
+                                finish();
+                                return;
+
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(), "Niepowodzenie wysłania raportu [oR] " + code, Toast.LENGTH_LONG).show();
                         }
