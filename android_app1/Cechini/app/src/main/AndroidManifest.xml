@@ -49,7 +49,7 @@
         <activity
             android:name=".activities.StoresActivity"
             android:label="@string/title_activity_trasowka" />
-        <activity android:name=".activities.WeeksActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.StoresInDayActivity" />
         <activity android:name=".activities.DaysReviewActivity" />
         <activity android:name=".activities.MyStoresActivity" />

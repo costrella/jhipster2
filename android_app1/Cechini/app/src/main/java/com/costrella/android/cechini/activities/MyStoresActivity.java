@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.activities.progress.ProgressBar;
+import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
@@ -43,6 +45,8 @@ public class MyStoresActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RealmInit.init(getApplicationContext());
+        realm = RealmInit.realm;
         setContentView(R.layout.activity_stores);
         mProgressView = findViewById(R.id.myStores_progress);
         DayService.selectedDay = null;
@@ -79,7 +83,7 @@ public class MyStoresActivity extends ListActivity {
             StoreService.STORES_LIST = personStores;
             initStoresToList();
         } else {
-            showProgress(true);
+            ProgressBar.showProgress(true, getApplicationContext(), mProgressView);
             //pobieramy z resta jesli w bazie nie ma stores - przy wylogowaniu usunac stores z bazy !
             Call<List<Store>> call = CechiniService.getInstance().getCechiniAPI().getPersonStores(PersonService.PERSON.getId().toString());
             call.enqueue(new Callback<List<Store>>() {
@@ -94,32 +98,21 @@ public class MyStoresActivity extends ListActivity {
                         StoreService.STORES_LIST = list;
                         initStoresToList();
                     }
-                    showProgress(false);
+                    ProgressBar.showProgress(false, getApplicationContext(), mProgressView);
 
                 }
 
                 @Override
                 public void onFailure(Call<List<Store>> call, Throwable t) {
-                    showProgress(false);
-                    Log.e("s", "f");
+                    ProgressBar.showProgress(false, getApplicationContext(), mProgressView);
                 }
             });
         }
     }
 
-    private void realmInit() {
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.init(getApplicationContext());
-        realm = Realm.getInstance(config);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        realmInit();
         refreshStores();
         setSelection(index);
     }
@@ -163,35 +156,6 @@ public class MyStoresActivity extends ListActivity {
             textView.setText(txt);
             return convertView;
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, WeeksActivity.class);
-        startActivity(intent);
     }
 
 }

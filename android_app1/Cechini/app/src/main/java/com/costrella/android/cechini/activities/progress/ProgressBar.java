@@ -45,4 +45,22 @@ public class ProgressBar {
             scroolView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public static void showProgress(final boolean show, Context context,final View mProgressView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = context.getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
 }

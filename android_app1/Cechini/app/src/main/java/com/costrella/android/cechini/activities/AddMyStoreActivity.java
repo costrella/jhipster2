@@ -67,9 +67,4 @@ public class AddMyStoreActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MyStoresActivity.class);
-        startActivity(intent);
-    }
 }

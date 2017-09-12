@@ -1,17 +1,12 @@
 package com.costrella.android.cechini.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,27 +15,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Day;
-import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.NetworkService;
 import com.costrella.android.cechini.services.OffLineService;
 import com.costrella.android.cechini.services.PersonService;
-import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 //Main activity
-public class WeeksActivity extends ListActivity {
+public class MainActivity extends ListActivity {
 
     private View mProgressView;
     private TextView text;
@@ -55,6 +48,8 @@ public class WeeksActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weeks);
+        RealmInit.init(getApplicationContext());
+        realm = RealmInit.realm;
         mProgressView = findViewById(R.id.weeks_progress);
         listValues = new ArrayList<>();
         adapter = new WeekAdapter(this, listValues);
@@ -64,7 +59,7 @@ public class WeeksActivity extends ListActivity {
         queueButton = (FloatingActionButton) findViewById(R.id.queueButton);
 
         offLine();
-        final WeeksActivity _this = this;
+        final MainActivity _this = this;
         queueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,11 +122,6 @@ public class WeeksActivity extends ListActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     // when an item of the list is clicked
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
@@ -178,42 +168,13 @@ public class WeeksActivity extends ListActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        }
-    }
 
     private void refresh() {
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.init(getApplicationContext());
-        realm = Realm.getInstance(config);
         realm.beginTransaction();
         getWeeksFromRest();
         realm.cancelTransaction();
 
     }
-
 
     private void getWeeksFromRest() {
         Call<List<Week>> callPersonWeeks = CechiniService.getInstance().getCechiniAPI().getPersonWeeks(PersonService.PERSON.getId());

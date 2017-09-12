@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.costrella.android.cechini.activities.WeeksActivity;
+import com.costrella.android.cechini.activities.MainActivity;
 import com.costrella.android.cechini.model.Raport;
 
 import java.util.List;
@@ -50,8 +50,8 @@ public class OffLineService {
                     Toast.makeText(context, "Poprawnie wysłano "+response.body().size() +" raportów z kolejki", Toast.LENGTH_LONG).show();
                     realm.delete(Raport.class);
                     realm.commitTransaction();
-                    if(activity instanceof WeeksActivity){
-                        ((WeeksActivity) activity).offLine();
+                    if(activity instanceof MainActivity){
+                        ((MainActivity) activity).offLine();
                     }
                 }else{
                     realm.cancelTransaction();

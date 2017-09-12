@@ -13,6 +13,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,8 @@ import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static java.lang.System.gc;
 
 public class RaportActivity extends AppCompatActivity {
     private static final int ACTION_TAKE_PHOTO_6 = 6;
@@ -250,7 +253,6 @@ public class RaportActivity extends AppCompatActivity {
             picSBtn3.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
-
     }
 
     Uri imageUri;

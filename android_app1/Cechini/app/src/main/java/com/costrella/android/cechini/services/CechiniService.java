@@ -26,22 +26,29 @@ public class CechiniService {
     public static CechiniService instance = null;
 
     public static CechiniService getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new CechiniService();
         }
         return instance;
     }
 
-    public CechiniAPI getCechiniAPI() {
-        Gson gson = new GsonBuilder().registerTypeHierarchyAdapter(byte[].class,
-                new ByteArrayToBase64TypeAdapter())
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
+    private Gson gson;
+    private Retrofit retrofit;
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(CechiniAPI.ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
+    public CechiniAPI getCechiniAPI() {
+        if (gson == null) {
+            gson = new GsonBuilder().registerTypeHierarchyAdapter(byte[].class,
+                    new ByteArrayToBase64TypeAdapter())
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                    .create();
+        }
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(CechiniAPI.ENDPOINT)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+        }
         return retrofit.create(CechiniAPI.class);
     }
 

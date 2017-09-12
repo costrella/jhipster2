@@ -106,8 +106,8 @@ public class DaysActivity extends ListActivity {
     }
 
     private void back(){
-        Intent intent = new Intent(this, WeeksActivity.class);
-        startActivity(intent);
-//        super.onBackPressed();
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+        super.onBackPressed();
     }
 }

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Person;
 import com.costrella.android.cechini.model.User;
 import com.costrella.android.cechini.services.CechiniService;
@@ -36,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,11 +110,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         TextView version = (TextView) findViewById(R.id.version);
 
         Realm.init(getApplicationContext());
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        realm = Realm.getInstance(config);
+        RealmInit.init(getApplicationContext());
+        realm = RealmInit.realm;
         User userRealm = realm.where(User.class).findFirst();
         if (userRealm != null) {
             mEmailView.setText(userRealm.getLogin());
@@ -278,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void goToItemList(Person person) {
-        Intent intent = new Intent(this, WeeksActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         Long id = person.getId();
         intent.putExtra("STRING_I_NEED", id);
 //        intent.putExtra("person", (Parcelable) person);
