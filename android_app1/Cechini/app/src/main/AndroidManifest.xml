@@ -41,7 +41,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.costrella.android.cechini.activities.ItemListActivity" />
         </activity>
-        <activity android:name=".activities.RaportActivity" />
+        <activity android:name=".activities.raport.RaportActivity" />
         <activity android:name=".activities.CalendarActivity" />
         <activity
             android:name=".activities.DaysActivity"

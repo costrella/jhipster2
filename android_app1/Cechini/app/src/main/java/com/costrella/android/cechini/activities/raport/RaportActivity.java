@@ -1,9 +1,6 @@
-package com.costrella.android.cechini.activities;
+package com.costrella.android.cechini.activities.raport;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,13 +9,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -32,26 +26,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.costrella.android.cechini.Constants;
 import com.costrella.android.cechini.R;
-import com.costrella.android.cechini.model.Raport;
-import com.costrella.android.cechini.model.Store;
+import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Warehouse;
 import com.costrella.android.cechini.services.CechiniService;
-import com.costrella.android.cechini.services.DayService;
-import com.costrella.android.cechini.services.NetworkService;
-import com.costrella.android.cechini.services.PersonService;
-import com.costrella.android.cechini.services.StoreService;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,7 +49,7 @@ public class RaportActivity extends AppCompatActivity {
     Bitmap bitmap1;
     Bitmap bitmap2;
     Bitmap bitmap3;
-    EditText editText, z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h;
+
     private int idImgView = 0;
     private View mProgressView;
     private View scroolView;
@@ -77,10 +62,7 @@ public class RaportActivity extends AppCompatActivity {
     Realm realm;
     private boolean internetAccess = true;
     Spinner warehousesSpinner = null;
-    RealmConfiguration config = new RealmConfiguration
-            .Builder()
-            .deleteRealmIfMigrationNeeded()
-            .build();
+
     float f_rotateLeft1 = 0;
     float f_rotateRight1 = 0;
     float f_rotateLeft2 = 0;
@@ -88,7 +70,7 @@ public class RaportActivity extends AppCompatActivity {
     float f_rotateLeft3 = 0;
     float f_rotateRight3 = 0;
 
-    private Bitmap rotate(float angle, Bitmap bitmap, ImageView imageView){
+    private Bitmap rotate(float angle, Bitmap bitmap, ImageView imageView) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
 
@@ -105,6 +87,10 @@ public class RaportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_raport);
+        RealmInit.init(getApplicationContext());
+        realm = RealmInit.realm;
+
+        final EditText editText, z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h;
 
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutRaport);
         imageView1 = (ImageView) findViewById(R.id.imageView1);
@@ -130,7 +116,11 @@ public class RaportActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createRaport();
+                RaportController.getInstance(
+                        getApplicationContext()).createRaport(selectedWarehouse, bitmap1, bitmap2, bitmap3,
+                        editText,
+                        z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h,
+                        scroolView, mProgressView, relativeLayout);
             }
         });
 
@@ -183,8 +173,8 @@ public class RaportActivity extends AppCompatActivity {
         rotateLeft1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                f_rotateLeft1 -=  90;
-                bitmap1 = rotate(f_rotateLeft1 , bitmap1, imageView1);
+                f_rotateLeft1 -= 90;
+                bitmap1 = rotate(f_rotateLeft1, bitmap1, imageView1);
             }
         });
         rotateRight1.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +187,7 @@ public class RaportActivity extends AppCompatActivity {
         rotateLeft2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                f_rotateLeft2 -=  90;
+                f_rotateLeft2 -= 90;
                 bitmap2 = rotate(-f_rotateLeft2, bitmap2, imageView2);
             }
         });
@@ -211,7 +201,7 @@ public class RaportActivity extends AppCompatActivity {
         rotateLeft3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                f_rotateLeft3 -=  90;
+                f_rotateLeft3 -= 90;
                 bitmap3 = rotate(-f_rotateLeft3, bitmap3, imageView3);
             }
         });
@@ -231,10 +221,9 @@ public class RaportActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 int code = response.code();
-                if(code == 200){
+                if (code == 200) {
                     List<Warehouse> warehouses = response.body();
                     addToListActivity(warehouses);
-                    realm = Realm.getInstance(config);
                     realm.beginTransaction();
                     realm.delete(Warehouse.class);
                     realm.commitTransaction();
@@ -246,8 +235,7 @@ public class RaportActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Warehouse>> call, Throwable t) {
-                Log.e("costrella:"," Nie ma internetu");
-                realm = Realm.getInstance(config);
+                Log.e("costrella:", " Nie ma internetu");
                 realm.beginTransaction();
                 List<Warehouse> warehouseList = realm.where(Warehouse.class).findAll();
                 addToListActivity(warehouseList);
@@ -260,7 +248,7 @@ public class RaportActivity extends AppCompatActivity {
             picSBtn1.setEnabled(false);
             picSBtn2.setEnabled(false);
             picSBtn3.setEnabled(false);
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
 
     }
@@ -269,7 +257,7 @@ public class RaportActivity extends AppCompatActivity {
     ContentValues values;
 
 
-    private void addToListActivity(List<Warehouse> warehouses){
+    private void addToListActivity(List<Warehouse> warehouses) {
         final List<Warehouse> list = new ArrayList<Warehouse>();
         Warehouse empty = new Warehouse();
         empty.setName("");
@@ -455,172 +443,8 @@ public class RaportActivity extends AppCompatActivity {
         }
     }
 
-    private Bitmap scale (Bitmap bitmap){
+    private Bitmap scale(Bitmap bitmap) {
         return Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, true);
-    }
-
-    private byte[] getImage(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
-        byte[] byteArray = baos.toByteArray();
-        return byteArray;
-    }
-
-    private int getInt(EditText editText) {
-        if (editText.getText().toString().isEmpty()) {
-            return 0;
-        } else {
-            return ((Integer.parseInt(editText.getText().toString())));
-        }
-    }
-
-    private boolean valid(){
-        if(selectedWarehouse.getId() == null){
-            Toast.makeText(getApplicationContext(), "Wybierz hutrownie ! / brak internetu", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if(selectedWarehouse.getId().equals(99999L)){
-            Toast.makeText(getApplicationContext(), "Wybierz hutrownie !", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    private Raport getObject(){
-        if(NetworkService.getInstance().isNetworkAvailable(this)){
-            internetAccess = true;
-            return new Raport();
-        }else {
-            internetAccess = false;
-            return realm.createObject(Raport.class);
-        }
-    }
-
-    private void createRaport() {
-        if(valid()) {
-            showProgress(true);
-            Realm.init(getApplicationContext());
-            realm = Realm.getInstance(config);
-            realm.beginTransaction();
-            Raport raport = getObject();
-            if (selectedWarehouse != null) {
-                raport.setWarehouse(internetAccess ? selectedWarehouse : realm.copyToRealm(selectedWarehouse));
-            }
-            if (DayService.selectedDay != null)
-                raport.setDay(DayService.selectedDay);
-            if (bitmap1 != null) {
-                raport.setFoto1(getImage(bitmap1));
-            }
-            if (bitmap2 != null) {
-                raport.setFoto2(getImage(bitmap2));
-            }
-            if (bitmap3 != null) {
-                raport.setFoto3(getImage(bitmap3));
-            }
-
-            raport.setDescription(editText.getText().toString());
-
-            raport.setPerson(internetAccess ? PersonService.PERSON : realm.copyToRealm(PersonService.PERSON));
-            raport.setStore(internetAccess ? StoreService.STORE : realm.copyToRealm(StoreService.STORE));
-            raport.setZ_a(getInt(z_a));
-            raport.setZ_b(getInt(z_b));
-            raport.setZ_c(getInt(z_c));
-            raport.setZ_d(getInt(z_d));
-            raport.setZ_e(getInt(z_e));
-            raport.setZ_f(getInt(z_f));
-            raport.setZ_g(getInt(z_g));
-            raport.setZ_h(getInt(z_h));
-            raport.setWarehousIdRealm(selectedWarehouse.getId());
-            raport.setPersonIdRealm(PersonService.PERSON.getId());
-            raport.setStoreIdRealm(StoreService.STORE.getId());
-
-            if (internetAccess) {
-
-                Call<Raport> callRaport = CechiniService.getInstance().getCechiniAPI().createRaport(raport);
-                callRaport.enqueue(new Callback<Raport>() {
-                    @Override
-                    public void onResponse(Call<Raport> call, Response<Raport> response) {
-                        int code = response.code();
-                        showProgress(false);
-                        if (code == 201) {
-                            Toast.makeText(getApplicationContext(), Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
-                            Store store = realm.where(Store.class).equalTo("id", StoreService.STORE.getId()).findFirst();
-                            if(store != null) {
-                                store.setVisited(true);
-                                realm.insertOrUpdate(store);
-                                realm.commitTransaction();
-                                finish();
-                                return;
-
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Niepowodzenie wysłania raportu [oR] " + code, Toast.LENGTH_LONG).show();
-                        }
-                        realm.cancelTransaction();
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Raport> call, Throwable t) {
-                        showProgress(false);
-                        showSnackBarToAddToQueue();
-//                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
-
-                    }
-                });
-            } else {
-                showSnackBarToAddToQueue();
-            }
-        }
-    }
-
-    private void showSnackBarToAddToQueue(){
-        Snackbar snackbar = Snackbar
-                .make(relativeLayout, "Problem z internetem", Snackbar.LENGTH_LONG)
-                .setAction("DODAJ DO KOLEJKI", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        realm.commitTransaction();
-                        finish();
-                        Toast.makeText(getApplicationContext(), "Dodano do kolejki, jak będziesz miał internet będziesz mógł wysłać raport", Toast.LENGTH_LONG).show();
-                    }
-                });
-        snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
-        snackbar.setActionTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            scroolView.setVisibility(show ? View.GONE : View.VISIBLE);
-            scroolView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    scroolView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            scroolView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 
 }

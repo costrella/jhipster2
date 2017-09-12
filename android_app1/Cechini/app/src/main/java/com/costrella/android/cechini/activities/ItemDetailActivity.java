@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.costrella.android.cechini.R;
+import com.costrella.android.cechini.activities.raport.RaportActivity;
 import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.services.StoreService;
 
