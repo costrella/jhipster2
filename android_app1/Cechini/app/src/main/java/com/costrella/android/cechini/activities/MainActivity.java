@@ -17,12 +17,14 @@ import android.widget.TextView;
 import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Day;
+import com.costrella.android.cechini.model.Store;
 import com.costrella.android.cechini.model.Week;
 import com.costrella.android.cechini.services.CechiniService;
 import com.costrella.android.cechini.services.DayService;
 import com.costrella.android.cechini.services.NetworkService;
 import com.costrella.android.cechini.services.OffLineService;
 import com.costrella.android.cechini.services.PersonService;
+import com.costrella.android.cechini.services.StoreService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,12 @@ public class MainActivity extends ListActivity {
         mProgressView = findViewById(R.id.weeks_progress);
         listValues = new ArrayList<>();
         adapter = new WeekAdapter(this, listValues);
+
+        //init stores
+        if (StoreService.STORES_LIST.isEmpty()) {
+            StoreService.STORES_LIST = realm.where(Store.class).findAll();
+        }
+
 
         refresh();
 

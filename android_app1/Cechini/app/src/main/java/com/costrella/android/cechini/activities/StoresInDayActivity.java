@@ -44,6 +44,7 @@ public class StoresInDayActivity extends ListActivity {
         text.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
         FloatingActionButton updateDay = (FloatingActionButton) findViewById(R.id.updateDay);
         updateDay.setVisibility(View.INVISIBLE);
+        findViewById(R.id.store_synchro).setVisibility(View.INVISIBLE);
 
         Call<Day> callDayStores = CechiniService.getInstance().getCechiniAPI().getDay(day.getId());
         callDayStores.enqueue(new Callback<Day>() {

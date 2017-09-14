@@ -124,6 +124,7 @@ public class RaportActivity extends AppCompatActivity {
                         editText,
                         z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h,
                         scroolView, mProgressView, relativeLayout);
+                finish();
             }
         });
 

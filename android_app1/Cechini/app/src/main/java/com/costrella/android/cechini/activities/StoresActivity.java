@@ -61,7 +61,7 @@ public class StoresActivity extends ListActivity {
         text.setText(day.getName() + " " + new SimpleDateFormat("dd/MM/yyyy").format(day.getDate()));
 
         setListAdapter(adapter);
-
+        findViewById(R.id.store_synchro).setVisibility(View.INVISIBLE);
         final FloatingActionButton updateDay = (FloatingActionButton) findViewById(R.id.updateDay);
         updateDay.setOnClickListener(new View.OnClickListener() {
             @Override

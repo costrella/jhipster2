@@ -54,6 +54,7 @@ public class MyStoresActivity extends ListActivity {
         adapter = new StoreAdapter(this, listValues);
         TextView title = (TextView) findViewById(R.id.storesMainText);
         title.setText("Moje sklepy");
+        findViewById(R.id.updateDay).setVisibility(View.INVISIBLE);
 
         FloatingActionButton store_synchro = (FloatingActionButton) findViewById(R.id.store_synchro);
         store_synchro.setOnClickListener(new View.OnClickListener() {
