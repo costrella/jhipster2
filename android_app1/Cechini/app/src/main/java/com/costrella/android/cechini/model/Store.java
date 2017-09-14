@@ -4,6 +4,8 @@ package com.costrella.android.cechini.model;
  * Created by mike on 2016-09-15.
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,8 +31,9 @@ import java.util.Objects;
 public class Store extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Expose
     private Long id;
-
+    @Expose
     private boolean selected = false;
 
     public boolean isSelected() {
@@ -40,18 +43,18 @@ public class Store extends RealmObject implements Serializable {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
-
+    @Expose
     private String name;
-
+    @Expose
     @Ignore
     private Person person;
-
+    @Expose
     @Ignore
     private Address address;
-
+    @Expose
     @Ignore
     private Set<Raport> raports = new HashSet<>();
-
+    @Expose
     @Ignore
     private Set<Day> days = new HashSet<>();
 
@@ -66,15 +69,15 @@ public class Store extends RealmObject implements Serializable {
     public String getName() {
         return name;
     }
-
+    @Expose
     private boolean visited;
-
+    @Expose
     private String street;
-
+    @Expose
     private String number;
-
+    @Expose
     private String description;
-
+    @Expose
     private String comment;
 
     public Store name(String name) {

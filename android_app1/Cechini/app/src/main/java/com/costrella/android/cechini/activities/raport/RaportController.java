@@ -51,6 +51,20 @@ public class RaportController {
 
     private boolean internetAccess = true;
 
+    private Store getStoreFromStoreProxy(Store proxy){
+        Store store = new Store();
+        store.setVisited(proxy.getVisited());
+        store.setAddress(proxy.getAddress());
+        store.setComment(proxy.getComment());
+        store.setDays(proxy.getDays());
+        store.setDescription(proxy.getDescription());
+        store.setId(proxy.getId());
+        store.setName(proxy.getName());
+        store.setNumber(proxy.getNumber());
+        store.setPerson(proxy.getPerson());
+        return store;
+    }
+
     public void createRaport(Warehouse selectedWarehouse, Bitmap bitmap1, Bitmap bitmap2, Bitmap bitmap3, EditText editText,
                              EditText z_a, EditText z_b, EditText z_c, EditText z_d, EditText z_e, EditText z_f, EditText z_g, EditText z_h,
                              final View scroolview, final View progressView, RelativeLayout relativeLayout
@@ -82,7 +96,9 @@ public class RaportController {
             raport.setDescription(editText.getText().toString());
 
             raport.setPerson(internetAccess ? PersonService.PERSON : RealmInit.realm.copyToRealm(PersonService.PERSON));
-            raport.setStore(internetAccess ? StoreService.STORE : RealmInit.realm.copyToRealm(StoreService.STORE));
+            Store tmp = internetAccess ? StoreService.STORE : RealmInit.realm.copyToRealm(StoreService.STORE);
+            Store tmp1 = getStoreFromStoreProxy(tmp);
+            raport.setStore(tmp1);
             raport.setZ_a(getInt(z_a));
             raport.setZ_b(getInt(z_b));
             raport.setZ_c(getInt(z_c));
@@ -111,7 +127,7 @@ public class RaportController {
                                 store.setVisited(true);
                                 RealmInit.realm.insertOrUpdate(store);
                                 RealmInit.realm.commitTransaction();
-                                return;
+                                   return;
 
                             }
                         } else {
@@ -122,6 +138,7 @@ public class RaportController {
 
                     @Override
                     public void onFailure(Call<Raport> call, Throwable t) {
+                        RealmInit.realm.cancelTransaction();
                         ProgressBar.showProgress(false, context, scroolview, progressView);
                         showSnackBarToAddToQueue();
 //                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
@@ -152,7 +169,6 @@ public class RaportController {
                 .setAction("DODAJ DO KOLEJKI", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RealmInit.realm.commitTransaction();
 //                        finish();
                         Toast.makeText(context, "Dodano do kolejki, jak będziesz miał internet będziesz mógł wysłać raport", Toast.LENGTH_LONG).show();
                     }

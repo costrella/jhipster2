@@ -1,5 +1,7 @@
 package com.costrella.android.cechini.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,11 +15,11 @@ import io.realm.annotations.Ignore;
 public class Warehouse extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Expose
     private Long id;
-
+    @Expose
     private String name;
-
+    @Expose
     @Ignore
     private Set<Raport> raports = new HashSet<>();
 

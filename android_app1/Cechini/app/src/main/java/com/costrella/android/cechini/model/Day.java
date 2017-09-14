@@ -1,5 +1,7 @@
 package com.costrella.android.cechini.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -12,17 +14,17 @@ import java.util.Set;
 public class Day implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Expose
     private Long id;
-
+    @Expose
     private String name;
-
+    @Expose
     private Date date;
-
+    @Expose
     private Week week;
-
+    @Expose
     private Set<Store> stores = new HashSet<>();
-
+    @Expose
     private Set<Raport> raports = new HashSet<>();
 
     public Long getId() {

@@ -4,6 +4,8 @@ package com.costrella.android.cechini.model;
  * Created by mike on 2016-09-15.
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,20 +19,20 @@ import io.realm.annotations.Ignore;
 public class Person extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Expose
     private Long id;
-
+    @Expose
     private String name;
-
+    @Expose
     private String surname;
-
+    @Expose
     private String login;
-
+    @Expose
     private String pass;
-
+    @Expose
     @Ignore
     private Set<Store> stores = new HashSet<>();
-
+    @Expose
     @Ignore
     private Set<Raport> raports = new HashSet<>();
 

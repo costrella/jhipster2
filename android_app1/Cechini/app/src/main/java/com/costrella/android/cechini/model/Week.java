@@ -1,5 +1,7 @@
 package com.costrella.android.cechini.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,19 +12,19 @@ import java.util.Set;
 public class Week implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Expose
     private Long id;
-
+    @Expose
     private String name;
 //nie uzywamy w androidzie daty. date weeksu ustawiamy w backendzie
 //    private Date dateBefore;
 //
 //    private Date dateAfter;
-
+@Expose
     private Integer weekOfYear;
-
+    @Expose
     private Set<Day> days = new HashSet<>();
-
+    @Expose
     private Person person;
 
     public Long getId() {

@@ -37,7 +37,7 @@ public class CechiniService {
 
     public CechiniAPI getCechiniAPI() {
         if (gson == null) {
-            gson = new GsonBuilder().registerTypeHierarchyAdapter(byte[].class,
+            gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(byte[].class,
                     new ByteArrayToBase64TypeAdapter())
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                     .create();

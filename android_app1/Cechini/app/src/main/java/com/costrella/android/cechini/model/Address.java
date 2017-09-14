@@ -1,5 +1,7 @@
 package com.costrella.android.cechini.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,11 +12,11 @@ import java.util.Set;
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Expose
     private Long id;
-
+    @Expose
     private String city;
-
+    @Expose
     private Set<Store> stores = new HashSet<>();
 
     public Long getId() {

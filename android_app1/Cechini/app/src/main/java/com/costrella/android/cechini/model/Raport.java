@@ -4,6 +4,8 @@ package com.costrella.android.cechini.model;
  * Created by mike on 2016-09-15.
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
@@ -14,55 +16,55 @@ import io.realm.annotations.Ignore;
  * A Raport.
  */
 public class Raport extends RealmObject implements Serializable {
-
+    @Expose
     private String date;
-
+    @Expose
     private Long personIdRealm;
-
+    @Expose
     private Long storeIdRealm;
-
+    @Expose
     private Long warehousIdRealm;
 
     private static final long serialVersionUID = 1L;
-
+    @Expose
     private Long id;
-
+    @Expose
     private String description;
-
+    @Expose
     private byte[] foto1;
-
+    @Expose
     private String foto1ContentType;
-
+    @Expose
     private byte[] foto2;
-
+    @Expose
     private String foto2ContentType;
-
+    @Expose
     private byte[] foto3;
-
+    @Expose
     private String foto3ContentType;
-
+    @Expose
     private Person person;
-
+    @Expose
     private Store store;
-
+    @Expose
     private Integer z_a;
-
+    @Expose
     private Integer z_b;
-
+    @Expose
     private Integer z_c;
-
+    @Expose
     private Integer z_d;
-
+    @Expose
     private Integer z_e;
-
+    @Expose
     private Integer z_f;
-
+    @Expose
     private Integer z_g;
-
+    @Expose
     private Integer z_h;
-
+    @Expose
     private Warehouse warehouse;
-
+    @Expose
     @Ignore
     private Day day;
 
@@ -79,7 +81,7 @@ public class Raport extends RealmObject implements Serializable {
         if (date != null) {
             if (date.contains("T")) {
                 return date.replace("T", " ");
-            }else{
+            } else {
                 return date;
             }
         }
