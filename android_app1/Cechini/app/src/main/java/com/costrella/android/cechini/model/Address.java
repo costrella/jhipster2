@@ -6,10 +6,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * A Address.
  */
-public class Address implements Serializable {
+public class Address extends RealmObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Expose
@@ -17,6 +20,7 @@ public class Address implements Serializable {
     @Expose
     private String city;
     @Expose
+    @Ignore
     private Set<Store> stores = new HashSet<>();
 
     public Long getId() {

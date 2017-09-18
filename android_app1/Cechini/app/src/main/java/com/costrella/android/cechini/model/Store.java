@@ -49,7 +49,6 @@ public class Store extends RealmObject implements Serializable {
     @Ignore
     private Person person;
     @Expose
-    @Ignore
     private Address address;
     @Expose
     @Ignore
