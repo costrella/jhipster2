@@ -50,7 +50,6 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weeks);
-        RealmInit.init(getApplicationContext());
         realm = RealmInit.realm;
         mProgressView = findViewById(R.id.weeks_progress);
         listValues = new ArrayList<>();

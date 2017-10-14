@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.costrella.android.cechini.activities.MainActivity;
+import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Raport;
 
 import java.util.List;
@@ -24,12 +25,7 @@ public class OffLineService {
 
     public OffLineService init(Context context) {
         this.context = context;
-        Realm.init(context);
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        realm = Realm.getInstance(config);
+        this.realm = RealmInit.realm;
         return this;
     }
 

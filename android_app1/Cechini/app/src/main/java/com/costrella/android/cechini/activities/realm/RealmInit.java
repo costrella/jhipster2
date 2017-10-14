@@ -14,12 +14,14 @@ public class RealmInit {
     public static Realm realm;
 
 
-    public static void init(Context context){
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.init(context);
-        realm = Realm.getInstance(config);
+    public static void init(Context context) {
+        if (realm == null) {
+            Realm.init(context);
+            RealmConfiguration config = new RealmConfiguration
+                    .Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            realm = Realm.getInstance(config);
+        }
     }
 }

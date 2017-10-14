@@ -90,7 +90,6 @@ public class RaportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_raport);
-        RealmInit.init(getApplicationContext());
         realm = RealmInit.realm;
 
         final EditText editText, z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h;

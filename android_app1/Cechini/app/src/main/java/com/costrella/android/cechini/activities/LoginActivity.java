@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
-
+        RealmInit.init(getApplicationContext());
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -109,8 +109,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
         TextView version = (TextView) findViewById(R.id.version);
 
-        Realm.init(getApplicationContext());
-        RealmInit.init(getApplicationContext());
+
         realm = RealmInit.realm;
         User userRealm = realm.where(User.class).findFirst();
         if (userRealm != null) {

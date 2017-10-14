@@ -74,7 +74,6 @@ public class RaportController {
 
         if (valid()) {
             ProgressBar.showProgress(true, context, scroolview, progressView);
-            RealmInit.init(context);
             RealmInit.realm.beginTransaction();
 
             Raport raport = getObject();

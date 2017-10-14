@@ -45,7 +45,6 @@ public class MyStoresActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RealmInit.init(getApplicationContext());
         realm = RealmInit.realm;
         setContentView(R.layout.activity_stores);
         mProgressView = findViewById(R.id.myStores_progress);
