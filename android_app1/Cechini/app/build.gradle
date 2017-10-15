@@ -9,8 +9,8 @@ android {
         applicationId "com.costrella.android.cechini"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 9
-        versionName "2.02"
+        versionCode 14
+        versionName "2.50"
     }
     buildTypes {
         release {
