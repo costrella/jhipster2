@@ -99,8 +99,11 @@ public class RaportController {
 
             raport.setPerson(internetAccess ? PersonService.PERSON : RealmInit.realm.copyToRealm(PersonService.PERSON));
             Store tmp = internetAccess ? StoreService.STORE : RealmInit.realm.copyToRealm(StoreService.STORE);
-            Store tmp1 = getStoreFromStoreProxy(tmp);
-            raport.setStore(tmp1);
+            if(internetAccess){
+                raport.setStore(getStoreFromStoreProxy(tmp));
+            }else{
+                raport.setStore(tmp);
+            }
             raport.setZ_a(getInt(z_a));
             raport.setZ_b(getInt(z_b));
             raport.setZ_c(getInt(z_c));

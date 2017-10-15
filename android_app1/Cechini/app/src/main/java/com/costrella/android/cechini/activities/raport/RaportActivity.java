@@ -32,6 +32,7 @@ import com.costrella.android.cechini.R;
 import com.costrella.android.cechini.activities.realm.RealmInit;
 import com.costrella.android.cechini.model.Warehouse;
 import com.costrella.android.cechini.services.CechiniService;
+import com.costrella.android.cechini.services.NetworkService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +64,6 @@ public class RaportActivity extends AppCompatActivity {
     ImageButton picSBtn1, picSBtn2, picSBtn3, rotateLeft1, rotateRight1, rotateLeft2, rotateRight2, rotateLeft3, rotateRight3;
     RelativeLayout relativeLayout;
     Realm realm;
-    private boolean internetAccess = true;
     Spinner warehousesSpinner = null;
 
     float f_rotateLeft1 = 0;
@@ -123,7 +123,9 @@ public class RaportActivity extends AppCompatActivity {
                         editText,
                         z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h,
                         scroolView, mProgressView, relativeLayout);
-                finish();
+                if(NetworkService.getInstance().isNetworkAvailable(getApplicationContext())){
+                    finish();
+                }
             }
         });
 
@@ -229,8 +231,6 @@ public class RaportActivity extends AppCompatActivity {
                     addToListActivity(warehouses);
                     realm.beginTransaction();
                     realm.delete(Warehouse.class);
-                    realm.commitTransaction();
-                    realm.beginTransaction();
                     realm.copyToRealm(warehouses);
                     realm.commitTransaction();
                 }
