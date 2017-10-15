@@ -23,6 +23,7 @@ import com.costrella.android.cechini.services.StoreService;
 
 import java.io.ByteArrayOutputStream;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +52,7 @@ public class RaportController {
 
     private boolean internetAccess = true;
 
-    private Store getStoreFromStoreProxy(Store proxy){
+    private Store getStoreFromStoreProxy(Store proxy) {
         Store store = new Store();
         store.setVisited(proxy.getVisited());
         store.setAddress(proxy.getAddress());
@@ -74,8 +75,10 @@ public class RaportController {
 
         if (valid()) {
             ProgressBar.showProgress(true, context, scroolview, progressView);
-            RealmInit.realm.beginTransaction();
-
+            checkInternet();
+            if (!internetAccess) { //musimy stworzyc nowy obiekt w realmie
+                RealmInit.realm.beginTransaction();
+            }
             Raport raport = getObject();
             if (selectedWarehouse != null) {
                 raport.setWarehouse(internetAccess ? selectedWarehouse : RealmInit.realm.copyToRealm(selectedWarehouse));
@@ -109,7 +112,6 @@ public class RaportController {
             raport.setWarehousIdRealm(selectedWarehouse.getId());
             raport.setPersonIdRealm(PersonService.PERSON.getId());
             raport.setStoreIdRealm(StoreService.STORE.getId());
-
             if (internetAccess) {
 
 
@@ -121,23 +123,22 @@ public class RaportController {
                         ProgressBar.showProgress(false, context, scroolview, progressView);
                         if (code == 201) {
                             Toast.makeText(context, Constants.RAPORT_SUCCESS, Toast.LENGTH_LONG).show();
-                            Store store = RealmInit.realm.where(Store.class).equalTo("id", StoreService.STORE.getId()).findFirst();
+                            final Store store = RealmInit.realm.where(Store.class).equalTo("id", StoreService.STORE.getId()).findFirst();
                             if (store != null) {
+                                RealmInit.realm.beginTransaction();
                                 store.setVisited(true);
                                 RealmInit.realm.insertOrUpdate(store);
                                 RealmInit.realm.commitTransaction();
-                                   return;
+                                return;
 
                             }
                         } else {
                             Toast.makeText(context, "Niepowodzenie wysłania raportu [oR] " + code, Toast.LENGTH_LONG).show();
                         }
-                        RealmInit.realm.cancelTransaction();
                     }
 
                     @Override
                     public void onFailure(Call<Raport> call, Throwable t) {
-                        RealmInit.realm.cancelTransaction();
                         ProgressBar.showProgress(false, context, scroolview, progressView);
                         showSnackBarToAddToQueue();
 //                        Toast.makeText(getApplicationContext(), Constants.SOMETHING_WRONG, Toast.LENGTH_LONG).show();
@@ -145,6 +146,7 @@ public class RaportController {
                     }
                 });
             } else {
+                RealmInit.realm.commitTransaction();
                 showSnackBarToAddToQueue();
             }
         }
@@ -178,13 +180,22 @@ public class RaportController {
     }
 
     private Raport getObject() {
+        Raport raport;
+        if (internetAccess) {
+            raport = new Raport();
+        } else {
+            raport = RealmInit.realm.createObject(Raport.class);
+        }
+        return raport;
+    }
+
+    private boolean checkInternet() {
         if (NetworkService.getInstance().isNetworkAvailable(context)) {
             internetAccess = true;
-            return new Raport();
         } else {
             internetAccess = false;
-            return RealmInit.realm.createObject(Raport.class);
         }
+        return internetAccess;
     }
 
     private byte[] getImage(Bitmap bitmap) {
