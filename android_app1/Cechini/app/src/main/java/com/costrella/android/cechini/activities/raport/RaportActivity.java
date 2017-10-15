@@ -114,18 +114,15 @@ public class RaportActivity extends AppCompatActivity {
         z_f = (EditText) findViewById(R.id.z_f);
         z_g = (EditText) findViewById(R.id.z_g);
         z_h = (EditText) findViewById(R.id.z_h);
-
+        final RaportActivity _this = this;
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RaportController.getInstance(
-                        getApplicationContext()).createRaport(selectedWarehouse, bitmap1, bitmap2, bitmap3,
+                        getApplicationContext()).createRaport(_this, selectedWarehouse, bitmap1, bitmap2, bitmap3,
                         editText,
                         z_a, z_b, z_c, z_d, z_e, z_f, z_g, z_h,
                         scroolView, mProgressView, relativeLayout);
-                if(NetworkService.getInstance().isNetworkAvailable(getApplicationContext())){
-                    finish();
-                }
             }
         });
 

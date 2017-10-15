@@ -37,6 +37,7 @@ public class RaportController {
     private Context context;
     private Warehouse selectedWarehouse;
     private RelativeLayout relativeLayout;
+    private RaportActivity raportActivity;
     private static RaportController instance;
 
     public static RaportController getInstance(Context context) {
@@ -66,13 +67,13 @@ public class RaportController {
         return store;
     }
 
-    public void createRaport(Warehouse selectedWarehouse, Bitmap bitmap1, Bitmap bitmap2, Bitmap bitmap3, EditText editText,
-                             EditText z_a, EditText z_b, EditText z_c, EditText z_d, EditText z_e, EditText z_f, EditText z_g, EditText z_h,
-                             final View scroolview, final View progressView, RelativeLayout relativeLayout
+    public void createRaport(final RaportActivity raportActivity, Warehouse selectedWarehouse, Bitmap bitmap1, Bitmap bitmap2, Bitmap bitmap3, EditText editText,
+                                EditText z_a, EditText z_b, EditText z_c, EditText z_d, EditText z_e, EditText z_f, EditText z_g, EditText z_h,
+                                final View scroolview, final View progressView, RelativeLayout relativeLayout
     ) {
         this.selectedWarehouse = selectedWarehouse;
         this.relativeLayout = relativeLayout;
-
+        this.raportActivity = raportActivity;
         if (valid()) {
             ProgressBar.showProgress(true, context, scroolview, progressView);
             checkInternet();
@@ -132,12 +133,11 @@ public class RaportController {
                                 store.setVisited(true);
                                 RealmInit.realm.insertOrUpdate(store);
                                 RealmInit.realm.commitTransaction();
-                                return;
-
                             }
                         } else {
                             Toast.makeText(context, "Niepowodzenie wysłania raportu [oR] " + code, Toast.LENGTH_LONG).show();
                         }
+                        raportActivity.finish();
                     }
 
                     @Override
@@ -173,8 +173,8 @@ public class RaportController {
                 .setAction("DODAJ DO KOLEJKI", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        finish();
                         Toast.makeText(context, "Dodano do kolejki, jak będziesz miał internet będziesz mógł wysłać raport", Toast.LENGTH_LONG).show();
+                        raportActivity.finish();
                     }
                 });
         snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
