@@ -113,14 +113,14 @@
                     <td>{{raport.description}}</td>
 
                     <td>
-                        <a ng-if="raport.foto1" ng-click="vm.openFile(raport.foto1ContentType, raport.foto1)">
-                            <img data-ng-src="{{'data:' + raport.foto1ContentType + ';base64,' + raport.foto1}}" style="max-height: 30px;"/>
+                        <a ng-if="raport.foto1" ng-click="vm.openImg(raport.foto1ContentType)">
+                            <img data-ng-src="raport.foto1ContentType" style="max-height: 30px;"/>
                         </a>
-                        <a ng-if="raport.foto2" ng-click="vm.openFile(raport.foto2ContentType, raport.foto2)">
-                            <img data-ng-src="{{'data:' + raport.foto2ContentType + ';base64,' + raport.foto2}}" style="max-height: 30px;"/>
+                        <a ng-if="raport.foto2" ng-click="vm.openImg(raport.foto2ContentType)">
+                            <img data-ng-src="raport.foto2ContentType" style="max-height: 30px;"/>
                         </a>
-                        <a ng-if="raport.foto3" ng-click="vm.openFile(raport.foto3ContentType, raport.foto3)">
-                            <img data-ng-src="{{'data:' + raport.foto3ContentType + ';base64,' + raport.foto3}}" style="max-height: 30px;"/>
+                        <a ng-if="raport.foto3" ng-click="vm.openImg(raport.foto3ContentType)">
+                            <img data-ng-src="raport.foto3ContentType" style="max-height: 30px;"/>
                         </a>
 
                     </td>

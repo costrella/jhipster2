@@ -32,6 +32,7 @@ public class Raport implements Serializable {
     @Column(name = "foto_1")
     private byte[] foto1;
 
+    //try to use this field for path ftp
     @Column(name = "foto_1_content_type")
     private String foto1ContentType;
 

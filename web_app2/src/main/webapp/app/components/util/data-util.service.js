@@ -62,6 +62,10 @@
             $window.open('data:image/png;base64,' + data, '_blank', 'height=400,width=500');
         }
 
+        function openImg (type, data) {
+                    $window.open(data, '_blank', 'height=400,width=500');
+         }
+
         function toBase64 (file, cb) {
             var fileReader = new FileReader();
             fileReader.readAsDataURL(file);

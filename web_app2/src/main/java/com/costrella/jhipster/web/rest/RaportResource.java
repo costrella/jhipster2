@@ -7,6 +7,7 @@ import com.costrella.jhipster.domain.User;
 import com.costrella.jhipster.repository.RaportRepository;
 import com.costrella.jhipster.repository.search.RaportSearchRepository;
 import com.costrella.jhipster.service.UserService;
+import com.costrella.jhipster.web.ftp.FTPUploader;
 import com.costrella.jhipster.web.rest.util.HeaderUtil;
 import com.costrella.jhipster.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -65,7 +66,19 @@ public class RaportResource {
         if (raport.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("raport", "idexists", "A new raport cannot already have an ID")).body(null);
         }
+
         //ALBO TWORZYMY RAPORT Z TRASOWKI, ALBO NIE Z TRASOWKI
+        FTPUploader ftpUploader = FTPUploader.getInstance();
+        try {
+            ftpUploader.connect("misiekmk.linuxpl.info","misiekmk","Aasdasd1!");
+            String hostDir = "r_" + raport.getId();
+            ftpUploader.uploadByteFile(raport.getFoto1(), raport.getId().toString() + "_1.jpg", hostDir);
+            ftpUploader.uploadByteFile(raport.getFoto2(), raport.getId().toString() + "_2.jpg", hostDir);
+            ftpUploader.uploadByteFile(raport.getFoto3(), raport.getId().toString() + "_3.jpg", hostDir);
+            ftpUploader.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         raport.setDate(LocalDateTime.now());
         if (raport.getDay() != null) {
             if (raport.getDay().getDate() != null) {
