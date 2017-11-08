@@ -14,7 +14,9 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -43,9 +45,20 @@ public class CechiniService {
                     .create();
         }
         if (retrofit == null) {
+//            final OkHttpClient okHttpClient = new OkHttpClient();
+//            okHttpClient.newBuilder().
+//            okHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
+//            okHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
+
+            final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .build();
+
             retrofit = new Retrofit.Builder()
                     .baseUrl(CechiniAPI.ENDPOINT)
                     .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(okHttpClient)
                     .build();
 
         }
