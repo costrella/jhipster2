@@ -12,6 +12,7 @@ import static com.costrella.db.compress.CompressJPEGFile.pathBefore;
 
 public class Main {
     CompressJPEGFile compressJPEGFile;
+
     class Blog {
         public int id;
         public String subject;
@@ -45,7 +46,10 @@ public class Main {
         }
     }
 
-    private void populateListOfRaports(Connection conn, LinkedList listOfBlogs)  {
+    //UPDATE table_name
+//SET column1 = value1, column2 = value2, ...
+//    WHERE condition;
+    private void populateListOfRaports(Connection conn, LinkedList listOfBlogs) {
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT id, description, foto_1 FROM raport WHERE id = 36414 ORDER BY id");
@@ -54,33 +58,10 @@ public class Main {
                 raport.id = rs.getLong("id");
                 raport.description = rs.getString("description");
                 raport.foto1 = rs.getBytes("foto_1");
-//                try {
-//                    BufferedImage img = ImageIO.read(new ByteArrayInputStream(raport.foto1));
-//                    img.
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                OutputStream out = null;
-                try {
-                    out = new BufferedOutputStream(new FileOutputStream(pathBefore));
-                    out.write(raport.foto1);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (out != null) try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                compressAndUpdate(raport.foto1, st, "description", conn);
+//                compressAndUpdate(raport.foto2, st);
+//                compressAndUpdate(raport.foto3, st);
 
-                try {
-                    compressJPEGFile.compress();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 listOfBlogs.add(raport);
             }
             rs.close();
@@ -88,6 +69,41 @@ public class Main {
         } catch (SQLException se) {
             System.err.println("Threw a SQLException creating the list of blogs.");
             System.err.println(se.getMessage());
+        }
+    }
+
+    void compressAndUpdate(byte[] photo, Statement st, String fieldName, Connection conn) {
+        if (photo != null) {
+            OutputStream out = null;
+            try {
+                out = new BufferedOutputStream(new FileOutputStream(pathBefore));
+                out.write(photo);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (out != null) try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                byte[] compressed = compressJPEGFile.compress();
+                try {
+                    Statement st2 = conn.createStatement();
+
+                    st2.executeUpdate("UPDATE raport SET " + fieldName + " = " + "'zamowienie1'" + "  WHERE id=36414");
+                    st2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
