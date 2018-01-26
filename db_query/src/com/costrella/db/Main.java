@@ -30,12 +30,13 @@ public class Main {
 
         // connect to the database
         conn = connectToDatabaseOrDie();
-
+        int id = 36408;
         // get the data
-        populateListOfRaports(conn, listOfBlogs);
+        for(int i = 30000; i<31000; i++){
+            startQuery(conn, i);
+        }
 
         // print the results
-        printRaports(listOfBlogs);
     }
 
     private void printRaports(LinkedList listOfBlogs) {
@@ -49,20 +50,20 @@ public class Main {
     //UPDATE table_name
 //SET column1 = value1, column2 = value2, ...
 //    WHERE condition;
-    private void populateListOfRaports(Connection conn, LinkedList listOfBlogs) {
+    private void startQuery(Connection conn, int id) {
         try {
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, description, foto_1 FROM raport WHERE id = 36414 ORDER BY id");
+            ResultSet rs = st.executeQuery("SELECT id, foto_1, foto_2, foto_3 FROM raport WHERE id = " + id + " ORDER BY id");
             while (rs.next()) {
                 Raport raport = new Raport();
                 raport.id = rs.getLong("id");
-                raport.description = rs.getString("description");
                 raport.foto1 = rs.getBytes("foto_1");
-                compressAndUpdate(raport.foto1, st, "description", conn);
-//                compressAndUpdate(raport.foto2, st);
-//                compressAndUpdate(raport.foto3, st);
+                raport.foto2 = rs.getBytes("foto_2");
+                raport.foto3 = rs.getBytes("foto_3");
 
-                listOfBlogs.add(raport);
+                compressAndUpdate(raport.foto1, "foto_1", conn, id);
+                compressAndUpdate(raport.foto2, "foto_2", conn, id);
+                compressAndUpdate(raport.foto3, "foto_3", conn, id);
             }
             rs.close();
             st.close();
@@ -72,7 +73,7 @@ public class Main {
         }
     }
 
-    void compressAndUpdate(byte[] photo, Statement st, String fieldName, Connection conn) {
+    void compressAndUpdate(byte[] photo, String fieldName, Connection conn, int id) {
         if (photo != null) {
             OutputStream out = null;
             try {
@@ -92,19 +93,40 @@ public class Main {
 
             try {
                 byte[] compressed = compressJPEGFile.compress();
-                try {
-                    Statement st2 = conn.createStatement();
 
-                    st2.executeUpdate("UPDATE raport SET " + fieldName + " = " + "'zamowienie1'" + "  WHERE id=36414");
-                    st2.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                String sql = "UPDATE raport SET " + fieldName + " = (?) WHERE id=" + id + "";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+
+                pstmt.setBytes(1, compressed);
+                pstmt.executeUpdate();
+                System.out.print(id + ",");
+//                try {
+//                    Statement st2 = conn.createStatement();
+//
+//                    st2.executeUpdate("UPDATE raport SET " + fieldName + " = '" + compressed.toString() + "'  WHERE id=36414");
+//                    st2.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    private void insert() throws SQLException {
+        Connection conn = connectToDatabaseOrDie();
+        Statement stmt = conn.createStatement();
+
+
+        String sql = "INSERT INTO survey (name) VALUES(?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setBytes(1, "asdfasdf".getBytes());
+        pstmt.executeUpdate();
     }
 
     private Connection connectToDatabaseOrDie() {
