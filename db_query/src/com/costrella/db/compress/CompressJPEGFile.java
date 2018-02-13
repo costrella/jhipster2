@@ -23,8 +23,9 @@ import java.util.logging.Logger;
 
 public class CompressJPEGFile {
 
-    public static String pathBefore = "C:\\mkostrzewa\\repos\\jhipster2\\db_query\\out\\fotobefore.jpg";
+    public static String pathArchive = "C:\\mkostrzewa\\projects\\cechini\\archiwum\\";
     public static  String pathAfter = "C:\\mkostrzewa\\repos\\jhipster2\\db_query\\out\\fotoafter.jpg";
+    public static String pathBefore = "C:\\mkostrzewa\\repos\\jhipster2\\db_query\\out\\fotobefore.jpg";
 
     public byte[] compress() throws IOException {
 
@@ -34,7 +35,7 @@ public class CompressJPEGFile {
         InputStream is = new FileInputStream(imageFile);
         OutputStream os = new FileOutputStream(compressedImageFile);
 
-        float quality = 0.4f;
+        float quality = 0.5f;
 
         // create a BufferedImage as the result of decoding the supplied InputStream
         BufferedImage image = ImageIO.read(is);

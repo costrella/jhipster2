@@ -4,10 +4,14 @@ import com.costrella.db.compress.CompressJPEGFile;
 import com.costrella.db.model.Raport;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static com.costrella.db.compress.CompressJPEGFile.pathArchive;
 import static com.costrella.db.compress.CompressJPEGFile.pathBefore;
 
 public class Main {
@@ -32,7 +36,7 @@ public class Main {
         conn = connectToDatabaseOrDie();
         int id = 36408;
         // get the data
-        for(int i = 30000; i<31000; i++){
+        for(int i = 7000; i<=15672; i++){
             startQuery(conn, i);
         }
 
@@ -53,17 +57,18 @@ public class Main {
     private void startQuery(Connection conn, int id) {
         try {
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, foto_1, foto_2, foto_3 FROM raport WHERE id = " + id + " ORDER BY id");
+            ResultSet rs = st.executeQuery("SELECT id, foto_1, foto_2, foto_3, description FROM raport WHERE id = " + id + " ORDER BY id");
             while (rs.next()) {
                 Raport raport = new Raport();
                 raport.id = rs.getLong("id");
                 raport.foto1 = rs.getBytes("foto_1");
                 raport.foto2 = rs.getBytes("foto_2");
                 raport.foto3 = rs.getBytes("foto_3");
+                raport.description = rs.getString("description");
 
-                compressAndUpdate(raport.foto1, "foto_1", conn, id);
-                compressAndUpdate(raport.foto2, "foto_2", conn, id);
-                compressAndUpdate(raport.foto3, "foto_3", conn, id);
+                compressAndUpdate(raport.foto1, "foto_1", conn, id, raport.description);
+                compressAndUpdate(raport.foto2, "foto_2", conn, id, raport.description);
+                compressAndUpdate(raport.foto3, "foto_3", conn, id, raport.description);
             }
             rs.close();
             st.close();
@@ -73,11 +78,12 @@ public class Main {
         }
     }
 
-    void compressAndUpdate(byte[] photo, String fieldName, Connection conn, int id) {
+    void compressAndUpdate(byte[] photo, String fieldName, Connection conn, int id, String desc) {
         if (photo != null) {
             OutputStream out = null;
             try {
-                out = new BufferedOutputStream(new FileOutputStream(pathBefore));
+                new File(pathArchive+id).mkdirs();
+                out = new BufferedOutputStream(new FileOutputStream(pathArchive+id+"\\"+fieldName+".jpg"));
                 out.write(photo);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -92,25 +98,19 @@ public class Main {
             }
 
             try {
-                byte[] compressed = compressJPEGFile.compress();
+//                Path path = Paths.get("C:\\mkostrzewa\\projects\\cechini\\a.jpg");
+//                byte[] data = Files.readAllBytes(path);
 
-                String sql = "UPDATE raport SET " + fieldName + " = (?) WHERE id=" + id + "";
+//                byte[] compressed = compressJPEGFile.compress();
+
+                String sql = "UPDATE raport SET " + fieldName + " = NULL, description = (?) WHERE id=" + id + "";
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
-                pstmt.setBytes(1, compressed);
+                String za = " *[za]";
+                pstmt.setString(1, desc+za);
                 pstmt.executeUpdate();
                 System.out.print(id + ",");
-//                try {
-//                    Statement st2 = conn.createStatement();
-//
-//                    st2.executeUpdate("UPDATE raport SET " + fieldName + " = '" + compressed.toString() + "'  WHERE id=36414");
-//                    st2.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
 
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
