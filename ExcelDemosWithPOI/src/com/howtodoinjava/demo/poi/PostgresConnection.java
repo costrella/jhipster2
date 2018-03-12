@@ -11,14 +11,14 @@ public class PostgresConnection {
 		Statement stmt = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-//			c = DriverManager.getConnection(
-//					"jdbc:postgresql://localhost:5432/jhipster_address", "postgres",
-//					"postgres");
-			
-			
 			c = DriverManager.getConnection(
-					"jdbc:postgresql://137.v.tld.pl:5432/pg137_c1_5a", "pg137_c1_5a",
-					"Aasdasd1!");
+					"jdbc:postgresql://localhost:5432/jhipster_test", "postgres",
+					"postgres");
+			
+			
+//			c = DriverManager.getConnection(
+//					"jdbc:postgresql://137.v.tld.pl:5432/pg137_c1_5a", "pg137_c1_5a",
+//					"Aasdasd1!");
 			
 			
 			c.setAutoCommit(false);
